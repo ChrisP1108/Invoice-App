@@ -50,6 +50,7 @@
 
         .logo {
             transform: scale(1.11111111);
+            margin-left: .2rem!important;
         }
         .avatar {
             &-container {
@@ -68,12 +69,13 @@
     @media(min-width: 75em) { // 1200px Desktop
         height: auto!important;
         width: 6.438rem!important;
-        border-top-right-radius: 1.7rem!important;
+        border-top-right-radius: 1.6rem!important;
         border-bottom-right-radius: 1.125rem!important;
 
         .logo {
             transform: scale(1.430555);
-            margin-top: .9rem;
+            margin-top: .9rem!important;
+            margin-right: .2rem!important;
         }
         .avatar {
             &-container {
