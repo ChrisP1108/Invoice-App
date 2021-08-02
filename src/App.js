@@ -10,7 +10,10 @@ const App = () => {
 
   return (
     <div>
-      <Viewer />
+      <div className="d-flex flex-column flex-xl-row">
+        <Header />
+        <Viewer />
+      </div>
     </div>
   )
 }

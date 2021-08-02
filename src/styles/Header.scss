@@ -1,0 +1,87 @@
+#header {
+    background-color: $c!important;
+    height: 4.5rem!important;
+    width: 100%!important;
+
+    .logo {
+        background-image: url(../assets/header-logo.svg);
+        width: 4.5rem!important;
+        height: 4.5rem!important;
+    }
+    .switch-container {
+        width: 4.125rem!important;
+        height: 4.5rem!important;
+    }
+    .theme {
+        width: 1.25rem!important;
+        height: 1.25rem!important;
+        transition: .25s!important;
+
+        &-night {
+            background-image: url(../assets/icon-sun.svg);
+        }
+        &-night:hover {
+            background-image: url(../assets/icon-sun-hover.svg);
+        }
+        &-day {
+            background-image: url(../assets/icon-moon.svg);
+        }
+        &-day:hover {
+            background-image: url(../assets/icon-moon-hover.svg);
+        }
+    }
+    .avatar {
+        &-container {
+            border-left : 0.063rem $m solid!important;
+            width: 5.063rem!important;
+            height: 4.5rem!important;
+        }
+        &-image {
+            background-image: url(../assets/image-avatar.jpg);
+            transform: scale(.4)!important;
+            width: 5rem!important;
+            height: 5rem!important;
+            border-radius: 50%!important;
+        }
+    }
+
+    @media(min-width: 48em) { // 768px Tablet
+        height: 5rem!important;
+
+        .logo {
+            transform: scale(1.11111111);
+        }
+        .avatar {
+            &-container {
+                width: 6.063rem!important;
+                height: 5rem!important;
+            }
+            &-image {
+                transform: scale(.5)!important;
+            }
+        }
+        .switch-container {
+            width: 5.25rem!important;
+            height: 5rem!important;
+        }
+    }
+    @media(min-width: 75em) { // 1200px Desktop
+        height: auto!important;
+        width: 6.438rem!important;
+        border-top-right-radius: 1.7rem!important;
+        border-bottom-right-radius: 1.125rem!important;
+
+        .logo {
+            transform: scale(1.430555);
+            margin-top: .9rem;
+        }
+        .avatar {
+            &-container {
+                border-left: 0!important;
+                border-top : 0.063rem $m solid!important;
+                width: 6.438rem!important;
+                height: 5.563rem!important;
+            }
+        }
+    }
+}

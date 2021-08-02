@@ -10,11 +10,9 @@ const Viewer = () => {
         setList(data);
     }
     invoices();
-    console.log(list);
-    console.log(nightMode());
 
     return (
-        <div>
+        <div id="viewer">
             <h1>Test</h1>
         </div>
     )
