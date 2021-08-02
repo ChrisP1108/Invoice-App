@@ -13,7 +13,7 @@ const Viewer = () => {
 
     return (
         <div id="viewer">
-            <h1>Test</h1>
+            <h1>{nightMode() ? 'Night Theme' : 'Day Theme'}</h1>
         </div>
     )
 }
