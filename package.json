@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.1.10",
     "bootstrap": "^5.0.2",
     "gh-pages": "^3.2.3",
+    "hooks-for-redux": "^2.0.3",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -24,7 +25,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sass" : "sass src/:src/ --watch --no-source-map"
+    "sass": "sass src/:src/ --watch --no-source-map",
+    "server": "json-server --watch db.json --port 5000"
   },
   "eslintConfig": {
     "extends": [
