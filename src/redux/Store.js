@@ -1,7 +1,7 @@
 import { Url } from './fetchUrl';
 import { createReduxModule } from 'hooks-for-redux';
 
-// Invoices List 
+// Invoices 
 
     const fetchInvoices = async () => {
         const res = await fetch(Url);
@@ -24,5 +24,5 @@ import { createReduxModule } from 'hooks-for-redux';
 
     export const [nightMode, {toggleNightMode}] = 
         createReduxModule('nightToggle', NIGHTMODE, {
-            toggleNightMode: () => !NIGHTMODE
+            toggleNightMode: (state) => !state
         });
