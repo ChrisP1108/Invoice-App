@@ -13,6 +13,12 @@
     $l: #141625;
     $m: #494E6E;
     $n: #7C5DFA;
+    $o: #97979725;
+    $p: #FF8F0025;
+    $q: #33D69F25;
+    $r: #33D69F;
+    $s: #FF8F00;
+    $t: #33D69F15;
     $white: #ffffff;
 
 //Font --> font-family: 'Spartan', sans-serif;
@@ -50,6 +56,10 @@ body {
         align-items: center;
         justify-content: center;
     }
+    &-e {
+        display: flex;
+        justify-content: end;
+    }
 }
 
 .night-mode {
@@ -65,9 +75,33 @@ body {
     h3 {
         color :$white;
     }
+    h4 {
+        color :$white;
+    }
     .invoice-outer-container {
         transition: .25s;
         background-color: $c;
+    }
+    .payment-button-paid {
+        background-color: $t;
+        color: $r!important;
+    }
+    .payment-button-pending {
+        background-color: $p;
+        color: $s!important;
+    }
+    .payment-button-draft {
+        background-color: $o;
+        color: $white!important;
+    }
+    .dot-paid {
+        background-color: $r!important;
+    }
+    .dot-pending {
+        background-color: $s!important;
+    }
+    .dot-draft {
+        background-color: $white!important;
     }
 }
 .day-mode {
@@ -83,9 +117,33 @@ body {
     h3 {
         color: $h;
     }
+    h4 {
+        color: $h;
+    }
     .invoice-outer-container {
         transition: .25s;
         background-color: $white;
+    }
+    .payment-button-paid {
+        background-color: $q;
+        color: $r!important;
+    }
+    .payment-button-pending {
+        background-color: $p;
+        color: $s!important;
+    }
+    .payment-button-draft {
+        background-color: $o;
+        color: $h!important;
+    }
+    .dot-paid {
+        background-color: $r!important;
+    }
+    .dot-pending {
+        background-color: $s!important;
+    }
+    .dot-draft {
+        background-color: $h!important;
     }
 }
 

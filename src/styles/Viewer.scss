@@ -18,9 +18,37 @@
     }
     h3 {
         font-size: 0.75rem!important;
-        font-weight: 800!important;
+        font-weight: 700!important;
+        letter-spacing: -0.016rem!important;
+        line-height: 0.938rem!important;
         margin: 0!important;
         padding: 0!important;
+
+        span {
+            color: $g!important;
+        }
+    }
+    h4 {
+        font-size: 1rem!important;
+        font-weight: 700!important;
+        letter-spacing: -0.05rem!important;
+        line-height: 1.5rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        display: flex;
+        align-items: center;
+    }
+    h5 {
+        font-size: 0.75rem!important;
+        font-weight: 700!important;
+        letter-spacing: -0.016rem!important;
+        line-height: 0.938rem!important;
+        margin: 0!important;
+        padding: 0!important;
+
+        span {
+            color: $g!important;
+        }
     }
     .viewer {
         &-container {
@@ -78,10 +106,30 @@
             border-radius: 0.5rem!important;
         }
         &-inner-container {
-            padding: 1.563rem 1.5rem 1.75rem 1.5rem!important;
+            padding: 1.5rem 1.5rem 1.75rem 1.5rem!important;
         }
         &-top-margin {
             margin-top: 2rem!important;
+        }
+        &-container-row {
+            margin-bottom: 1.613rem!important;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    .payment {
+        &-button-container {
+            width: 6.5rem!important;
+            height: 2.5Rem!important;
+            border-radius: 0.5rem!important;
+        }
+        &-dot {
+            width: 0.5rem!important;
+            height: 0.5rem!important;
+            border-radius: 50%;
+            margin-right: 0.5rem!important
         }
     }
 }
