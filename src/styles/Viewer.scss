@@ -1,5 +1,31 @@
 #viewer {
+    height: 30rem!important;
     h1 {
-        padding-bottom: 55rem;
+        font-family: 'Spartan', sans-serif!important;
+        font-size: 1.25rem!important;
+        font-weight: 700!important;
+        letter-spacing: -0.039rem!important;
+        line-height: 1.25rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        display: flex;
     }
+    h2 {
+        font-family: 'Spartan', sans-serif!important;
+        font-size: 0.75rem!important;
+        letter-spacing: -0.016rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        display: flex;
+        align-items: center;
+    }
+    .viewer {
+        &-container {
+            margin: 2rem 1.5rem 6.563rem 1.5rem!important
+        }
+        &-container-filter {
+            height: 2.75rem!important
+        }
+    }
+
 }

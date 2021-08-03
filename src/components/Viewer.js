@@ -12,8 +12,15 @@ const Viewer = () => {
     invoices();
 
     return (
-        <div id="viewer">
-            <h1>{nightMode() ? 'Night Theme' : 'Day Theme'}</h1>
+        <div id="viewer" className={nightMode() ? 'night-mode' : 'day-mode'}>
+            <div className="viewer-container">
+                <div className="row m-0 viewer-container-filter">
+                    <div className="col-5 m-0 p-0 d-flex flex-column justify-content-around">
+                        <h1>Invoices</h1>
+                        <h2>{list.length === 0 ? `No invoices` : `${list.length} invoices`}</h2>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

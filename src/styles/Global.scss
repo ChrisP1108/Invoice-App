@@ -12,6 +12,13 @@
     $k: #F8F8F8;
     $l: #141625;
     $m: #494E6E;
+    $white: #ffffff;
+
+//Font --> font-family: 'Spartan', sans-serif;
+
+    @import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+//Global Classes
 
 .pointer:hover {
     cursor: pointer;
@@ -21,5 +28,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.night-mode {
+    background-color: $l!important;
+    transition: .25s;
+
+    h1 {
+        color: $white;
+    }
+    h2 {
+        color :$white;
+    }
+}
+.day-mode {
+    background-color: $k!important;
+    transition: .25s;
+
+    h1 {
+        color: $h;
+    }
+    h2 {
+        color: $f;
+    }
 }
 
