@@ -12,6 +12,7 @@
     $k: #F8F8F8;
     $l: #141625;
     $m: #494E6E;
+    $n: #7C5DFA;
     $white: #ffffff;
 
 //Font --> font-family: 'Spartan', sans-serif;
@@ -20,14 +21,35 @@
 
 //Global Classes
 
+body {
+    font-family: 'Spartan', sans-serif!important;
+}
+
 .pointer:hover {
     cursor: pointer;
 }
 
-.centerize {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.ns {
+    margin: 0!important;
+    padding: 0!important;
+}
+
+.f {
+    &-ae {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    &-ca {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &-c {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .night-mode {
@@ -40,6 +62,9 @@
     h2 {
         color :$white;
     }
+    h3 {
+        color :$white;
+    }
 }
 .day-mode {
     background-color: $k!important;
@@ -50,6 +75,9 @@
     }
     h2 {
         color: $f;
+    }
+    h3 {
+        color: $h;
     }
 }
 

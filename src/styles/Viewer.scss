@@ -1,7 +1,6 @@
 #viewer {
     height: 30rem!important;
     h1 {
-        font-family: 'Spartan', sans-serif!important;
         font-size: 1.25rem!important;
         font-weight: 700!important;
         letter-spacing: -0.039rem!important;
@@ -11,13 +10,18 @@
         display: flex;
     }
     h2 {
-        font-family: 'Spartan', sans-serif!important;
         font-size: 0.75rem!important;
         letter-spacing: -0.016rem!important;
         margin: 0!important;
         padding: 0!important;
         display: flex;
         align-items: center;
+    }
+    h3 {
+        font-size: 0.75rem!important;
+        font-weight: 800!important;
+        margin: 0!important;
+        padding: 0!important;
     }
     .viewer {
         &-container {
@@ -28,4 +32,43 @@
         }
     }
 
+    .filter {
+    
+        &-arrow {
+            background-image: url(../assets/icon-arrow-down.svg);
+            width: 0.625rem!important;
+            height: 0.438rem!important;
+        }
+        &-container {
+            margin: 0 1.125rem 0 0.688rem!important
+        }
+    }
+
+    .button {
+
+        &-container {
+            background-color: $n!important;
+            width: 5.625rem!important;
+            height: 2.75rem!important;
+            border-radius: 1.513rem!important;
+        }
+        &-circle {
+            width: 2rem!important;
+            height: 2rem!important;
+            background-color :$white!important;
+            border-radius: 50%!important;
+        }
+        &-icon {
+            background-image: url(../assets/icon-plus.svg);
+            width: 0.625rem!important;
+            height: 0.625rem!important;
+        }
+        span {
+            color: $white;
+            font-size: 0.75rem!important;
+            font-weight: 700!important;
+            letter-spacing: -0.016rem!important;
+            margin: 0 0.5rem 0 0.5rem!important;
+        }
+    }
 }
