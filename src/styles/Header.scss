@@ -7,6 +7,11 @@
         background-image: url(../assets/header-logo.svg);
         width: 4.5rem!important;
         height: 4.5rem!important;
+
+        &-container {
+            width: 4.5rem!important;
+            height: 4.5rem!important;
+        }
     }
     .switch-container {
         width: 4.125rem!important;
@@ -50,7 +55,11 @@
 
         .logo {
             transform: scale(1.11111111);
-            margin-left: .2rem!important;
+
+            &-container {
+                width: 5rem!important;
+                height: 5rem!important;
+            }
         }
         .avatar {
             &-container {
@@ -74,8 +83,12 @@
 
         .logo {
             transform: scale(1.430555);
-            margin-top: .9rem!important;
-            margin-right: .2rem!important;
+            margin-bottom: .15rem;
+
+            &-container {
+                width: 6.438rem!important;
+                height: 6.438rem!important;
+            }
         }
         .avatar {
             &-container {
