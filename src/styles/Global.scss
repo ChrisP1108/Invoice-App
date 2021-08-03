@@ -65,6 +65,10 @@ body {
     h3 {
         color :$white;
     }
+    .invoice-outer-container {
+        transition: .25s;
+        background-color: $c;
+    }
 }
 .day-mode {
     background-color: $k!important;
@@ -78,6 +82,10 @@ body {
     }
     h3 {
         color: $h;
+    }
+    .invoice-outer-container {
+        transition: .25s;
+        background-color: $white;
     }
 }
 

@@ -1,5 +1,4 @@
 #viewer {
-    height: 30rem!important;
     h1 {
         font-size: 1.25rem!important;
         font-weight: 700!important;
@@ -28,7 +27,7 @@
             margin: 2rem 1.5rem 6.563rem 1.5rem!important
         }
         &-container-filter {
-            height: 2.75rem!important
+            height: 2.75rem!important;
         }
     }
 
@@ -69,6 +68,20 @@
             font-weight: 700!important;
             letter-spacing: -0.016rem!important;
             margin: 0 0.5rem 0 0.5rem!important;
+        }
+    }
+
+    .invoice {
+        &-outer-container {
+            height: 8.375rem!important;
+            margin-top: 1rem!important;
+            border-radius: 0.5rem!important;
+        }
+        &-inner-container {
+            padding: 1.563rem 1.5rem 1.75rem 1.5rem!important;
+        }
+        &-top-margin {
+            margin-top: 2rem!important;
         }
     }
 }

@@ -34,6 +34,17 @@ const Viewer = () => {
                         </div>
                     </div>
                 </div>
+                <div className="invoice-top-margin"></div>
+                <div className="invoice-outer-container">
+                    <div className="d-flex invoice-inner-container">
+                        <div className="col-6">
+                            <h1>Hello</h1>
+                        </div>
+                        <div className="col-6">
+                            <h1>Hello</h1>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )
