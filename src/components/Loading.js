@@ -3,9 +3,9 @@ import React from 'react'
 const Loading = () => {
     return (
         <div id="loading">
-            <div class="lds-default d-flex mx-auto margin">
-                <div></div><div></div><div>
-                </div><div></div><div></div><div></div><div></div>
+            <div className="lds-default d-flex mx-auto margin">
+                <div></div><div></div><div></div>
+                <div></div><div></div><div></div><div></div>
                 <div></div><div></div><div></div><div></div>
                 <div></div>
             </div>

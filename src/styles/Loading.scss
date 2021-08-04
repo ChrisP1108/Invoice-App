@@ -1,4 +1,5 @@
 #loading {
+
     .lds-default {
         display: inline-block;
         position: relative;
@@ -78,7 +79,7 @@
             transform: scale(1);
     }
     50% {
-        transform: scale(1.5);
+        transform: scale(1.75);
     }
     }
     .margin {

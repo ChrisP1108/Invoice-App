@@ -1,6 +1,6 @@
 import Loading from './Loading';
 import Invoices from './Invoices';
-import { invoiceList, nightMode } from '../redux/Store.js';
+import { invoiceList } from '../redux/Store.js';
 import { useState } from 'react'
 
 const List = () => {
@@ -14,9 +14,7 @@ const List = () => {
     getInvoices();
 
     setTimeout(() => {
-        if (list[0] === 'loading') {
-            setList(["error"])
-        }
+        list[0] === 'loading' && setList(["error"])
     }, 15000)
 
     const noInvoices = () => {
