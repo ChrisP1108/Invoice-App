@@ -103,6 +103,9 @@ body {
     .dot-draft {
         background-color: $white!important;
     }
+    .lds-default div {
+        background: $white;
+    }
 }
 .day-mode {
     background-color: $k!important;
@@ -144,6 +147,9 @@ body {
     }
     .dot-draft {
         background-color: $h!important;
+    }
+    .lds-default div {
+        background: $f;
     }
 }
 
