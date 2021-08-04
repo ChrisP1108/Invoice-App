@@ -13,7 +13,7 @@ const App = () => {
     <div className={nightMode() ? 'night-mode' : 'day-mode'}>
       <div className="d-flex flex-column flex-xl-row">
         <Header />
-        <Viewer />
+        <List />
       </div>
     </div>
   )
