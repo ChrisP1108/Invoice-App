@@ -2,7 +2,7 @@ import React from 'react'
 
 const Loading = () => {
     return (
-        <div id="loading">
+        <div id="loading" className="invoice-trans">
             <div className="lds-default d-flex mx-auto margin">
                 <div></div><div></div><div></div>
                 <div></div><div></div><div></div><div></div>

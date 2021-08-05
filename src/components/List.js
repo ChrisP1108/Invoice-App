@@ -19,7 +19,7 @@ const List = () => {
 
     const noInvoices = () => {
         return (
-            <div className="f-ca flex-column no-invoices-container">
+            <div className="f-ca flex-column no-invoices-container invoice-trans">
                 <div className="no-invoices-logo"></div>
                 <div>
                     <h1>There is nothing here</h1>
@@ -34,7 +34,7 @@ const List = () => {
 
     const loadingError = () => {
         return (
-            <div className="f-ca flex-column no-invoices-container-error">
+            <div className="f-ca flex-column no-invoices-container-error invoice-trans">
                 <div className="no-invoices-error-logo"></div>
                 <div>
                     <h1>Something went wrong</h1>
@@ -88,7 +88,11 @@ const List = () => {
         <div id="list">
             <div className="list-container">
                 {listHeader()}
-                <div className="invoice-top-margin"></div>
+                <div className="invoice-top-margin position-relative">
+                    {/* <div className="position-absolute filter-drop-container">
+
+                    </div> */}
+                </div>
                 {loadingEval()}
             </div>
         </div>

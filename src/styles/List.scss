@@ -64,7 +64,6 @@
     }
 
     .filter {
-    
         &-arrow {
             background-image: url(../assets/icon-arrow-down.svg);
             width: 0.625rem!important;
@@ -73,10 +72,18 @@
         &-container {
             margin: 0 1.125rem 0 0.688rem!important
         }
+        &-drop-container {
+            z-index: 1;
+            background-color: white;
+            margin-left: auto;
+            height: 3rem;
+            width: 6.25rem;
+            left: 50%;
+            top: 0px;
+        }
     }
 
     .button {
-
         &-container {
             background-color: $n!important;
             width: 5.625rem!important;
@@ -103,40 +110,6 @@
         }
     }
 
-    .invoice {
-        &-outer-container {
-            height: 8.375rem!important;
-            margin-top: 1rem!important;
-            border-radius: 0.5rem!important;
-        }
-        &-inner-container {
-            padding: 1.5rem 1.5rem 1.75rem 1.5rem!important;
-        }
-        &-top-margin {
-            margin-top: 2rem!important;
-        }
-        &-container-row {
-            margin-bottom: 1.613rem!important;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-    }
-
-    .payment {
-        &-button-container {
-            width: 6.5rem!important;
-            height: 2.5Rem!important;
-            border-radius: 0.5rem!important;
-        }
-        &-dot {
-            width: 0.5rem!important;
-            height: 0.5rem!important;
-            border-radius: 50%;
-            margin-right: 0.5rem!important
-        }
-    }
-
     .no-invoices {
         &-container {
             margin-top: 6.438rem!important;
@@ -154,7 +127,7 @@
             margin-right: .15rem!important
         }
         &-container-error {
-            margin-top: 10.5rem!important;
+            margin-top: 12.25rem!important;
         }
         &-error-logo {
             background-image: url(../assets/icon-error.svg);
