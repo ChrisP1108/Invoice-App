@@ -1,29 +1,27 @@
 import Loading from './Loading';
 import Invoices from './Invoices';
-import { invoiceList } from '../redux/Store.js';
+import { fetchInvoiceList } from '../redux/Store.js';
 import { useState } from 'react'
 
 const List = () => {
 
     const [list, setList] = useState(["loading"]);
     const [toggleFilter, setToggleFilter] = useState(false);
-    const [filterType, setFilterType] = useState([{
-        draft: false,
-        pending: false,
-        paid: false,
-    }])
+    const [draftFilter, setDraftFilter] = useState(false);
+    const [pendingFilter, setPendingFilter] = useState(false);
+    const [paidFilter, setPaidFilter] = useState(false);
 
     const getInvoices = async () => {
-        const data = await invoiceList();
+        const data = await fetchInvoiceList();
         setList(data);
     }
 
     getInvoices();
 
     const filterInvoices = () => {
-        const type = filterType[0].draft ? 'draft' 
-            : filterType[0].pending ? 'pending'
-            : filterType[0].paid ? 'paid' : '';
+        const type = draftFilter ? 'draft' 
+            : pendingFilter ? 'pending'
+            : paidFilter ? 'paid' : '';
         const filtered = list.filter(invoice => 
             invoice.status === type);
         return type === '' ? list : filtered;
@@ -32,6 +30,35 @@ const List = () => {
     setTimeout(() => {
         list[0] === 'loading' && setList(["error"])
     }, 15000)
+
+    const filterModal = () => {
+        setToggleFilter(!toggleFilter);
+    }
+
+    const toggleFilterType = (type) => {
+        switch(type) {
+            case 'draft':
+                setDraftFilter(true)
+                setPendingFilter(false);
+                setPaidFilter(false);
+                break;
+            case 'pending':
+                setDraftFilter(false)
+                setPendingFilter(true);
+                setPaidFilter(false);
+                break;
+            case 'paid':
+                setDraftFilter(false)
+                setPendingFilter(false);
+                setPaidFilter(true);
+                break;
+            default:
+                setDraftFilter(false)
+                setPendingFilter(false);
+                setPaidFilter(false);
+                break;
+        }
+    }
 
     const noInvoices = () => {
         return (
@@ -65,7 +92,7 @@ const List = () => {
 
     const listHeader = () => {
         return (
-            <div className="row m-0 list-container-filter d-flex justify-content-between">
+            <div className="row m-0 list-container-filter d-flex justify-content-between position-relative">
                 <div className="col-5 ns d-flex flex-column justify-content-around">
                     <h1>Invoices</h1>
                     <h2>{list[0] === 'loading' ? `Loading invoices`
@@ -74,9 +101,24 @@ const List = () => {
                             : `${list.length} invoice${list.length > 1 && `s`}`}</h2>
                 </div>
                 <div className="col-7 ns f-ae pointer">
-                    <h3>Filter</h3>
-                    <div className="filter-container f-c">
-                        <div className="filter-arrow"></div>
+                    <div className="d-flex">
+                        <div className="d-flex">
+                            <div onClick={() => filterModal()} className="d-flex">
+                                <h3>Filter</h3>
+                                <div className="filter-container f-c">
+                                    <div className="filter-arrow"></div>
+                                </div>
+                            </div>
+                            <div className={`${toggleFilter ? `list-filter-modal-trans-on d-block` : `d-none`} list-filter-modal`}>
+                                <div className="filter-modal-container">
+                                    <div className="d-flex flex-column">
+                                        <input type="checkbox" onClick ={() => toggleFilterType('draft')}></input>
+                                        <input type="checkbox" onClick ={() => toggleFilterType('pending')}></input>
+                                        <input type="checkbox" onClick ={() => toggleFilterType('paid')}></input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div className="button-container pointer f-c">
                         <div className="f-c">
@@ -88,6 +130,7 @@ const List = () => {
                     </div>
                 </div>
             </div>
+
         )
     }
 

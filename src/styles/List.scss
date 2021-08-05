@@ -60,7 +60,26 @@
         }
         &-container-filter {
             height: 2.75rem!important;
+            z-index: 2!important;
         }
+        &-filter-modal {
+            position: absolute!important;
+            z-index: 1!important;
+            width: 8rem!important;
+            right: 5.625rem;
+            top: 2.75rem;
+            border-radius: 0.5rem!important;
+        }
+        &-filter-modal-trans-on {
+            animation-name: filter-trans-in;
+            animation-duration: .5s;
+            animation-fill-mode: forwards;
+        }
+    }
+
+    @keyframes filter-trans-in {
+        from {height: 0rem; display: block}
+        to {height: 8rem; }
     }
 
     .filter {

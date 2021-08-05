@@ -4,7 +4,6 @@ import List from './components/List';
 import Viewer from './components/Viewer';
 import './App.scss';
 import { nightMode } from './redux/Store.js';
-import { useState, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 const App = () => {

@@ -4,6 +4,7 @@
         margin-top: 1rem!important;
         border-radius: 0.5rem!important;
         border: 0.063rem $trans solid;
+        z-index: 0!important;
     }
     &-outer-container:hover {
         border: 0.063rem $n solid;
