@@ -38,19 +38,19 @@ const List = () => {
     const toggleFilterType = (type) => {
         switch(type) {
             case 'draft':
-                setDraftFilter(true)
+                setDraftFilter(!draftFilter)
                 setPendingFilter(false);
                 setPaidFilter(false);
                 break;
             case 'pending':
                 setDraftFilter(false)
-                setPendingFilter(true);
+                setPendingFilter(!pendingFilter);
                 setPaidFilter(false);
                 break;
             case 'paid':
                 setDraftFilter(false)
                 setPendingFilter(false);
-                setPaidFilter(true);
+                setPaidFilter(!paidFilter);
                 break;
             default:
                 setDraftFilter(false)
@@ -112,9 +112,9 @@ const List = () => {
                             <div className={`${toggleFilter ? `list-filter-modal-trans-on d-block` : `d-none`} list-filter-modal`}>
                                 <div className="filter-modal-container">
                                     <div className="d-flex flex-column">
-                                        <input type="checkbox" onClick ={() => toggleFilterType('draft')}></input>
-                                        <input type="checkbox" onClick ={() => toggleFilterType('pending')}></input>
-                                        <input type="checkbox" onClick ={() => toggleFilterType('paid')}></input>
+                                        <input type="checkbox" checked={draftFilter} onClick ={() => toggleFilterType('draft')}></input>
+                                        <input type="checkbox" checked={pendingFilter} onClick ={() => toggleFilterType('pending')}></input>
+                                        <input type="checkbox" checked={paidFilter} onClick ={() => toggleFilterType('paid')}></input>
                                     </div>
                                 </div>
                             </div>
