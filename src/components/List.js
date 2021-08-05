@@ -5,13 +5,29 @@ import { useState } from 'react'
 
 const List = () => {
 
-    const [list, setList] = useState(["loading"])
+    const [list, setList] = useState(["loading"]);
+    const [toggleFilter, setToggleFilter] = useState(false);
+    const [filterType, setFilterType] = useState([{
+        draft: false,
+        pending: false,
+        paid: false,
+    }])
 
     const getInvoices = async () => {
         const data = await invoiceList();
         setList(data);
     }
+
     getInvoices();
+
+    const filterInvoices = () => {
+        const type = filterType[0].draft ? 'draft' 
+            : filterType[0].pending ? 'pending'
+            : filterType[0].paid ? 'paid' : '';
+        const filtered = list.filter(invoice => 
+            invoice.status === type);
+        return type === '' ? list : filtered;
+    }
 
     setTimeout(() => {
         list[0] === 'loading' && setList(["error"])
@@ -79,7 +95,7 @@ const List = () => {
         return (
             list[0] === 'loading' ? <Loading />
             : list[0] === 'error' ? loadingError()
-            : list.length > 0 ? <Invoices list={list} />
+            : list.length > 0 ? <Invoices list={filterInvoices()} />
             : noInvoices()
         )
     }
@@ -88,11 +104,7 @@ const List = () => {
         <div id="list">
             <div className="list-container">
                 {listHeader()}
-                <div className="invoice-top-margin position-relative">
-                    {/* <div className="position-absolute filter-drop-container">
-
-                    </div> */}
-                </div>
+                <div className="invoice-top-margin"></div>
                 {loadingEval()}
             </div>
         </div>
