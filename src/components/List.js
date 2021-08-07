@@ -1,12 +1,12 @@
 import Loading from './Loading';
 import Invoices from './Invoices';
-import { fetchInvoiceList } from '../redux/Store.js';
-import { useState } from 'react'
+import { fetchInvoiceList, toggleFilter, setToggleFilter } from '../redux/Store.js';
+import { useState } from 'react';
+import { filterItems } from '../Arrays/Filters';
 
 const List = () => {
 
     const [list, setList] = useState(["loading"]);
-    const [toggleFilter, setToggleFilter] = useState(false);
     const [draftFilter, setDraftFilter] = useState(false);
     const [pendingFilter, setPendingFilter] = useState(false);
     const [paidFilter, setPaidFilter] = useState(false);
@@ -31,23 +31,19 @@ const List = () => {
         list[0] === 'loading' && setList(["error"])
     }, 15000)
 
-    const filterModal = () => {
-        setToggleFilter(!toggleFilter);
-    }
-
     const toggleFilterType = (type) => {
         switch(type) {
-            case 'draft':
+            case 'Draft':
                 setDraftFilter(!draftFilter)
                 setPendingFilter(false);
                 setPaidFilter(false);
                 break;
-            case 'pending':
+            case 'Pending':
                 setDraftFilter(false)
                 setPendingFilter(!pendingFilter);
                 setPaidFilter(false);
                 break;
-            case 'paid':
+            case 'Paid':
                 setDraftFilter(false)
                 setPendingFilter(false);
                 setPaidFilter(!paidFilter);
@@ -90,6 +86,15 @@ const List = () => {
         )
     }
 
+    const filterItemMapping = filterItems.map(item => {
+        return (
+            <div className={`${eval(item.checkedValue) && `list-filter-modal-selected`} list-filter-modal-item`} onClick ={() => toggleFilterType(item.name)}>
+                <input className="checkbox d-none" type="checkbox" checked={eval(item.checkedValue)}></input>
+                <h3>{item.name}</h3>
+            </div>
+        )
+    });
+
     const listHeader = () => {
         return (
             <div className="row m-0 list-container-filter d-flex justify-content-between position-relative">
@@ -103,18 +108,16 @@ const List = () => {
                 <div className="col-7 ns f-ae pointer">
                     <div className="d-flex">
                         <div className="d-flex">
-                            <div onClick={() => filterModal()} className="d-flex">
+                            <div onClick={() => setToggleFilter()} className="d-flex">
                                 <h3>Filter</h3>
                                 <div className="filter-container f-c">
-                                    <div className="filter-arrow"></div>
+                                    <div className={`${toggleFilter() && `filter-arrow-clicked`} filter-arrow`}></div>
                                 </div>
                             </div>
-                            <div className={`${toggleFilter ? `list-filter-modal-trans-on d-block` : `d-none`} list-filter-modal`}>
-                                <div className="filter-modal-container">
-                                    <div className="d-flex flex-column">
-                                        <input type="checkbox" checked={draftFilter} onClick ={() => toggleFilterType('draft')}></input>
-                                        <input type="checkbox" checked={pendingFilter} onClick ={() => toggleFilterType('pending')}></input>
-                                        <input type="checkbox" checked={paidFilter} onClick ={() => toggleFilterType('paid')}></input>
+                            <div className={`${toggleFilter() ? `list-filter-modal-trans-on` : `list-filter-modal-trans-off`} list-filter-modal`}>
+                                <div className="list-modal-outer-container">
+                                    <div className="d-flex flex-column h-100 justify-content-between">
+                                        {filterItemMapping}
                                     </div>
                                 </div>
                             </div>

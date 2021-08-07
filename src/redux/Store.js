@@ -29,3 +29,12 @@ import { createReduxModule } from 'hooks-for-redux';
         createReduxModule('nightToggle', NIGHTMODE, {
             toggleNightMode: (toggle) => !toggle
         });
+
+// Filter Modal Toggler
+
+    const FILTERTOGGLE = false;
+
+    export const [toggleFilter, {setToggleFilter}] = 
+        createReduxModule('filterToggle', FILTERTOGGLE, {
+            setToggleFilter: (toggle) => !toggle
+        });
