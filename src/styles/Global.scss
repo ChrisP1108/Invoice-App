@@ -12,14 +12,155 @@
     $k: #F8F8F8;
     $l: #141625;
     $m: #494E6E;
+    $n: #7C5DFA;
+    $o: #97979725;
+    $p: #FF8F0025;
+    $q: #33D69F25;
+    $r: #33D69F;
+    $s: #FF8F00;
+    $t: #33D69F15;
+    $white: #ffffff;
+    $trans: #f4ecc200;
+
+//Font --> font-family: 'Spartan', sans-serif;
+
+    @import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+//Global Classes
+
+body {
+    font-family: 'Spartan', sans-serif!important;
+}
+
+.window-height {
+    min-height: 60rem!important;
+}
 
 .pointer:hover {
     cursor: pointer;
 }
 
-.centerize {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.ns {
+    margin: 0!important;
+    padding: 0!important;
+}
+
+.f {
+    &-ae {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    &-ca {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &-c {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &-e {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+.night-mode {
+    background-color: $l!important;
+    transition: .25s;
+
+    h1 {
+        color: $white;
+    }
+    h2 {
+        color :$e;
+    }
+    h3 {
+        color :$white;
+    }
+    h4 {
+        color :$white;
+    }
+    .invoice-outer-container {
+        transition: .25s;
+        background-color: $c;
+    }
+    .payment-button-paid {
+        background-color: $t;
+        color: $r!important;
+    }
+    .payment-button-pending {
+        background-color: $p;
+        color: $s!important;
+    }
+    .payment-button-draft {
+        background-color: $o;
+        color: $white!important;
+    }
+    .dot-paid {
+        background-color: $r!important;
+    }
+    .dot-pending {
+        background-color: $s!important;
+    }
+    .dot-draft {
+        background-color: $white!important;
+    }
+    .lds-default div {
+        background: $white;
+    }
+    .list-filter-modal {
+        background: $d;
+    }
+}
+.day-mode {
+    background-color: $k!important;
+    transition: .25s;
+
+    h1 {
+        color: $h;
+    }
+    h2 {
+        color: $f;
+    }
+    h3 {
+        color: $h;
+    }
+    h4 {
+        color: $h;
+    }
+    .invoice-outer-container {
+        transition: .25s;
+        background-color: $white;
+    }
+    .payment-button-paid {
+        background-color: $q;
+        color: $r!important;
+    }
+    .payment-button-pending {
+        background-color: $p;
+        color: $s!important;
+    }
+    .payment-button-draft {
+        background-color: $o;
+        color: $h!important;
+    }
+    .dot-paid {
+        background-color: $r!important;
+    }
+    .dot-pending {
+        background-color: $s!important;
+    }
+    .dot-draft {
+        background-color: $h!important;
+    }
+    .lds-default div {
+        background: $f;
+    }
+    .list-filter-modal {
+        background: $white;
+    }
 }
 

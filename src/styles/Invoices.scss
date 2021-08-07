@@ -1,0 +1,48 @@
+.invoice {
+    &-outer-container {
+        height: 8.375rem!important;
+        margin-top: 1rem!important;
+        border-radius: 0.5rem!important;
+        border: 0.063rem $trans solid;
+        z-index: 0!important;
+    }
+    &-outer-container:hover {
+        border: 0.063rem $n solid;
+    }
+    &-inner-container {
+        padding: 1.438rem 1.438rem 1.688rem 1.438rem!important;
+    }
+    &-top-margin {
+        margin-top: 2rem!important;
+    }
+    &-container-row {
+        margin-bottom: 1.613rem!important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &-trans {
+        animation-name: invoice-trans-in;
+        animation-duration: .5s;
+        animation-fill-mode: forwards;
+    }
+}
+
+.payment {
+    &-button-container {
+        width: 6.5rem!important;
+        height: 2.5Rem!important;
+        border-radius: 0.5rem!important;
+    }
+    &-dot {
+        width: 0.5rem!important;
+        height: 0.5rem!important;
+        border-radius: 50%;
+        margin-right: 0.5rem!important
+    }
+}
+
+@keyframes invoice-trans-in {
+    from {top: 5rem; opacity: 0}
+    to {top: 0rem; opacity: 1}
+}
