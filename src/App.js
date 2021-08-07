@@ -9,7 +9,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 const App = () => {
 
-  const filterToggled = toggleFilter();
   const invoiceSelected = invoice();
   const createToggle = toggleCreate();
 
@@ -19,8 +18,7 @@ const App = () => {
   }
 
   return (
-    <div onClick={() => filterToggled && setToggleFilter()}
-      className={`${nightMode() ? 'night-mode' : 'day-mode'} window-height`}>
+    <div className={`${nightMode() ? 'night-mode' : 'day-mode'} window-height`}>
       <div className="d-flex flex-column flex-xl-row">
         <Header />
         {invoiceSwitch()}

@@ -29,7 +29,7 @@ const List = () => {
     }
 
     setTimeout(() => {
-        list[0] === 'loading' && setList(["error"])
+        list[0] === "loading" && setList(["error"])
     }, 15000)
 
     const toggleFilterType = (type) => {
@@ -89,14 +89,21 @@ const List = () => {
 
     const filterItemMapping = filterItems.map(item => {
         return (
-            <div key={item.id} 
+            <div key={item.id}
                 className={`${eval(item.checkedValue) && `list-filter-modal-selected`} 
-                list-filter-modal-item`} onClick ={() => toggleFilterType(item.name)}>
-                <input className="checkbox d-none" type="checkbox" checked={eval(item.checkedValue)}></input>
+                list-filter-modal-item`} onClick ={() => {toggleFilterType(item.name); setToggleFilter()}}>
+                <input className="checkbox d-none" type="checkbox" defaultChecked={eval(item.checkedValue)}></input>
                 <h3>{item.name}</h3>
             </div>
         )
     });
+
+    const loadedEval = () => {
+        if (list[0] === "loading" || list[0] === "error") {
+            console.log("Cannot Perform Prior To Loading Invoices"); 
+            return false;       
+        } else return true
+    }
 
     const listHeader = () => {
         return (
@@ -111,7 +118,7 @@ const List = () => {
                 <div className="col-7 ns f-ae pointer">
                     <div className="d-flex">
                         <div className="d-flex">
-                            <div onClick={() => setToggleFilter()} className="d-flex">
+                            <div onClick={() => loadedEval() && setToggleFilter()} className="d-flex">
                                 <h3>Filter</h3>
                                 <div className="filter-container f-c">
                                     <div className={`${toggleFilter() && `filter-arrow-clicked`} filter-arrow`}></div>
@@ -126,7 +133,7 @@ const List = () => {
                             </div>
                         </div>
                     </div>
-                    <div onClick={() => setToggleCreate()}
+                    <div onClick={() => loadedEval() && setToggleCreate()}
                         className="button-container pointer f-c">
                         <div className="f-c">
                             <div className="button-circle f-c">
