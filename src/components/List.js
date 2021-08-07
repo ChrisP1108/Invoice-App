@@ -100,7 +100,6 @@ const List = () => {
 
     const loadedEval = () => {
         if (list[0] === "loading" || list[0] === "error") {
-            console.log("Cannot Perform Prior To Loading Invoices"); 
             return false;       
         } else return true
     }
@@ -124,7 +123,8 @@ const List = () => {
                                     <div className={`${toggleFilter() && `filter-arrow-clicked`} filter-arrow`}></div>
                                 </div>
                             </div>
-                            <div className={`${toggleFilter() ? `list-filter-modal-trans-on` : `list-filter-modal-trans-off`} list-filter-modal`}>
+                            <div className={`${toggleFilter() ? `list-filter-modal-trans-on`
+                                : loadedEval() ? `list-filter-modal-trans-off` : `d-none`} list-filter-modal position-absolute`}>
                                 <div className="list-modal-outer-container">
                                     <div className="d-flex flex-column h-100 justify-content-between">
                                         {filterItemMapping}

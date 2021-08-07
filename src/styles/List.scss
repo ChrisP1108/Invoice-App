@@ -72,7 +72,6 @@
             height: 8rem!important;
         }
         &-filter-modal {
-            position: absolute!important;
             z-index: 1!important;
             width: 8rem!important;
             height: 8rem!important;
@@ -102,7 +101,7 @@
         }
         &-filter-modal-trans-off {
             animation-name: filter-trans-out;
-            animation-duration: .25s;
+            animation-duration: 0s;
             animation-fill-mode: forwards;
         }
     }
