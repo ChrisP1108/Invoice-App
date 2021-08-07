@@ -1,3 +1,5 @@
+import { setInvoice } from '../redux/Store.js';
+
 const Invoices = ({ list }) => {
 
     const dateFormat = (date) => {
@@ -16,7 +18,8 @@ const Invoices = ({ list }) => {
 
     const invoiceMapping = list.map(item => {
         return (
-            <div key={item.id} id="invoices" className="invoice-outer-container position-relative pointer invoice-trans">
+            <div key={item.id} onClick={() => setInvoice(item)}
+                id="invoices" className="invoice-outer-container position-relative pointer invoice-trans">
                 <div className="invoice-inner-container position-absolute w-100 my-auto mx-auto">
                     <div className="invoice-container-row">
                         <h3><span>#</span>{item.id}</h3>

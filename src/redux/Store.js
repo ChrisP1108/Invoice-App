@@ -1,5 +1,4 @@
 import { Url } from './fetchUrl';
-import { useState } from 'react';
 import { createReduxModule } from 'hooks-for-redux';
 
 
@@ -37,4 +36,22 @@ import { createReduxModule } from 'hooks-for-redux';
     export const [toggleFilter, {setToggleFilter}] = 
         createReduxModule('filterToggle', FILTERTOGGLE, {
             setToggleFilter: (toggle) => !toggle
+        });
+
+// View, Create or Edit INVOICE
+
+    const INVOICE = [];
+
+    export const [invoice, {setInvoice}] = 
+        createReduxModule('invoiceSet', INVOICE, {
+            setInvoice: (store, invoice) => invoice
+        });
+
+// Create Invoice Toggler
+
+    const CREATETOGGLE = false;
+
+    export const [toggleCreate, {setToggleCreate}] = 
+        createReduxModule('createToggle', CREATETOGGLE, {
+            setToggleCreate: (toggle) => !toggle
         });

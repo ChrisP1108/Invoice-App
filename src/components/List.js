@@ -1,6 +1,7 @@
 import Loading from './Loading';
 import Invoices from './Invoices';
-import { fetchInvoiceList, toggleFilter, setToggleFilter } from '../redux/Store.js';
+import { fetchInvoiceList, toggleFilter, setToggleFilter, 
+    setToggleCreate } from '../redux/Store.js';
 import { useState } from 'react';
 import { filterItems } from '../Arrays/Filters';
 
@@ -88,7 +89,9 @@ const List = () => {
 
     const filterItemMapping = filterItems.map(item => {
         return (
-            <div className={`${eval(item.checkedValue) && `list-filter-modal-selected`} list-filter-modal-item`} onClick ={() => toggleFilterType(item.name)}>
+            <div key={item.it} 
+                className={`${eval(item.checkedValue) && `list-filter-modal-selected`} 
+                list-filter-modal-item`} onClick ={() => toggleFilterType(item.name)}>
                 <input className="checkbox d-none" type="checkbox" checked={eval(item.checkedValue)}></input>
                 <h3>{item.name}</h3>
             </div>
@@ -123,7 +126,8 @@ const List = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="button-container pointer f-c">
+                    <div onClick={() => setToggleCreate()}
+                        className="button-container pointer f-c">
                         <div className="f-c">
                             <div className="button-circle f-c">
                                 <div className="button-icon"></div>
