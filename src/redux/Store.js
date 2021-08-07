@@ -29,15 +29,6 @@ import { createReduxModule } from 'hooks-for-redux';
             toggleNightMode: (toggle) => !toggle
         });
 
-// Filter Modal Toggler
-
-    const FILTERTOGGLE = false;
-
-    export const [toggleFilter, {setToggleFilter}] = 
-        createReduxModule('filterToggle', FILTERTOGGLE, {
-            setToggleFilter: (toggle) => !toggle
-        });
-
 // Viewer Toggle
 
     const VIEWERTOGGLE = false;

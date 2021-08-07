@@ -1,23 +1,15 @@
 import Loading from './Loading';
 import Invoices from './Invoices';
-import { fetchInvoiceList, toggleFilter, setToggleFilter, 
-    setToggleCreate } from '../redux/Store.js';
+import { fetchInvoiceList, setToggleCreate } from '../redux/Store.js';
 import { useState } from 'react';
 import { filterItems } from '../Arrays/Filters';
 
-const List = () => {
+const List = ( { list }) => {
 
-    const [list, setList] = useState(["loading"]);
+    const [toggleFilter, setToggleFilter] = useState(false);
     const [draftFilter, setDraftFilter] = useState(false);
     const [pendingFilter, setPendingFilter] = useState(false);
     const [paidFilter, setPaidFilter] = useState(false);
-
-    const getInvoices = async () => {
-        const data = await fetchInvoiceList();
-        setList(data);
-    }
-
-    getInvoices();
 
     const filterInvoices = () => {
         const type = draftFilter ? 'draft' 
@@ -27,10 +19,6 @@ const List = () => {
             invoice.status === type);
         return type === '' ? list : filtered;
     }
-
-    setTimeout(() => {
-        list[0] === "loading" && setList(["error"])
-    }, 15000)
 
     const toggleFilterType = (type) => {
         switch(type) {
@@ -91,7 +79,7 @@ const List = () => {
         return (
             <div key={item.id}
                 className={`${eval(item.checkedValue) && `list-filter-modal-selected`} 
-                list-filter-modal-item`} onClick ={() => {toggleFilterType(item.name); setToggleFilter()}}>
+                list-filter-modal-item`} onClick ={() => {toggleFilterType(item.name); setToggleFilter(!toggleFilter)}}>
                 <input className="checkbox d-none" type="checkbox" defaultChecked={eval(item.checkedValue)}></input>
                 <h3>{item.name}</h3>
             </div>
@@ -117,13 +105,13 @@ const List = () => {
                 <div className="col-7 ns f-ae pointer">
                     <div className="d-flex">
                         <div className="d-flex">
-                            <div onClick={() => loadedEval() && setToggleFilter()} className="d-flex">
+                            <div onClick={() => loadedEval() && setToggleFilter(!toggleFilter)} className="d-flex">
                                 <h3>Filter</h3>
                                 <div className="filter-container f-c">
-                                    <div className={`${toggleFilter() && `filter-arrow-clicked`} filter-arrow`}></div>
+                                    <div className={`${toggleFilter && `filter-arrow-clicked`} filter-arrow`}></div>
                                 </div>
                             </div>
-                            <div className={`${toggleFilter() ? `list-filter-modal-trans-on`
+                            <div className={`${toggleFilter ? `list-filter-modal-trans-on`
                                 : loadedEval() ? `list-filter-modal-trans-off` : `d-none`} list-filter-modal position-absolute`}>
                                 <div className="list-modal-outer-container">
                                     <div className="d-flex flex-column h-100 justify-content-between">
@@ -152,7 +140,7 @@ const List = () => {
         return (
             list[0] === 'loading' ? <Loading />
             : list[0] === 'error' ? loadingError()
-            : list.length > 0 ? <Invoices list={filterInvoices()} />
+            : list.length > 0 ? <Invoices listOutput={filterInvoices()} />
             : noInvoices()
         )
     }
