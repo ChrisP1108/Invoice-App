@@ -3,7 +3,7 @@ import Header from './components/Header';
 import List from './components/List';
 import Viewer from './components/Viewer';
 import './App.scss';
-import { nightMode, toggleFilter, setToggleFilter, 
+import { nightMode, toggleFilter, setToggleFilter, toggleViewer,
   invoice, setInvoice, toggleCreate } from './redux/Store.js';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
@@ -11,10 +11,11 @@ const App = () => {
 
   const invoiceSelected = invoice();
   const createToggle = toggleCreate();
+  const viewerToggle = toggleViewer();
 
   const invoiceSwitch = () => {
     return createToggle ? <CreateOrEdit />
-      : invoiceSelected == '' ? <List /> : <Viewer />
+      : viewerToggle ? <Viewer /> : <List /> 
   }
 
   return (

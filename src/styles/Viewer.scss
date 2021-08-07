@@ -6,9 +6,33 @@
         line-height: .938rem!important;
         margin: 0!important;
         padding: 0!important;
-
-        span {
-            color: $g!important;
+    }
+    .back {
+        &-container {
+            display: flex;
+            width: 5.125rem!important;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1
+        }
+        &-container-filler {
+            position: absolute;
+            height: 3rem!important;
+            width: 6rem!important;
+            left: 1.5rem;
+            top: 6rem;
+            z-index: 0;
+        }
+        &-arrow {
+            background-image: url(../assets/icon-arrow-left.svg);
+            width: 0.438rem!important;
+            height: 0.625rem!important;
+            transition: .5s;
+        }
+    }
+    .viewer {
+        &-container {
+            margin: 2rem 1.5rem 3.5rem 1.5rem!important;
         }
     }
 }

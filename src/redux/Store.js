@@ -38,7 +38,16 @@ import { createReduxModule } from 'hooks-for-redux';
             setToggleFilter: (toggle) => !toggle
         });
 
-// View, Create or Edit INVOICE
+// Viewer Toggle
+
+    const VIEWERTOGGLE = false;
+    
+    export const [toggleViewer, {setToggleViewer}] =
+        createReduxModule('viewerToggle', VIEWERTOGGLE, {
+            setToggleViewer: (toggle) => !toggle
+        })
+
+// Invoice Content For Viewer
 
     const INVOICE = [];
 
