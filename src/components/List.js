@@ -89,7 +89,7 @@ const List = () => {
 
     const filterItemMapping = filterItems.map(item => {
         return (
-            <div key={item.it} 
+            <div key={item.id} 
                 className={`${eval(item.checkedValue) && `list-filter-modal-selected`} 
                 list-filter-modal-item`} onClick ={() => toggleFilterType(item.name)}>
                 <input className="checkbox d-none" type="checkbox" checked={eval(item.checkedValue)}></input>
