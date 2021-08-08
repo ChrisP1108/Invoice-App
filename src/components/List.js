@@ -1,10 +1,12 @@
 import Loading from './Loading';
 import Invoices from './Invoices';
-import { fetchInvoiceList, setToggleCreate } from '../redux/Store.js';
+import { setToggleCreate, invoiceList } from '../redux/Store.js';
 import { useState } from 'react';
 import { filterItems } from '../Arrays/Filters';
 
-const List = ( { list }) => {
+const List = () => {
+
+    const list = invoiceList();
 
     const [toggleFilter, setToggleFilter] = useState(false);
     const [draftFilter, setDraftFilter] = useState(false);

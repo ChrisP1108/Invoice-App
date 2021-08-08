@@ -21,6 +21,7 @@
     $t: #33D69F15;
     $u: #F9FAFE;
     $v: #888EB0;
+    $w: #373B53;
     $white: #ffffff;
     $trans: #f4ecc200;
 
@@ -154,6 +155,18 @@ body {
             }
         }
     }
+    .viewer-main-pricing-grand-total-outer-container {
+        background-color: $h!important;
+    }
+    .viewer-footer-outer-container {
+        background-color: $c;
+    }
+    .viewer-footer-edit-button-container {
+        background-color: $d;
+        h3 {
+            color: $e;
+        }
+    }
 }
 .day-mode {
     background-color: $k!important;
@@ -225,6 +238,18 @@ body {
             span {
                 color: $g!important;
             }
+        }
+    }
+    .viewer-main-pricing-grand-total-outer-container {
+        background-color: $w!important;
+    }
+    .viewer-footer-outer-container {
+        background-color: $white;
+    }
+    .viewer-footer-edit-button-container {
+        background-color: $u;
+        h3 {
+            color: $g;
         }
     }
 }

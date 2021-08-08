@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { invoice, setInvoice, deleteInvoice, 
+import { invoice, invoiceList, setInvoice, deleteInvoice, 
     setToggleViewer } from '../redux/Store.js';
 
 const Viewer = () => {
@@ -134,6 +133,24 @@ const Viewer = () => {
         )
     }
 
+    const buttonsFooter = () => {
+        return (
+            <div className="viewer-footer-outer-container">
+                <div className="viewer-footer-inner-container f-sb">
+                    <div className="viewer-footer-edit-button-container f-c">
+                        <h3>Edit</h3>
+                    </div>
+                    <div onClick={() => deleteInvoice(viewInvoice.id)}className="viewer-footer-delete-button-container f-c pointer">
+                        <h3>Delete</h3>
+                    </div>
+                    <div className="viewer-footer-paid-button-container f-c">
+                        <h3>Mark as Paid</h3>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div id="viewer">
             <div className="viewer-container">
@@ -141,6 +158,7 @@ const Viewer = () => {
                 {statusContainer()}   
                 {mainContainer()}  
             </div>
+            {buttonsFooter()}
         </div>
     )
 }
