@@ -1,4 +1,15 @@
 #viewer {
+    h1 {
+        font-size: 1.25rem!important;
+        font-weight: 600!important;
+        letter-spacing: -0.026rem!important;
+        line-height: 2rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        display: flex;
+        align-items: center;
+        color: $white!important;
+    }
     h2 {
         font-size: 0.75rem!important;
         font-weight: 500!important;
@@ -11,13 +22,13 @@
     }
     h3 {
         font-size: 0.75rem!important;
-        font-weight: 700!important;
+        font-weight: 600!important;
         letter-spacing: -0.016rem!important;
         line-height: .938rem!important;
         margin: 0!important;
         padding: 0!important;
         span {
-            color: $g!important;
+            color: $v!important;
         }
     }
     h5 {
@@ -38,7 +49,7 @@
     }
     p {
         font-size: 0.938rem!important;
-        font-weight: 700!important;
+        font-weight: 600!important;
         letter-spacing: -0.019rem!important;
         line-height: 1.25rem!important;
         margin: 0!important;
@@ -86,7 +97,7 @@
     }
     .viewer-main {
             &-outer-container {
-                height: 43.438rem!important;
+                min-height: 43.438rem!important;
                 margin-top: 1rem!important;
                 border-radius: 0.5rem!important;
                 border: 0.063rem $trans solid;
@@ -97,16 +108,69 @@
                 height: 100%!important
             }
             &-left-column-container {
-                width: 8.688rem!important;
+                width: 8.563rem!important;
+            }
+            &-right-column-container {
+                width: 8.75rem!important;
             }
             &-id-subscription-container {
-                height: 4.125rem!important;
+                height: 2.188rem!important;
             }
             &-address-container {
-                height: 6.5rem!important
+                margin-top: 2.125rem!important;
+                height: 4.313rem!important
             }
             &-invoice-container {
+                margin-top: 2.375rem!important;
                 height: 2.938rem!important
+            }
+            &-due-container {
+                margin-top: 2.375rem!important;
+                height: 2.938rem!important
+            }
+            &-bill-container {
+                margin-top: 2.375rem!important;
+                height: 2.938rem!important
+            }
+            &-bill-address-outer-container {
+                margin-top: 1rem!important;
+            }
+            &-bill-address-inner-container {
+                height: 4.375rem!important
+            }
+            &-sent-outer-container {
+                margin-top: 2.375rem!important;  
+                height: 2.813rem!important;        
+            }
+            &-sent-inner-container {
+                height: 2.813rem!important;
+            }
+            &-pricing-outer-container {
+                margin-top: 2.563rem!important;
+                width: 100%!important;
+                border-radius: 0.5rem!important;
+            }
+            &-pricing-inner-container {
+                padding: 1.5rem 1.5rem 0rem 1.5rem!important;
+                height: 100%!important;
+            }
+            &-pricing-item-container {
+                width: 100%!important;
+                height: 2.375rem!important;
+                margin-bottom: 1.5rem!important;
+            }
+            &-pricing-grand-total-outer-container {
+                height: 5rem!important;
+                background: $h;
+                border-bottom-right-radius: 0.5rem!important;
+                border-bottom-left-radius: 0.5rem!important;
+            }
+            &-pricing-grand-total-inner-container {
+                padding: 1.813rem 1.5rem 2.125rem!important;
+
+                h6 {
+                    color: $white!important;
+                }
             }
     }
 }

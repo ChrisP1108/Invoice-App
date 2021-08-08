@@ -1,10 +1,10 @@
+import { useState } from 'react';
 import { invoice, setInvoice, deleteInvoice, 
     setToggleViewer } from '../redux/Store.js';
 
 const Viewer = () => {
 
     const viewInvoice = invoice();
-    console.log(viewInvoice);
 
     const backHeader = () => {
         return (
@@ -37,26 +37,98 @@ const Viewer = () => {
         )
     }
 
+    let grandTotal = 0;
+
+    const priceItemsMapping = viewInvoice.items.map(item => {
+
+        const calculateItemTotal = (item) => {
+            const numberTotal = (item.quantity * item.price);
+            grandTotal = grandTotal + numberTotal;
+            const total = `£ ${numberTotal.toFixed(2)}`;
+            return total;
+        }
+        return (
+            <div key={item.name} className="viewer-main-pricing-item-container f-sb">
+                <div className="f-clb">
+                    <h3>{item.name}</h3>
+                    <h3><span>{`${item.quantity} x £ ${item.price.toFixed(2)}`}</span></h3>
+                </div>
+                <div className="f-c">
+                    <h3>{calculateItemTotal(item)}</h3>
+                </div>
+            </div> 
+        );
+    });
+
     const mainContainer = () => {
         return (
             <div className="viewer-main-outer-container">
                 <div className="viewer-main-inner-container">
-                    <div className="viewer-main-left-column-container">
-                        <div className="viewer-main-id-subscription-container">
-                            <h3><span>#</span>{viewInvoice.id}</h3>
-                            <h2>{viewInvoice.description}</h2>
+                    <div className="viewer-main-full-span-container f-ca">
+                        <div className="viewer-main-left-column-container">
+                            <div className="viewer-main-id-subscription-container f-clb">
+                                <h3><span>#</span>{viewInvoice.id}</h3>
+                                <h2>{viewInvoice.description}</h2>
+                            </div>
+                            <div className="viewer-main-address-container f-clb">
+                                <h6>{viewInvoice.senderAddress.street}</h6>
+                                <h6>{viewInvoice.senderAddress.city}</h6>
+                                <h6>{viewInvoice.senderAddress.postCode}</h6>
+                                <h6>{viewInvoice.senderAddress.country}</h6>
+                            </div>
                         </div>
-                        <div className="viewer-main-address-container">
-                            <h6>{viewInvoice.senderAddress.street}</h6>
-                            <h6>{viewInvoice.senderAddress.city}</h6>
-                            <h6>{viewInvoice.senderAddress.postCode}</h6>
-                            <h6>{viewInvoice.senderAddress.country}</h6>
+                        <div className="viewer-main-right-column-container"></div>
+                    </div>
+                    <div className="viewer-main-full-span-container f-ca">
+                        <div className="viewer-main-left-column-container">   
+                            <div className="viewer-main-invoice-container f-clb">
+                                <h2>Invoice Date</h2>
+                                <p>{viewInvoice.createdAt}</p>
+                            </div>
+                            <div className="viewer-main-due-container f-clb">
+                                <h2>Payment Due</h2>
+                                <p>{viewInvoice.paymentDue}</p>
+                            </div>
                         </div>
-                        <div className="viewer-main-invoice-container f-clb">
-                            <h2>Invoice Date</h2>
-                            <p>{viewInvoice.createdAt}</p>
+                        <div className="viewer-main-right-column-container">
+                            <div className="viewer-main-bill-container f-clb">
+                                <h2>Bill To</h2>
+                                <p>{viewInvoice.clientName}</p>
+                            </div>
+                            <div className="viewer-main-bill-address-outer-container">
+                                <div className="viewer-main-bill-address-inner-container f-sb flex-column">
+                                    <h6>{viewInvoice.clientAddress.street}</h6>
+                                    <h6>{viewInvoice.clientAddress.city}</h6>
+                                    <h6>{viewInvoice.clientAddress.postCode}</h6>
+                                    <h6>{viewInvoice.clientAddress.country}</h6>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <div className="viewer-main-full-span-container f-ca">
+                        <div className="viewer-main-left-column-container">
+                            <div className="viewer-main-sent-outer-container">
+                                <div className="viewer-main-sent-inner-container f-clb">
+                                    <h2>Sent to</h2>
+                                    <p>{viewInvoice.clientEmail}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="viewer-main-right-column-container"></div>
+                    </div>
+                    <div className="viewer-main-pricing-outer-container">
+                        <div className="viewer-main-pricing-inner-container">
+                            {priceItemsMapping}
+                        </div>
+                        <div className="viewer-main-pricing-grand-total-outer-container">
+                            <div className="viewer-main-pricing-grand-total-inner-container">
+                                <div className="f-ca">
+                                    <h6> Amount Due</h6>
+                                    <h1>{`£ ${grandTotal.toFixed(2)}`}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
                 </div>
             </div>
         )

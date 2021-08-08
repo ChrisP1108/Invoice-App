@@ -19,6 +19,8 @@
     $r: #33D69F;
     $s: #FF8F00;
     $t: #33D69F15;
+    $u: #F9FAFE;
+    $v: #888EB0;
     $white: #ffffff;
     $trans: #f4ecc200;
 
@@ -55,6 +57,14 @@ body {
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+    &-sb {
+        display: flex;
+        justify-content: space-between;
+    }
+    &-sa {
+        display: flex;
+        justify-content: space-around;
     }
     &-c {
         display: flex;
@@ -133,6 +143,17 @@ body {
         transition: .25s;
         background-color: $c;
     }
+    .viewer-main-pricing-outer-container {
+        transition: .25s;
+        background-color: $d;
+    }
+    #viewer {
+        h3 {
+            span {
+                color: $v!important;
+            }
+        }
+    }
 }
 .day-mode {
     background-color: $k!important;
@@ -194,6 +215,17 @@ body {
     .viewer-main-outer-container {
         transition: .25s;
         background-color: $white;
+    }
+    .viewer-main-pricing-outer-container {
+        transition: .25s;
+        background-color: $u;
+    }
+    #viewer {
+        h3 {
+            span {
+                color: $g!important;
+            }
+        }
     }
 }
 

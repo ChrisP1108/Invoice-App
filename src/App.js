@@ -48,11 +48,7 @@ const App = () => {
         formattedList.push({...invoice, 
           createdAt: dateFormat(invoice.createdAt), 
           paymentDue: dateFormat(invoice.paymentDue), 
-          items: {
-            ...invoice.items[0],
-            price: currencyFormat(invoice.items[0].price), 
-            total: currencyFormat(invoice.items[0].total)},
-          total: currencyFormat(invoice.total)
+          total: currencyFormat(invoice.total) 
         })
       });
 
