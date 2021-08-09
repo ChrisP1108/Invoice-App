@@ -191,12 +191,18 @@
             width: 5.563rem!important;
             background-color: $i;
             height: 100%!important;
+            h3 {
+                color: $white;
+            }
         }
         &-paid-button-container {
             border-radius: 1.513rem!important;
             width: 9.313rem!important;
             background-color: $n;
             height: 100%!important;
+            h3 {
+                color: $white;
+            }
         }
     }
 }

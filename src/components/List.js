@@ -17,9 +17,10 @@ const List = () => {
         const type = draftFilter ? 'draft' 
             : pendingFilter ? 'pending'
             : paidFilter ? 'paid' : '';
-        const filtered = list.filter(invoice => 
-            invoice.status === type);
+        const filtered = (list.filter(invoice => 
+            invoice.status === type));
         return type === '' ? list : filtered;
+        
     }
 
     const toggleFilterType = (type) => {
@@ -52,11 +53,19 @@ const List = () => {
             <div className="f-ca flex-column no-invoices-container invoice-trans">
                 <div className="no-invoices-logo"></div>
                 <div>
-                    <h1>There is nothing here</h1>
+                    <h1>{list.length === 0
+                        ? `There is nothing here` : `No Results`}</h1>
                 </div>
                 <div className="f-ca flex-column no-invoices-text-margin">
-                    <h2>Create an invoice by clicking the</h2>
-                    <h2><span className="no-invoices-space">New</span>button and get started</h2>
+                    <h2>{list.length === 0 
+                        ? `Create an invoice by clicking the` 
+                        : `No invoices based upon the status`}</h2>
+                    <h2><span className="no-invoices-space">
+                        {list.length === 0 ? 'New' : draftFilter ? 'Draft' 
+                        : pendingFilter ? 'Pending' 
+                        : 'Paid'}</span>
+                        {list.length === 0  
+                        ? `button and get started` : ` were found`}</h2>
                 </div>
             </div>
         )
@@ -107,7 +116,8 @@ const List = () => {
                 <div className="col-7 ns f-ae pointer">
                     <div className="d-flex">
                         <div className="d-flex">
-                            <div onClick={() => loadedEval() && setToggleFilter(!toggleFilter)} className="d-flex">
+                            <div onClick={() => loadedEval() && list.length > 0 
+                                && setToggleFilter(!toggleFilter)} className="d-flex">
                                 <h3>Filter</h3>
                                 <div className="filter-container f-c">
                                     <div className={`${toggleFilter && `filter-arrow-clicked`} filter-arrow`}></div>
@@ -141,7 +151,8 @@ const List = () => {
     const loadingEval = () => {
         return (
             list[0] === 'loading' ? <Loading />
-            : list[0] === 'error' ? loadingError()
+            : list[0] === 'error' ? loadingError() 
+            : filterInvoices().length === 0 ? noInvoices()
             : list.length > 0 ? <Invoices listOutput={filterInvoices()} />
             : noInvoices()
         )

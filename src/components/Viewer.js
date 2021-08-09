@@ -1,13 +1,21 @@
-import { invoice, invoiceList, setInvoice, deleteInvoice, 
-    setToggleViewer } from '../redux/Store.js';
+import { useState } from 'react';
+import { invoice, invoiceList, 
+    deleteInvoice, markPaidInvoice, setToggleViewer } from '../redux/Store.js';
 
 const Viewer = () => {
 
-    const viewInvoice = invoice();
+    const [viewInvoice, setViewInvoice] = useState(invoice());
+
+    const markPaid = () => {
+        if (viewInvoice.status !== 'paid') {
+            setViewInvoice({...viewInvoice, status: 'paid'})
+            markPaidInvoice(viewInvoice.id);
+        }       
+    }
 
     const backHeader = () => {
         return (
-            <div onClick={() => setToggleViewer()} 
+            <div onClick={() => window.location.reload()} 
                 className="back-container pointer">
                 <div className="back-arrow"></div>
                 <div className="d-flex">
@@ -140,10 +148,12 @@ const Viewer = () => {
                     <div className="viewer-footer-edit-button-container f-c">
                         <h3>Edit</h3>
                     </div>
-                    <div onClick={() => deleteInvoice(viewInvoice.id)}className="viewer-footer-delete-button-container f-c pointer">
+                    <div onClick={() => {deleteInvoice(viewInvoice.id); window.location.reload()}}className="viewer-footer-delete-button-container f-c pointer">
                         <h3>Delete</h3>
                     </div>
-                    <div className="viewer-footer-paid-button-container f-c">
+                    <div onClick={() => markPaid()} 
+                        className={`${viewInvoice.status === 'paid' && `d-none`} 
+                            viewer-footer-paid-button-container f-c pointer`}>
                         <h3>Mark as Paid</h3>
                     </div>
                 </div>
