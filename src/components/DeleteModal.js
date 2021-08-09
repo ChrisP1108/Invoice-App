@@ -13,8 +13,8 @@ const DeleteModal = () => {
 
     return (
         <div id="deleteModal" className="d-flex align-items-stretch">
-            <div className="delete-modal-page-container f-c">
-                <div className="delete-modal-outer-container">
+            <div className="delete-modal-page-container f-c delete-fill-transition">
+                <div className="delete-modal-outer-container delete-modal-transition">
                     <div className="delete-modal-inner-container">
                         <h1>Confirm Deletion</h1>
                         <div className="delete-modal-content-spacing">

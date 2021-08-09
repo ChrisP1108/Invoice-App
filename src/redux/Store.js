@@ -9,8 +9,7 @@ let SERVERLIST = [];
 
     const fetchInvoices = async () => {
         const res = await fetch(Url)
-        .catch((err) => console.log(err)); 
-        console.log(res);      
+        .catch((err) => console.log(err));     
         if (res === undefined) {
             const data = ["error"]
             return data;

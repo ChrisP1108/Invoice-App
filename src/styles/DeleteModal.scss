@@ -8,6 +8,16 @@
         width: 96.5vw;
         height: 120vh;
     }
+    .delete-fill-transition {
+        animation-name: delete-modal-trans-in;
+        animation-duration: .25s;
+        animation-fill-mode: forwards;
+    }
+    
+    @keyframes delete-fill-trans-in {
+        from {opacity: 0}
+        to {opacity: 1}
+    }
 }
 
 .delete-modal {
@@ -73,6 +83,16 @@
     }
     &-button-gap {
         width: 0.5rem!important;
+    }
+    &-transition {
+        animation-name: delete-modal-trans-in;
+        animation-duration: .5s;
+        animation-fill-mode: forwards;
+    }
+    
+    @keyframes delete-modal-trans-in {
+        from {transform: translateY(15%); opacity: 0}
+        to {transform: translateY(0%); opacity: 1}
     }
 }
 

@@ -205,4 +205,14 @@
             }
         }
     }
+    .viewer-transition {
+        animation-name: viewer-trans-in;
+        animation-duration: .5s;
+        animation-fill-mode: forwards;
+    }
+    
+    @keyframes viewer-trans-in {
+        from {padding-top: 5rem; opacity: 0}
+        to {padding-top: 0rem; opacity: 1}
+    }
 }
