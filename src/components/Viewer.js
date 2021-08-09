@@ -17,7 +17,7 @@ const Viewer = () => {
     const backHeader = () => {
         return (
             <div onClick={() => setToggleViewer()} 
-                className="back-container pointer">
+                className="back-container pointer position-relative">
                 <div className="back-arrow"></div>
                 <div className="d-flex">
                     <h3>Go back</h3>

@@ -168,6 +168,20 @@ body {
             color: $e;
         }
     }
+    .delete-modal-outer-container {
+        background-color: $c!important;
+    }
+    .delete-modal-inner-container {
+        h1 {
+            color: $white;
+        }
+    }
+    .delete-modal-cancel-button-container {
+        background-color: $d;
+        h3 {
+            color: $e;
+        }
+    }
 }
 .day-mode {
     background-color: $k!important;
@@ -248,6 +262,20 @@ body {
         background-color: $white;
     }
     .viewer-footer-edit-button-container {
+        background-color: $u;
+        h3 {
+            color: $g;
+        }
+    }
+    .delete-modal-outer-container {
+        background-color: $white!important;
+    }
+    .delete-modal-inner-container {
+        h1 {
+            color: $h;
+        }
+    }
+    .delete-modal-cancel-button-container {
         background-color: $u;
         h3 {
             color: $g;
