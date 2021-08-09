@@ -15,7 +15,7 @@ const Viewer = () => {
 
     const backHeader = () => {
         return (
-            <div onClick={() => window.location.reload()} 
+            <div onClick={() => setToggleViewer()} 
                 className="back-container pointer">
                 <div className="back-arrow"></div>
                 <div className="d-flex">
@@ -148,7 +148,7 @@ const Viewer = () => {
                     <div className="viewer-footer-edit-button-container f-c">
                         <h3>Edit</h3>
                     </div>
-                    <div onClick={() => {deleteInvoice(viewInvoice.id); window.location.reload()}}className="viewer-footer-delete-button-container f-c pointer">
+                    <div onClick={() => {deleteInvoice(viewInvoice.id); setToggleViewer()}} className="viewer-footer-delete-button-container f-c pointer">
                         <h3>Delete</h3>
                     </div>
                     <div onClick={() => markPaid()} 

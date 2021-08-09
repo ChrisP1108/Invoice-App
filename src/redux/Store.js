@@ -3,7 +3,7 @@ import { createReduxModule } from 'hooks-for-redux';
 
 let SERVERLIST = [];
 
-// HTTP Requests From Server
+// HTTP Requests & State Update
 
     // GET INVOICES
 
@@ -18,15 +18,30 @@ let SERVERLIST = [];
 
     // DELETE INVOICE
 
-    const delInvoice = async (id) => {
-        await fetch(`${Url}/${id}`, {
+    const delInvoice = (store, id) => {
+        delReq(id);
+        const state = store.filter(item => item.id !== id);
+        return state;
+    }
+
+    const delReq = async (id) => {
+        const res = await fetch(`${Url}/${id}`, {
             method: 'DELETE'
         });
+        const data = await res;
+        console.log(`Delete Invoice Response: ${data.status} Ok: ${data.ok}`);       
     }
 
     // MARK INVOICE PAID
 
-    const paidInvoice = async (id) => {
+    const paidInvoice = (store, id) => {
+        paidUpdateReq(id);
+        const state = store.map(item => item.id === id 
+            ? {...item, status: 'paid'} : item);
+        return state;
+    }
+
+    const paidUpdateReq = async (id) => {
         const invoice = SERVERLIST.filter(invoice => 
             invoice.id === id);
         const res = await fetch(`${Url}/${id}`, {
@@ -36,8 +51,8 @@ let SERVERLIST = [];
             },
             body: JSON.stringify({...invoice[0], status: 'paid'})
         });
-
-        const data = await res.json()
+        const data = await res;
+        console.log(`Mark Invoice Paid Response: ${data.status} Ok: ${data.ok}`);
     }
 
 // Invoice List
@@ -48,10 +63,19 @@ let SERVERLIST = [];
         createReduxModule('invoice', INVOICE_LIST, {
             initInvoices: (store, invoice) => invoice,
             addInvoice: (store, invoice) => [...store, invoice],
-            markPaidInvoice: (store, id) => paidInvoice(id),
+            markPaidInvoice: (store, id) => paidInvoice(store, id),
             updateInvoice: (store, invoice) => (store.map((item) => item.id === invoice.id ? invoice : item)),
-            deleteInvoice: (store, id) => delInvoice(id)
+            deleteInvoice: (store, id) => delInvoice(store, id)
         });
+
+// Invoice Formatted Toggle
+
+const FORMATTOGGLE = false;
+    
+export const [toggleFormat, {setToggleFormat}] =
+    createReduxModule('formatToggle', FORMATTOGGLE, {
+        setToggleFormat: (toggle) => !toggle
+    })
 
 // Invoice Content For Viewer
 

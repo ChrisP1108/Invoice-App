@@ -1,6 +1,6 @@
 import Loading from './Loading';
 import Invoices from './Invoices';
-import { setToggleCreate, invoiceList } from '../redux/Store.js';
+import { setToggleCreate, invoiceList, markPaidInvoice } from '../redux/Store.js';
 import { useState } from 'react';
 import { filterItems } from '../Arrays/Filters';
 
@@ -111,7 +111,8 @@ const List = () => {
                     <h2>{list[0] === 'loading' ? `Loading invoices`
                             : list[0] === 'error' ? `Error`
                             : list.length === 0 ? `No invoices` 
-                            : `${list.length} invoice${list.length > 1 && `s`}`}</h2>
+                            : list.length === 1 ? `1 invoice`
+                            : `${list.length} invoices`}</h2>
                 </div>
                 <div className="col-7 ns f-ae pointer">
                     <div className="d-flex">

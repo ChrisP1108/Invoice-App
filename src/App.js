@@ -3,13 +3,15 @@ import Header from './components/Header';
 import List from './components/List';
 import Viewer from './components/Viewer';
 import './App.scss';
-import { fetchData, invoiceList, initInvoices, nightMode, toggleViewer, toggleCreate } from './redux/Store.js';
+import { fetchData, invoiceList, initInvoices, nightMode, 
+  toggleViewer, toggleCreate  } from './redux/Store.js';
 import { useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 const App = () => {
 
   const [fetchedList, setFetchedList] = useState(["loading"]);
+  const [toggleFormat, setToggleFormat] = useState(false);
 
   const getInvoices = async () => {
     const data = await fetchData;
@@ -19,7 +21,7 @@ const App = () => {
   getInvoices();
 
   setTimeout(() => {
-    if (fetchedList[0] === "loading") {
+    if (fetchedList === ["loading"]) {
       setFetchedList(["error"]);
       initInvoices(["error"]);
     }
@@ -56,11 +58,11 @@ const App = () => {
       });
 
       initInvoices(formattedList);
-      return formattedList;
+      setToggleFormat(true);
     }
   }
 
-  listFormatter();
+  !toggleFormat && listFormatter();
 
   const createToggle = toggleCreate();
   const viewerToggle = toggleViewer();
