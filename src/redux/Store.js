@@ -8,10 +8,17 @@ let SERVERLIST = [];
     // GET INVOICES
 
     const fetchInvoices = async () => {
-        const res = await fetch(Url);
-        const data = await res.json();
-        SERVERLIST = data;
-        return data;
+        const res = await fetch(Url)
+        .catch((err) => console.log(err)); 
+        console.log(res);      
+        if (res === undefined) {
+            const data = ["error"]
+            return data;
+        } else {
+            const data = await res.json();
+            SERVERLIST = data;
+            return data;
+        }
     }
 
     export const fetchData = fetchInvoices();
@@ -77,7 +84,7 @@ export const [toggleFormat, {setToggleFormat}] =
         setToggleFormat: (toggle) => !toggle
     })
 
-// Invoice Content For Viewer
+// Invoice Content For Viewer/Editor
 
     const INVOICE = [];
 
@@ -95,6 +102,15 @@ export const [toggleFormat, {setToggleFormat}] =
             toggleNightMode: (toggle) => !toggle
         });
 
+// Delete Modal Toggle
+
+const DELETEMODALTOGGLE = false;
+    
+export const [toggleDeleteModal, {setToggleDeleteModal}] =
+    createReduxModule('deleteToggle', DELETEMODALTOGGLE, {
+        setToggleDeleteModal: (store, toggle) => toggle
+    })
+
 // Viewer Toggle
 
     const VIEWERTOGGLE = false;
@@ -104,7 +120,7 @@ export const [toggleFormat, {setToggleFormat}] =
             setToggleViewer: (toggle) => !toggle
         })
 
-// Create Invoice Toggler
+// Create Or Edit Invoice Toggler
 
     const CREATETOGGLE = false;
 

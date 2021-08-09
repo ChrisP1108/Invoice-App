@@ -2,9 +2,10 @@ import CreateOrEdit from './components/CreateOrEdit';
 import Header from './components/Header';
 import List from './components/List';
 import Viewer from './components/Viewer';
+import DeleteModal from './components/DeleteModal';
 import './App.scss';
-import { fetchData, invoiceList, initInvoices, nightMode, 
-  toggleViewer, toggleCreate  } from './redux/Store.js';
+import { fetchData, initInvoices, nightMode, 
+  toggleViewer, toggleCreate, toggleDeleteModal  } from './redux/Store.js';
 import { useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
@@ -15,20 +16,18 @@ const App = () => {
 
   const getInvoices = async () => {
     const data = await fetchData;
-    setFetchedList(data);
+    if (data[0] === "error") {
+      console.log("Failed To Load Invoices")
+      initInvoices(data);
+    } else {
+      setFetchedList(data);
+    }
   }
 
   getInvoices();
 
-  setTimeout(() => {
-    if (fetchedList === ["loading"]) {
-      setFetchedList(["error"]);
-      initInvoices(["error"]);
-    }
-  }, 15000);
-
   const listFormatter = () => {
-    if (fetchedList[0] === "loading" || fetchedList[0] === "error") {
+    if (fetchedList[0] === "loading") {
       return fetchedList;
     } else {
       const monthsArray =['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July',
@@ -75,6 +74,7 @@ const App = () => {
   return (
     <div className={`${nightMode() ? 'night-mode' : 'day-mode'} window-height`}>
       <div className="d-flex flex-column flex-xl-row">
+        {toggleDeleteModal && <DeleteModal />}
         <Header />
         {invoiceSwitch()}
       </div>

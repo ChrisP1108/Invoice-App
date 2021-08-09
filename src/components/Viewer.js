@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { invoice, invoiceList, 
-    deleteInvoice, markPaidInvoice, setToggleViewer } from '../redux/Store.js';
+import { invoice, 
+    markPaidInvoice, setToggleDeleteModal, 
+    setToggleViewer, setToggleCreate } from '../redux/Store.js';
 
 const Viewer = () => {
 
@@ -145,10 +146,11 @@ const Viewer = () => {
         return (
             <div className="viewer-footer-outer-container">
                 <div className="viewer-footer-inner-container f-sb">
-                    <div className="viewer-footer-edit-button-container f-c">
+                    <div onClick={() => {setToggleCreate(); setToggleViewer()}} 
+                        className="viewer-footer-edit-button-container f-c pointer">
                         <h3>Edit</h3>
                     </div>
-                    <div onClick={() => {deleteInvoice(viewInvoice.id); setToggleViewer()}} className="viewer-footer-delete-button-container f-c pointer">
+                    <div onClick={() => setToggleDeleteModal(true)} className="viewer-footer-delete-button-container f-c pointer">
                         <h3>Delete</h3>
                     </div>
                     <div onClick={() => markPaid()} 
