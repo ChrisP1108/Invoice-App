@@ -72,10 +72,10 @@ const App = () => {
   }
 
   return (
-    <div className={`${nightMode() ? 'night-mode' : 'day-mode'} window-height`}>
+    <div className={`${nightMode() ? 'night-mode' : 'day-mode'} window-height position-relative`}>
       <div className="d-flex flex-column flex-xl-row">
-        {toggleDeleteModal && <DeleteModal />}
         <Header />
+        {toggleDeleteModal() && <DeleteModal />}
         {invoiceSwitch()}
       </div>
     </div>
