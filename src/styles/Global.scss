@@ -19,7 +19,11 @@
     $r: #33D69F;
     $s: #FF8F00;
     $t: #33D69F15;
+    $u: #F9FAFE;
+    $v: #888EB0;
+    $w: #373B53;
     $white: #ffffff;
+    $halftrans: #00000080;
     $trans: #f4ecc200;
 
 //Font --> font-family: 'Spartan', sans-serif;
@@ -56,6 +60,14 @@ body {
         justify-content: space-between;
         align-items: center;
     }
+    &-sb {
+        display: flex;
+        justify-content: space-between;
+    }
+    &-sa {
+        display: flex;
+        justify-content: space-around;
+    }
     &-c {
         display: flex;
         align-items: center;
@@ -64,6 +76,11 @@ body {
     &-e {
         display: flex;
         justify-content: flex-end;
+    }
+    &-clb {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 }
 
@@ -75,13 +92,19 @@ body {
         color: $white;
     }
     h2 {
-        color :$e;
+        color: $e;
     }
     h3 {
         color :$white;
     }
     h4 {
         color :$white;
+    }
+    h6 {
+        color: $e
+    }
+    p {
+        color: $white;
     }
     .invoice-outer-container {
         transition: .25s;
@@ -114,6 +137,37 @@ body {
     .list-filter-modal {
         background: $d;
     }
+    .viewer-status-outer-container {
+        transition: .25s;
+        background-color: $c;
+    }
+    .viewer-main-outer-container {
+        transition: .25s;
+        background-color: $c;
+    }
+    .viewer-main-pricing-outer-container {
+        transition: .25s;
+        background-color: $d;
+    }
+    #viewer {
+        h3 {
+            span {
+                color: $v!important;
+            }
+        }
+    }
+    .viewer-main-pricing-grand-total-outer-container {
+        background-color: $h!important;
+    }
+    .viewer-footer-outer-container {
+        background-color: $c;
+    }
+    .viewer-footer-edit-button-container {
+        background-color: $d;
+        h3 {
+            color: $e;
+        }
+    }
 }
 .day-mode {
     background-color: $k!important;
@@ -129,6 +183,12 @@ body {
         color: $h;
     }
     h4 {
+        color: $h;
+    }
+    h6 {
+        color: $f;
+    }
+    p {
         color: $h;
     }
     .invoice-outer-container {
@@ -161,6 +221,37 @@ body {
     }
     .list-filter-modal {
         background: $white;
+    }
+    .viewer-status-outer-container {
+        transition: .25s;
+        background-color: $white;
+    }
+    .viewer-main-outer-container {
+        transition: .25s;
+        background-color: $white;
+    }
+    .viewer-main-pricing-outer-container {
+        transition: .25s;
+        background-color: $u;
+    }
+    #viewer {
+        h3 {
+            span {
+                color: $g!important;
+            }
+        }
+    }
+    .viewer-main-pricing-grand-total-outer-container {
+        background-color: $w!important;
+    }
+    .viewer-footer-outer-container {
+        background-color: $white;
+    }
+    .viewer-footer-edit-button-container {
+        background-color: $u;
+        h3 {
+            color: $g;
+        }
     }
 }
 

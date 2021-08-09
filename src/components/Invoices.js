@@ -1,24 +1,10 @@
-import { setInvoice } from '../redux/Store.js';
+import { setInvoice, setToggleViewer, dateFormatter, setDateFormatter } from '../redux/Store.js';
 
-const Invoices = ({ list }) => {
+const Invoices = ({ listOutput }) => {
 
-    const dateFormat = (date) => {
-        const input = new Date(date).toString();
-        const day= input.slice(8, 10);
-        const month = input.slice(4, 7);
-        const year = input.slice(11, 15);
-        const formatted = `${day} ${month} ${year}`;
-        return formatted;
-    }
-
-    const currencyFormat = (amount) => {
-        const output = new Intl.NumberFormat ('en-UK', { style: 'currency', currency: 'GBP'}).format(amount).toString().slice(1);
-        return output;
-    }
-
-    const invoiceMapping = list.map(item => {
+    const invoiceMapping = listOutput.map(item => {
         return (
-            <div key={item.id} onClick={() => setInvoice(item)}
+            <div key={item.id} onClick={() => {setInvoice(item); setToggleViewer();}}
                 id="invoices" className="invoice-outer-container position-relative pointer invoice-trans">
                 <div className="invoice-inner-container position-absolute w-100 my-auto mx-auto">
                     <div className="invoice-container-row">
@@ -27,9 +13,9 @@ const Invoices = ({ list }) => {
                     </div>
                     <div className="f-ca">
                         <div className="d-flex flex-column w-50">
-                            <h2>Due {dateFormat(item.paymentDue)}</h2>
+                            <h2>Due {item.paymentDue}</h2>
                             <div className="mt-2">
-                                <h4>£ {currencyFormat(item.total)}</h4>
+                                <h4>{item.total}</h4>
                             </div>
                         </div>
                         <div className="f-ae">
