@@ -1,6 +1,6 @@
 import Loading from './Loading';
 import Invoices from './Invoices';
-import { setToggleCreate, invoiceList, markPaidInvoice } from '../redux/Store.js';
+import { setToggleCreate, invoiceList, setInvoice } from '../redux/Store.js';
 import { useState } from 'react';
 import { filterItems } from '../Arrays/Filters';
 
@@ -103,6 +103,11 @@ const List = () => {
         } else return true
     }
 
+    const createNewInvoice = () => {
+        setInvoice([]);
+        loadedEval() && setToggleCreate();
+    }
+
     const listHeader = () => {
         return (
             <div className="row m-0 list-container-filter d-flex justify-content-between position-relative">
@@ -134,7 +139,7 @@ const List = () => {
                             </div>
                         </div>
                     </div>
-                    <div onClick={() => loadedEval() && setToggleCreate()}
+                    <div onClick={() => createNewInvoice()}
                         className="button-container pointer f-c">
                         <div className="f-c">
                             <div className="button-circle f-c">

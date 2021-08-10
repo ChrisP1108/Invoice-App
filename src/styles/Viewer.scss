@@ -55,6 +55,7 @@
         margin: 0!important;
         padding: 0!important;
     }
+}
     .back {
         &-container {
             display: flex;
@@ -215,4 +216,3 @@
         from {padding-top: 5rem; opacity: 0}
         to {padding-top: 0rem; opacity: 1}
     }
-}

@@ -1,5 +1,5 @@
 import { invoice, setToggleViewer, setToggleDeleteModal, 
-    deleteInvoice, setToggleCreate } from '../redux/Store.js';
+    deleteInvoice } from '../redux/Store.js';
 
 const DeleteModal = () => {
 

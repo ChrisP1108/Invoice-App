@@ -1,0 +1,70 @@
+#createoredit {
+    h1 {
+        font-size: 1.5rem!important;
+        font-weight: 700!important;
+        letter-spacing: -0.031rem!important;
+        line-height: 2rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        transition: .25s!important;
+    }
+    h2 {
+        font-size: 0.75rem!important;
+        font-weight: 700!important;
+        letter-spacing: -0.016rem!important;
+        line-height: 0.938rem!important;
+        color: $n!important;
+        margin: 0!important;
+        padding: 0!important;
+        transition: .25s!important;
+    }
+    h3 {
+        font-size: 0.75rem!important;
+        font-weight: 700!important;
+        letter-spacing: -0.016rem!important;
+        line-height: .938rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        transition: .25s!important;
+    }
+    h4 {
+        font-size: 0.75rem!important;
+        font-weight: 500!important;
+        letter-spacing: -0.016rem!important;
+        line-height: 0.938rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        transition: .25s!important;
+    }
+    .createoredit {
+        &-container {
+            margin: 2rem 1.5rem 3.5rem 1.5rem!important;
+        }
+        &-title {
+            margin-top: 1.875rem!important;
+        }
+        &-bill-top-margin {
+            margin: 2.063rem 0 0.25rem 0 !important;
+        }
+        &-bill-margin {
+            margin: 2.5rem 0 0.25rem 0 !important;
+        }
+        &-form-row-full-container {
+            margin-top: 1.5rem!important;
+            height: 4.563rem!important;
+            width: 100%!important;
+        }
+        &-field {
+            height: 3rem!important;
+            width: 100%!important;
+            border-radius: 0.25rem!important;
+            padding: 1.063rem 1.25rem 1.063rem!important;
+            font-size: 0.75rem!important;
+            font-weight: bold!important;
+            transition: .25s!important;
+        }
+        &-column-gap {
+            width: 3.252rem!important;
+        }
+    }
+}

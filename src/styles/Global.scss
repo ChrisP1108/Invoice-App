@@ -22,6 +22,7 @@
     $u: #F9FAFE;
     $v: #888EB0;
     $w: #373B53;
+    $x: #777F98;
     $white: #ffffff;
     $halftrans: #00000080;
     $trans: #f4ecc200;
@@ -182,6 +183,26 @@ body {
             color: $e;
         }
     }
+    #createoredit {
+        h1 {
+            span {
+                color: $x;
+            }         
+        }
+        h4 {
+            color: $f;
+        }
+    }
+    .createoredit-field {
+        background-color: $c;
+        border: 0.063rem $d solid;
+        color: $white;
+    }
+    input:focus {
+        background-color: $c!important;
+        border: 0.063rem $d solid!important;;
+        color: $white!important;
+    }
 }
 .day-mode {
     background-color: $k!important;
@@ -281,5 +302,26 @@ body {
             color: $g;
         }
     }
+    #createoredit {
+        h1 {
+            span {
+                color: $v;
+            }         
+        }
+        h4 {
+            color: $g;
+        }
+    }
+    .createoredit-field {
+        background-color: $white;
+        border: 0.063rem $e solid;
+        color: $h;
+    }
+    input:focus:-webkit-autofill {
+        background-color: $white;
+        border: 0.063rem $e solid;
+        color: $h;
+    }
 }
+
 

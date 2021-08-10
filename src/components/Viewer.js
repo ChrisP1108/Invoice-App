@@ -154,7 +154,7 @@ const Viewer = () => {
                         <h3>Delete</h3>
                     </div>
                     <div onClick={() => markPaid()} 
-                        className={`${viewInvoice.status === 'paid' || viewInvoice.status === 'draft' && `d-none`} 
+                        className={`${viewInvoice.status === 'paid' || viewInvoice.status === 'draft' ? `d-none` : ``} 
                             viewer-footer-paid-button-container f-c pointer`}>
                         <h3>Mark as Paid</h3>
                     </div>
