@@ -23,6 +23,7 @@
     $v: #888EB0;
     $w: #373B53;
     $x: #777F98;
+    $y: #bdbdbd;
     $white: #ffffff;
     $halftrans: #00000080;
     $trans: #f4ecc200;
@@ -198,6 +199,11 @@ body {
         border: 0.063rem $d solid;
         color: $white;
     }
+    .createoredit-option {
+        background-color: $d;
+        border: 0.063rem $w solid;
+        color: $white;
+    }
     input:focus {
         background-color: $c!important;
         border: 0.063rem $d solid!important;;
@@ -317,10 +323,20 @@ body {
         border: 0.063rem $e solid;
         color: $h;
     }
+    .createoredit-option {
+        background-color: $white;
+        border: 0.063rem $e solid;
+        color: $white;
+    }
     input:focus:-webkit-autofill {
         background-color: $white;
         border: 0.063rem $e solid;
         color: $h;
+    }
+    .createoredit-invoice-disabled {
+        input {
+            box-shadow: 0.125rem 0.313rem 0.313rem $y!important;
+        }
     }
 }
 

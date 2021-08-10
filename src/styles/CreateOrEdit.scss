@@ -36,6 +36,10 @@
         padding: 0!important;
         transition: .25s!important;
     }
+    select {
+        padding: 0;
+        margin: 0;
+    }
     .createoredit {
         &-container {
             margin: 2rem 1.5rem 3.5rem 1.5rem!important;
@@ -58,13 +62,46 @@
             height: 3rem!important;
             width: 100%!important;
             border-radius: 0.25rem!important;
-            padding: 1.063rem 1.25rem 1.063rem!important;
+            padding: 1.063rem 0.875rem 1.063rem 1.25rem!important;
             font-size: 0.75rem!important;
-            font-weight: bold!important;
+            font-weight: 700!important;
+            transition: .25s!important;
+        }
+        &-option {
+            height: 3rem!important;
+            width: 100%!important;
+            border-radius: 0.25rem!important;
+            padding: 1.063rem 0.875rem 1.063rem 1.25rem!important;
+            font-size: 0.75rem!important;
+            font-weight: 700!important;
             transition: .25s!important;
         }
         &-column-gap {
             width: 3.252rem!important;
+        }
+        &-invoice-top-gap {
+            height: 1rem!important;
+        }
+        &-invoice-disabled {
+            opacity: 0.6!important;
+        }
+        &-option-arrow {
+            background-image: url(../assets/icon-arrow-down.svg);
+            width: 0.625rem!important;
+            height: 0.438rem!important;
+            transition: .5s;
+        }
+        &-option-arrow-clicked {
+            transform: rotateX(180deg);
+        }
+        &-option-trans {
+            animation-name: option-trans-in;
+            animation-duration: .5s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes option-trans-in {
+            from {transform: rotateX(90deg); top: 0.5rem; display: block}
+            to {transform: rotateX(0deg); top: 4.55rem; display: block}
         }
         &-transition {
             animation-name: createoredit-trans-in;
