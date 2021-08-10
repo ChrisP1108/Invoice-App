@@ -66,5 +66,15 @@
         &-column-gap {
             width: 3.252rem!important;
         }
+        &-transition {
+            animation-name: createoredit-trans-in;
+            animation-duration: .5s;
+            animation-fill-mode: forwards;
+        }
+        
+        @keyframes createoredit-trans-in {
+            from {padding-top: 5rem; opacity: 0}
+            to {padding-top: 0rem; opacity: 1}
+        }
     }
 }

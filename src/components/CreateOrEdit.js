@@ -104,9 +104,11 @@ const CreateOrEdit = () => {
     return (
         <div id="createoredit">
             <div className="createoredit-container">
-            {backHeader()}
-            {title()}
-            {formBody()}
+                {backHeader()}
+                <div className="createoredit-transition">
+                    {title()}
+                    {formBody()}
+                </div>
             </div>   
         </div>
     )
