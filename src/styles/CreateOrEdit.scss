@@ -161,6 +161,17 @@
             left: -.95rem!important;
             top: -0.78rem!important;
         }
+        &-item-add-button {
+            height: 3rem!important;
+            width: 100%!important;
+            border-radius: 1.5rem!important;
+            h4 {
+                font-weight: 700!important;
+            }
+        }
+        &-item-empty-button-gap {
+            margin-top: 2.5rem!important;
+        }
         @keyframes option-trans-in {
             from {transform: rotateX(90deg); top: 0.5rem; display: block}
             to {transform: rotateX(0deg); top: 4.55rem; display: block}
@@ -170,10 +181,35 @@
             animation-duration: .5s;
             animation-fill-mode: forwards;
         }
-        
         @keyframes createoredit-trans-in {
             from {padding-top: 5rem; opacity: 0}
             to {padding-top: 0rem; opacity: 1}
+        }
+        &-footer-outer-container {
+            height: 5.688rem!important;
+            width: 100%!important;
+        }
+        &-footer-inner-container {
+            height: 3rem!important;
+            width: 100%!important;
+            padding: 0 1.5rem 0!important;
+        }
+        &-footer-button-gap {
+            width: 0.5rem!important;
+        }
+        &-cancel-button-container {
+            border-radius: 1.513rem!important;
+            width: 5.25rem!important;
+            height: 3rem!important;
+        }
+        &-savechanges-button-container {
+            border-radius: 1.513rem!important;
+            width: 8.625rem!important;
+            height: 3rem!important;
+            background-color: $n;
+            h3 {
+                color: $white;
+            }
         }
     }
 }

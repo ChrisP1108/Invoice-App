@@ -150,9 +150,13 @@ const Viewer = () => {
                         className="viewer-footer-edit-button-container f-c pointer">
                         <h3>Edit</h3>
                     </div>
+                    <div className={viewInvoice.status === 'paid' || viewInvoice.status === 'draft'
+                        ? `d-none` : `viewer-footer-button-gap`}></div>
                     <div onClick={() => setToggleDeleteModal(true)} className="viewer-footer-delete-button-container f-c pointer">
                         <h3>Delete</h3>
                     </div>
+                    <div className={viewInvoice.status === 'paid' || viewInvoice.status === 'draft'
+                        ? `d-none` : `viewer-footer-button-gap`}></div>
                     <div onClick={() => markPaid()} 
                         className={`${viewInvoice.status === 'paid' || viewInvoice.status === 'draft' ? `d-none` : ``} 
                             viewer-footer-paid-button-container f-c pointer`}>

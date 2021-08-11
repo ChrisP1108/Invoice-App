@@ -224,6 +224,18 @@ body {
             color:$u!important;
         }
     }
+    .createoredit-item-add-button {
+        background-color: $c!important; 
+    }
+    .createoredit-footer-outer-container {
+        background-color: $c!important;
+    }
+    .createoredit-cancel-button-container {
+        background-color: $d!important;
+        h3 {
+            color: $e!important;
+        }
+    }
 }
 .day-mode {
     background-color: $k!important;
@@ -341,9 +353,7 @@ body {
     .createoredit-option {
         background-color: $white;
         border: 0.063rem $e solid;
-        color: $white;
-
-        
+        color: $white;  
     }
     .createoredit-option:hover {
         border: 0.063rem $y solid;
@@ -360,6 +370,18 @@ body {
         box-shadow: 0.125rem 0.313rem 0.313rem $y!important;
         span {
             color:$l!important;
+        }
+    }
+    .createoredit-item-add-button {
+        background-color: $u!important; 
+    }
+    .createoredit-footer-outer-container {
+        background-color: $white!important;
+    }
+    .createoredit-cancel-button-container {
+        background-color: $u!important;
+        h3 {
+            color: $g!important;
         }
     }
 }

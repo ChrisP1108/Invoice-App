@@ -19,6 +19,21 @@ export const Schema = {
         postCode: "",
         country: ""
     },
-    items: [],
+    items: [
+        {
+            name: "",
+            quantity: 0,
+            price: 0,
+            total: 0
+        }
+    ],
     total: ""
 }
+
+export const ItemAddSchema = 
+    {
+        name: "",
+        quantity: 0,
+        price: 0,
+        total: 0
+    }
