@@ -9,6 +9,8 @@ const CreateOrEdit = () => {
 
     const input = invoice().id === undefined ? Schema : invoice();
 
+    console.log(invoice());
+
     const [invoiceEdit, setInvoiceEdit] = useState(input);
     const [toggleTerms, setToggleTerms] = useState(false);
 
@@ -46,6 +48,85 @@ const CreateOrEdit = () => {
             <div onClick={() => setPaymentTerms(option.days)}
                 key={option.id} className="createoredit-option pointer">
                 <h4>{option.name}</h4>
+            </div>
+        )
+    });
+
+    const itemStateUpdate = (type, value, indexId) => {
+        let data = invoiceEdit;
+
+        switch (type) {
+            case 'name':
+                data.items[indexId].name = value;
+                break;
+            case 'quantity':
+                data.items[indexId].quantity = value;
+                break;
+            case 'price':
+                data.items[indexId].price = value;
+                break;
+            default:
+                break;
+        }
+
+        setInvoiceEdit({...invoiceEdit, data});
+    }
+
+    const itemsMapping = invoiceEdit.items.map(item => {
+
+        const itemTotal = (item.quantity * item.price).toFixed(2);
+        const indexId = invoiceEdit.items.indexOf(item);
+
+        return (
+            <div key={indexId}>
+                <div className="createoredit-form-row-full-container f-clb">
+                    <h4>Item Name</h4>
+                    <input 
+                        type="text"
+                        name="name"
+                        value={item.name}
+                        onChange={(e) => itemStateUpdate(e.target.name, e.target.value, indexId)}                            
+                        className="createoredit-field"> 
+                    </input>
+                </div>
+                <div className="d-flex">
+                    <div className="createoredit-form-row-full-container f-clb">
+                        <h4>Qty.</h4>
+                        <input 
+                            type="text"
+                            name="quantity"
+                            value={item.quantity}
+                            onChange={(e) => itemStateUpdate(e.target.name, e.target.value, indexId)}
+                            className="createoredit-field"> 
+                        </input>
+                    </div>
+                    <div className="createoredit-column-gap"></div>
+                    <div className="createoredit-form-row-full-container f-clb">
+                        <h4>Price</h4>
+                        <input 
+                            type="text"
+                            name="price"
+                            value={item.price.toFixed(2)}
+                            onChange={(e) => itemStateUpdate(e.target.name, e.target.value, indexId)}
+                            className="createoredit-field"> 
+                        </input>
+                    </div>
+                    <div className="createoredit-column-gap"></div>
+                    <div className="createoredit-form-row-full-container f-clb">
+                        <h4>Total</h4>
+                        <div className="createoredit-item-total">
+                            <h4><span>{itemTotal}</span></h4>
+                            <div className="position-relative">
+                                <div className="createoredit-item-trash-icon"></div>
+                                <div 
+                                    onClick={() => console.log('delete clicked')}
+                                    className="createoredit-item-trash-filler pointer">         
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="createoredit-item-separation-margin"></div>
             </div>
         )
     });
@@ -229,6 +310,10 @@ const CreateOrEdit = () => {
                             setInvoiceEdit({...invoiceEdit, description: e.target.value})}
                         className="createoredit-field"> 
                     </input>
+                </div>
+                <div className="createoredit-item-list-container">
+                    <h5>Item List</h5>
+                    {itemsMapping}
                 </div>
             </>
         )

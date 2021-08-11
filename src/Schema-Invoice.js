@@ -22,15 +22,9 @@ export const Schema = {
     items: [
         {
             name: "",
-            quantity: null,
-            price: null,
-            total: null
-        },
-        {
-            name: "",
-            quantity: null,
-            price: null,
-            total: null
+            quantity: 0,
+            price: 0,
+            total: 0
         }
     ],
     total: ""

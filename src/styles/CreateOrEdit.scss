@@ -36,9 +36,15 @@
         padding: 0!important;
         transition: .25s!important;
     }
-    select {
-        padding: 0;
-        margin: 0;
+    h5 {
+        font-size: 1.125rem!important;
+        font-weight: 700!important;
+        letter-spacing: -0.024rem!important;
+        line-height: 2rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        transition: .25s!important;
+        color: $x!important;
     }
     .createoredit {
         &-container {
@@ -62,10 +68,25 @@
             height: 3rem!important;
             width: 100%!important;
             border-radius: 0.25rem!important;
-            padding: 1.063rem 0.875rem 1.063rem 1.25rem!important;
+            padding-left: 1.25rem!important;
+            display: flex;
+            align-items: center;
             font-size: 0.75rem!important;
             font-weight: 700!important;
             transition: .25s!important;
+        }
+        &-item-total {
+            height: 3rem!important;
+            width: 100%!important;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.75rem!important;
+            font-weight: 700!important;
+            transition: .25s!important;
+            span {
+                font-weight: 700!important;
+            }
         }
         &-option {
             height: 3rem!important;
@@ -104,6 +125,7 @@
             width: 0.625rem!important;
             height: 0.438rem!important;
             transition: .5s;
+            margin-right: 0.875rem;
         }
         &-option-arrow-clicked {
             transform: rotateX(180deg);
@@ -117,6 +139,27 @@
             animation-name: option-trans-in;
             animation-duration: .5s;
             animation-fill-mode: forwards;
+        }
+        &-item-list-container {
+            width: 100%!important;
+            margin-top: 4.125rem!important
+        }
+        &-item-separation-margin {
+            margin-top: 3rem!important;
+        }
+        &-item-trash-icon {
+            background-image: url(../assets/icon-delete.svg);
+            width: 0.778rem!important;
+            height: 1rem!important;
+            margin-bottom: .1rem!important;
+            transition: .5s;
+        }
+        &-item-trash-filler {
+            position: absolute;
+            width: 2.5rem!important;
+            height: 2.5rem!important;
+            left: -0.85rem!important;
+            top: -0.75rem!important;
         }
         @keyframes option-trans-in {
             from {transform: rotateX(90deg); top: 0.5rem; display: block}
