@@ -76,6 +76,20 @@
             font-weight: 700!important;
             transition: .25s!important;
         }
+        &-date-disabled {
+            height: 3rem!important;
+            width: 100%!important;
+            border-radius: 0.25rem!important;
+            padding: 1.063rem 0.875rem 1.063rem 1.25rem!important;
+            font-size: 0.75rem!important;
+            font-weight: 700!important;
+            transition: .25s!important;
+
+            span {
+                font-size: 0.75rem!important;
+                font-weight: 700!important;
+            }
+        }
         &-column-gap {
             width: 3.252rem!important;
         }
@@ -93,6 +107,11 @@
         }
         &-option-arrow-clicked {
             transform: rotateX(180deg);
+        }
+        &-calendar-icon {
+            background-image: url(../assets/icon-calendar.svg);
+            width: 1rem!important;
+            height: 1rem!important;
         }
         &-option-trans {
             animation-name: option-trans-in;

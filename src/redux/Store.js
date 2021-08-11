@@ -3,11 +3,13 @@ import { createReduxModule } from 'hooks-for-redux';
 
 let SERVERLIST = [];
 
+// Redux Store Contains Both State And HTTP Request Management
+
 // HTTP Requests & State Update
 
-    // GET INVOICES
+    // GET INVOICES - Sent To App.Js For Formatting
 
-    const fetchInvoices = async () => {
+    const fetchInvoices = async () => { // HTTP GET
         const res = await fetch(Url)
         .catch((err) => console.log(err));     
         if (res === undefined) {
@@ -24,13 +26,13 @@ let SERVERLIST = [];
 
     // DELETE INVOICE
 
-    const delInvoice = (store, id) => {
+    const delInvoice = (store, id) => { // STATE DELETE
         delReq(id);
         const state = store.filter(item => item.id !== id);
         return state;
     }
 
-    const delReq = async (id) => {
+    const delReq = async (id) => { // HTTP DELETE
         const res = await fetch(`${Url}/${id}`, {
             method: 'DELETE'
         });
@@ -40,14 +42,14 @@ let SERVERLIST = [];
 
     // MARK INVOICE PAID
 
-    const paidInvoice = (store, id) => {
+    const paidInvoice = (store, id) => { // STATE PAID
         paidUpdateReq(id);
         const state = store.map(item => item.id === id 
             ? {...item, status: 'paid'} : item);
         return state;
     }
 
-    const paidUpdateReq = async (id) => {
+    const paidUpdateReq = async (id) => { // HTTP PUT
         const invoice = SERVERLIST.filter(invoice => 
             invoice.id === id);
         const res = await fetch(`${Url}/${id}`, {
@@ -61,7 +63,7 @@ let SERVERLIST = [];
         console.log(`Mark Invoice Paid Response: ${data.status} Ok: ${data.ok}`);
     }
 
-// Invoice List
+// Invoice List - Fetched Data Is Modified in App.Js To Reformat Dates And Currencies And Then Sent To Invoice List
 
     const INVOICE_LIST = ['loading']
 

@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { optionTerms } from '../Arrays/Options';
+import { Schema } from '../Schema-Invoice';
 import { invoice, 
     markPaidInvoice, setToggleDeleteModal, 
     setToggleViewer, setToggleCreate } from '../redux/Store.js';
 
 const CreateOrEdit = () => {
 
-    const [invoiceEdit, setInvoiceEdit] = useState(invoice());
+    const input = invoice().id === undefined ? Schema : invoice();
+
+    const [invoiceEdit, setInvoiceEdit] = useState(input);
     const [toggleTerms, setToggleTerms] = useState(false);
 
     const backHeader = () => {
@@ -25,7 +28,7 @@ const CreateOrEdit = () => {
     const title = () => {
         return (
             <div className="createoredit-title">
-                {invoiceEdit.length === 0 ?
+                {invoice().id === undefined ?
                     <h1>New Invoice</h1>
                     : <h1>Edit <span>#</span>{invoiceEdit.id}</h1>
                 }
@@ -55,82 +58,156 @@ const CreateOrEdit = () => {
                 </div>
                 <div className="createoredit-form-row-full-container f-clb">
                     <h4>Street Address</h4>
-                    <input className="createoredit-field" 
-                        type="text"></input>
+                    <input 
+                        type="text"
+                        name="senderAddress.street"
+                        value={invoiceEdit.senderAddress.street}
+                        onChange={(e) => 
+                            setInvoiceEdit({...invoiceEdit, senderAddress: 
+                                {...invoiceEdit.senderAddress, street: e.target.value}})}
+                        className="createoredit-field">
+                    </input>
                 </div>
                 <div className="d-flex">
                     <div className="createoredit-form-row-full-container f-clb">
                         <h4>City</h4>
-                        <input className="createoredit-field" 
-                            type="text"></input>
+                        <input  
+                            type="text"
+                            name="senderAddress.city"
+                            value={invoiceEdit.senderAddress.city}
+                            onChange={(e) => 
+                                setInvoiceEdit({...invoiceEdit, senderAddress: 
+                                    {...invoiceEdit.senderAddress, city: e.target.value}})}
+                            className="createoredit-field">
+                        </input>
                     </div>
                     <div className="createoredit-column-gap"></div>
                     <div className="createoredit-form-row-full-container f-clb">
                         <h4>Post Code</h4>
-                        <input className="createoredit-field" 
-                            type="text"></input>
+                        <input 
+                            type="text"
+                            name="senderAddress.postCode"
+                            value={invoiceEdit.senderAddress.postCode}
+                            onChange={(e) => 
+                                setInvoiceEdit({...invoiceEdit, senderAddress: 
+                                    {...invoiceEdit.senderAddress, postCode: e.target.value}})}
+                            className="createoredit-field"> 
+                            </input>
                     </div>
                 </div>
                 <div className="createoredit-form-row-full-container f-clb">
                     <h4>Country</h4>
-                    <input className="createoredit-field" 
-                        type="text"></input>
+                    <input 
+                        type="text"
+                        name="senderAddress.country"
+                        value={invoiceEdit.senderAddress.country}
+                        onChange={(e) => 
+                            setInvoiceEdit({...invoiceEdit, senderAddress: 
+                                {...invoiceEdit.senderAddress, country: e.target.value}})}
+                        className="createoredit-field"> 
+                    </input>
                 </div>
                 <div className="createoredit-bill-margin">
                     <h2>Bill To</h2>
                 </div>
                 <div className="createoredit-form-row-full-container f-clb">
                     <h4>Client's Name</h4>
-                    <input className="createoredit-field" 
-                        type="text"></input>
+                    <input  
+                        type="text"
+                        name="clientName"
+                        value={invoiceEdit.clientName}
+                        onChange={(e) => 
+                            setInvoiceEdit({...invoiceEdit, clientName: e.target.value})}
+                        className="createoredit-field">
+                    </input>
                 </div>
                 <div className="createoredit-form-row-full-container f-clb">
                     <h4>Client's Email</h4>
-                    <input className="createoredit-field" 
-                        type="text"></input>
+                    <input  
+                        type="text"
+                        name="clientEmail"
+                        value={invoiceEdit.clientEmail}
+                        onChange={(e) => 
+                            setInvoiceEdit({...invoiceEdit, clientEmail: e.target.value})}
+                        className="createoredit-field">
+                    </input>
                 </div>
                 <div className="createoredit-form-row-full-container f-clb">
                     <h4>Street Address</h4>
-                    <input className="createoredit-field" 
-                        type="text"></input>
+                    <input 
+                        type="text"
+                        name="clientAddress.street"
+                        value={invoiceEdit.clientAddress.street}
+                        onChange={(e) => 
+                            setInvoiceEdit({...invoiceEdit, clientAddress: 
+                                {...invoiceEdit.clientAddress, street: e.target.value}})}
+                        className="createoredit-field"> 
+                    </input>
                 </div>
                 <div className="d-flex">
                     <div className="createoredit-form-row-full-container f-clb">
                         <h4>City</h4>
-                        <input className="createoredit-field" 
-                            type="text"></input>
+                        <input 
+                            type="text"
+                            name="clientAddress.city"
+                            value={invoiceEdit.clientAddress.city}
+                            onChange={(e) => 
+                                setInvoiceEdit({...invoiceEdit, clientAddress: 
+                                    {...invoiceEdit.clientAddress, city: e.target.value}})}
+                            className="createoredit-field"> 
+                        </input>
                     </div>
                     <div className="createoredit-column-gap"></div>
                     <div className="createoredit-form-row-full-container f-clb">
                         <h4>Post Code</h4>
-                        <input className="createoredit-field" 
-                            type="text"></input>
+                        <input 
+                            type="text"
+                            name="clientAddress.postCode"
+                            value={invoiceEdit.clientAddress.postCode}
+                            onChange={(e) => 
+                                setInvoiceEdit({...invoiceEdit, clientAddress: 
+                                    {...invoiceEdit.clientAddress, postCode: e.target.value}})}
+                            className="createoredit-field"> 
+                        </input>
                     </div>
                 </div>
                 <div className="createoredit-form-row-full-container f-clb">
                     <h4>Country</h4>
-                    <input className="createoredit-field" 
-                        type="text"></input>
+                    <input 
+                        type="text"
+                        name="clientAddress.country"
+                        value={invoiceEdit.clientAddress.country}
+                        onChange={(e) => 
+                            setInvoiceEdit({...invoiceEdit, clientAddress: 
+                                {...invoiceEdit.clientAddress, country: e.target.value}})}
+                        className="createoredit-field"> 
+                    </input>
                 </div>
                 <div className="createoredit-invoice-top-gap"></div>
-                <div className={`${invoiceEdit.length === 0 && `d-none`} createoredit-form-row-full-container createoredit-invoice-disabled f-clb`}>
+                <div className={`${invoice().id === undefined && `d-none`} createoredit-form-row-full-container createoredit-invoice-disabled f-clb`}>
                     <h4>Invoice Date</h4>
-                    <input className="createoredit-field" 
-                        type="date" disabled></input>
+                    <div className="createoredit-date-disabled f-sb">
+                        <h4><span>{invoiceEdit.createdAt}</span></h4>
+                        <div className="createoredit-calendar-icon"></div>
+                    </div>   
                 </div>
-                <div className={`${invoiceEdit.length !== 0 && `d-none`} createoredit-form-row-full-container f-clb`}>
+                <div className={`${invoice().id !== undefined && `d-none`} createoredit-form-row-full-container f-clb`}>
                     <h4>Invoice Date</h4>
-                    <input className="createoredit-field" 
-                        type="date" ></input>
+                    <div className="f-sb">
+                        <input 
+                            type="date"
+                            className="createoredit-field"> 
+                        </input>
+                    </div>
                 </div>
                 <div className="position-relative">
                     <div className="createoredit-form-row-full-container f-clb">
                         <h4>Payment Terms</h4>
                         <div onClick ={() => setToggleTerms(!toggleTerms)}className="createoredit-field f-sb pointer">
-                        <span className={`${invoiceEdit.length !== 0 && `d-none`}`}>
+                        <span className={`${invoiceEdit.paymentTerms !== null && `d-none`}`}>
                                 Select Payment Status
                             </span>
-                            <span className={`${invoiceEdit.length === 0 && `d-none`}`}>
+                            <span className={`${invoiceEdit.paymentTerms === null && `d-none`}`}>
                                 Net {invoiceEdit.paymentTerms} Day{invoiceEdit.paymentTerms > 1 ? 's' : ''}
                             </span>
                             <div className="f-c">
@@ -145,8 +222,13 @@ const CreateOrEdit = () => {
                 </div>
                 <div className="createoredit-form-row-full-container f-clb">
                     <h4>Project / Description</h4>
-                    <input className="createoredit-field" 
-                        type="text"></input>
+                    <input 
+                        type="text"
+                        value={invoiceEdit.description}
+                        onChange={(e) => 
+                            setInvoiceEdit({...invoiceEdit, description: e.target.value})}
+                        className="createoredit-field"> 
+                    </input>
                 </div>
             </>
         )
