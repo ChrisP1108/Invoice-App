@@ -9,8 +9,6 @@ const CreateOrEdit = () => {
 
     const input = invoice().id === undefined ? Schema : invoice();
 
-    console.log(invoice());
-
     const [invoiceEdit, setInvoiceEdit] = useState(input);
     const [toggleTerms, setToggleTerms] = useState(false);
 
@@ -38,39 +36,77 @@ const CreateOrEdit = () => {
         )
     }
 
-    const setPaymentTerms = (days) => {
-        setInvoiceEdit({...invoiceEdit, paymentTerms: days})
-        setToggleTerms(false);
+    const stateUpdate = (type, value, indexId) => {
+        const data = invoiceEdit;
+
+        switch (type) {
+            case 'senderAddress.street':
+                data.senderAddress.street = value;
+                break;
+            case 'senderAddress.city':
+                data.senderAddress.city = value;
+                break;
+            case 'senderAddress.postCode':
+                data.senderAddress.postCode = value;
+                break;
+            case 'senderAddress.country':
+                data.senderAddress.country = value;
+                break;
+            case 'clientName':
+                data.clientName = value;
+                break;
+            case 'clientEmail':
+                data.clientEmail = value;
+                break;
+            case 'clientAddress.street':
+                data.clientAddress.street = value;
+                break;
+            case 'clientAddress.city':
+                data.clientAddress.city = value;
+                break;
+            case 'clientAddress.postCode':
+                data.clientAddress.postCode = value;
+                break;
+            case 'clientAddress.country':
+                data.clientAddress.country = value;
+                break;
+            case 'createdAt':
+                data.clientAddress.createdAt = value;
+                break;
+            case 'paymentTerms':
+                data.paymentTerms = value;
+                setToggleTerms(false);
+                break;
+            case 'description':
+                data.description = value;
+                break;
+            case 'item.name':
+                data.items[indexId].name = value;
+                break;
+            case 'item.quantity':
+                data.items[indexId].quantity = value;
+                break;
+            case 'item.price':
+                data.items[indexId].price = Number(value);
+                break;
+            case 'deleteItem':
+                data.items.splice(indexId, 1)
+                console.log(data);
+                break;
+            default:
+                break;
+        }
+        setInvoiceEdit({...invoiceEdit, data});
     }
 
     const termsMapping = optionTerms.map(option => {
         return (
-            <div onClick={() => setPaymentTerms(option.days)}
+            <div onClick={() => stateUpdate('paymentTerms', option.days)}
                 key={option.id} className="createoredit-option pointer">
                 <h4>{option.name}</h4>
             </div>
         )
     });
-
-    const itemStateUpdate = (type, value, indexId) => {
-        let data = invoiceEdit;
-
-        switch (type) {
-            case 'name':
-                data.items[indexId].name = value;
-                break;
-            case 'quantity':
-                data.items[indexId].quantity = value;
-                break;
-            case 'price':
-                data.items[indexId].price = value;
-                break;
-            default:
-                break;
-        }
-
-        setInvoiceEdit({...invoiceEdit, data});
-    }
 
     const itemsMapping = invoiceEdit.items.map(item => {
 
@@ -83,9 +119,9 @@ const CreateOrEdit = () => {
                     <h4>Item Name</h4>
                     <input 
                         type="text"
-                        name="name"
+                        name="item.name"
                         value={item.name}
-                        onChange={(e) => itemStateUpdate(e.target.name, e.target.value, indexId)}                            
+                        onChange={(e) => stateUpdate(e.target.name, e.target.value, indexId)}                            
                         className="createoredit-field"> 
                     </input>
                 </div>
@@ -94,9 +130,9 @@ const CreateOrEdit = () => {
                         <h4>Qty.</h4>
                         <input 
                             type="text"
-                            name="quantity"
+                            name="item.quantity"
                             value={item.quantity}
-                            onChange={(e) => itemStateUpdate(e.target.name, e.target.value, indexId)}
+                            onChange={(e) => stateUpdate(e.target.name, e.target.value, indexId)}
                             className="createoredit-field"> 
                         </input>
                     </div>
@@ -105,9 +141,9 @@ const CreateOrEdit = () => {
                         <h4>Price</h4>
                         <input 
                             type="text"
-                            name="price"
+                            name="item.price"
                             value={item.price.toFixed(2)}
-                            onChange={(e) => itemStateUpdate(e.target.name, e.target.value, indexId)}
+                            onChange={(e) => stateUpdate(e.target.name, e.target.value, indexId)}
                             className="createoredit-field"> 
                         </input>
                     </div>
@@ -119,7 +155,7 @@ const CreateOrEdit = () => {
                             <div className="position-relative">
                                 <div className="createoredit-item-trash-icon"></div>
                                 <div 
-                                    onClick={() => console.log('delete clicked')}
+                                    onClick={() => stateUpdate('deleteItem', item, indexId)}
                                     className="createoredit-item-trash-filler pointer">         
                                 </div>
                             </div>
@@ -143,9 +179,7 @@ const CreateOrEdit = () => {
                         type="text"
                         name="senderAddress.street"
                         value={invoiceEdit.senderAddress.street}
-                        onChange={(e) => 
-                            setInvoiceEdit({...invoiceEdit, senderAddress: 
-                                {...invoiceEdit.senderAddress, street: e.target.value}})}
+                        onChange={(e) => stateUpdate(e.target.name, e.target.value)}
                         className="createoredit-field">
                     </input>
                 </div>
@@ -156,9 +190,7 @@ const CreateOrEdit = () => {
                             type="text"
                             name="senderAddress.city"
                             value={invoiceEdit.senderAddress.city}
-                            onChange={(e) => 
-                                setInvoiceEdit({...invoiceEdit, senderAddress: 
-                                    {...invoiceEdit.senderAddress, city: e.target.value}})}
+                            onChange={(e) => stateUpdate(e.target.name, e.target.value)}
                             className="createoredit-field">
                         </input>
                     </div>
@@ -169,9 +201,7 @@ const CreateOrEdit = () => {
                             type="text"
                             name="senderAddress.postCode"
                             value={invoiceEdit.senderAddress.postCode}
-                            onChange={(e) => 
-                                setInvoiceEdit({...invoiceEdit, senderAddress: 
-                                    {...invoiceEdit.senderAddress, postCode: e.target.value}})}
+                            onChange={(e) => stateUpdate(e.target.name, e.target.value)}
                             className="createoredit-field"> 
                             </input>
                     </div>
@@ -182,9 +212,7 @@ const CreateOrEdit = () => {
                         type="text"
                         name="senderAddress.country"
                         value={invoiceEdit.senderAddress.country}
-                        onChange={(e) => 
-                            setInvoiceEdit({...invoiceEdit, senderAddress: 
-                                {...invoiceEdit.senderAddress, country: e.target.value}})}
+                        onChange={(e) => stateUpdate(e.target.name, e.target.value)}
                         className="createoredit-field"> 
                     </input>
                 </div>
@@ -197,8 +225,7 @@ const CreateOrEdit = () => {
                         type="text"
                         name="clientName"
                         value={invoiceEdit.clientName}
-                        onChange={(e) => 
-                            setInvoiceEdit({...invoiceEdit, clientName: e.target.value})}
+                        onChange={(e) => stateUpdate(e.target.name, e.target.value)}
                         className="createoredit-field">
                     </input>
                 </div>
@@ -208,8 +235,7 @@ const CreateOrEdit = () => {
                         type="text"
                         name="clientEmail"
                         value={invoiceEdit.clientEmail}
-                        onChange={(e) => 
-                            setInvoiceEdit({...invoiceEdit, clientEmail: e.target.value})}
+                        onChange={(e) => stateUpdate(e.target.name, e.target.value)}
                         className="createoredit-field">
                     </input>
                 </div>
@@ -219,9 +245,7 @@ const CreateOrEdit = () => {
                         type="text"
                         name="clientAddress.street"
                         value={invoiceEdit.clientAddress.street}
-                        onChange={(e) => 
-                            setInvoiceEdit({...invoiceEdit, clientAddress: 
-                                {...invoiceEdit.clientAddress, street: e.target.value}})}
+                        onChange={(e) => stateUpdate(e.target.name, e.target.value)}
                         className="createoredit-field"> 
                     </input>
                 </div>
@@ -232,9 +256,7 @@ const CreateOrEdit = () => {
                             type="text"
                             name="clientAddress.city"
                             value={invoiceEdit.clientAddress.city}
-                            onChange={(e) => 
-                                setInvoiceEdit({...invoiceEdit, clientAddress: 
-                                    {...invoiceEdit.clientAddress, city: e.target.value}})}
+                            onChange={(e) => stateUpdate(e.target.name, e.target.value)}
                             className="createoredit-field"> 
                         </input>
                     </div>
@@ -245,9 +267,7 @@ const CreateOrEdit = () => {
                             type="text"
                             name="clientAddress.postCode"
                             value={invoiceEdit.clientAddress.postCode}
-                            onChange={(e) => 
-                                setInvoiceEdit({...invoiceEdit, clientAddress: 
-                                    {...invoiceEdit.clientAddress, postCode: e.target.value}})}
+                            onChange={(e) => stateUpdate(e.target.name, e.target.value)}
                             className="createoredit-field"> 
                         </input>
                     </div>
@@ -258,9 +278,7 @@ const CreateOrEdit = () => {
                         type="text"
                         name="clientAddress.country"
                         value={invoiceEdit.clientAddress.country}
-                        onChange={(e) => 
-                            setInvoiceEdit({...invoiceEdit, clientAddress: 
-                                {...invoiceEdit.clientAddress, country: e.target.value}})}
+                        onChange={(e) => stateUpdate(e.target.name, e.target.value)}
                         className="createoredit-field"> 
                     </input>
                 </div>
@@ -284,7 +302,7 @@ const CreateOrEdit = () => {
                 <div className="position-relative">
                     <div className="createoredit-form-row-full-container f-clb">
                         <h4>Payment Terms</h4>
-                        <div onClick ={() => setToggleTerms(!toggleTerms)}className="createoredit-field f-sb pointer">
+                        <div onClick ={() => setToggleTerms(!toggleTerms)} className="createoredit-field f-sb pointer">
                         <span className={`${invoiceEdit.paymentTerms !== null && `d-none`}`}>
                                 Select Payment Status
                             </span>
@@ -305,9 +323,9 @@ const CreateOrEdit = () => {
                     <h4>Project / Description</h4>
                     <input 
                         type="text"
+                        name="description"
                         value={invoiceEdit.description}
-                        onChange={(e) => 
-                            setInvoiceEdit({...invoiceEdit, description: e.target.value})}
+                        onChange={(e) => stateUpdate(e.target.name, e.target.value)}
                         className="createoredit-field"> 
                     </input>
                 </div>

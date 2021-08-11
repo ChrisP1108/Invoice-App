@@ -156,10 +156,10 @@
         }
         &-item-trash-filler {
             position: absolute;
-            width: 2.5rem!important;
-            height: 2.5rem!important;
-            left: -0.85rem!important;
-            top: -0.75rem!important;
+            width: 2.75rem!important;
+            height: 2.75rem!important;
+            left: -.95rem!important;
+            top: -0.78rem!important;
         }
         @keyframes option-trans-in {
             from {transform: rotateX(90deg); top: 0.5rem; display: block}
