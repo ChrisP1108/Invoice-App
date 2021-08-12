@@ -1,6 +1,7 @@
 import CreateOrEdit from './components/CreateOrEdit';
 import Header from './components/Header';
 import List from './components/List';
+import Formatter from './components/List';
 import Viewer from './components/Viewer';
 import DeleteModal from './components/DeleteModal';
 import './App.scss';

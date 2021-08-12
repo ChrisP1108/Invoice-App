@@ -26,7 +26,8 @@
     $y: #bdbdbd;
     $white: #ffffff;
     $halftrans: #00000080;
-    $trans: #f4ecc200;
+    $trans: #00000000;
+    $transgray: #00000017;
 
 //Font --> font-family: 'Spartan', sans-serif;
 
@@ -236,6 +237,21 @@ body {
             color: $e!important;
         }
     }
+    .createoredit-discard-button-container {
+        background-color: $d!important;
+        h3 {
+            color: $e!important;
+        }
+    }
+    .createoredit-bottom-filler {
+        background-color: $trans;
+    }
+    .createoredit-saveasdraft-button-container {
+        background-color: $w!important;
+        h3 {
+            color: $e!important;
+        }
+    }
 }
 .day-mode {
     background-color: $k!important;
@@ -382,6 +398,28 @@ body {
         background-color: $u!important;
         h3 {
             color: $g!important;
+        }
+    }
+    .createoredit-discard-button-container {
+        background-color: $u!important;
+        h3 {
+            color: $g!important;
+        }
+    }
+    .createoredit-bottom-filler {
+        // background: $transgray;
+        background: linear-gradient(0deg, $transgray, $trans) no-repeat;
+    }
+    .createoredit-saveasdraft-button-container {
+        background-color: $w!important;
+        h3 {
+            color: $e!important;
+        }
+    }
+    .createoredit-saveasdraft-button-container {
+        background-color: $w!important;
+        h3 {
+            color: $f!important;
         }
     }
 }

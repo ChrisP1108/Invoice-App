@@ -145,13 +145,12 @@ const Viewer = () => {
     const buttonsFooter = () => {
         return (
             <div className="viewer-footer-outer-container">
-                <div className="viewer-footer-inner-container f-sb">
+                <div className="viewer-footer-inner-container f-e">
                     <div onClick={() => {setToggleCreate(); setToggleViewer()}} 
                         className="viewer-footer-edit-button-container f-c pointer">
                         <h3>Edit</h3>
                     </div>
-                    <div className={viewInvoice.status === 'paid' || viewInvoice.status === 'draft'
-                        ? `d-none` : `viewer-footer-button-gap`}></div>
+                    <div className="viewer-footer-button-gap"></div>
                     <div onClick={() => setToggleDeleteModal(true)} className="viewer-footer-delete-button-container f-c pointer">
                         <h3>Delete</h3>
                     </div>

@@ -120,7 +120,7 @@ const CreateOrEdit = () => {
         itemKeyId += 1;
         
         return (
-            <div key={itemKeyId}>
+            <div key={itemKeyId} className="createoredit-transition">
                 <div className="createoredit-form-row-full-container f-clb">
                     <h4>Item Name</h4>
                     <input 
@@ -355,12 +355,24 @@ const CreateOrEdit = () => {
             <div className="createoredit-footer-outer-container f-c">
                 <div className="createoredit-footer-inner-container f-e f-c">
                     <div onClick={() => setToggleCreate()}
-                        className="createoredit-cancel-button-container f-c pointer">
+                        className={`${invoice().id === undefined && `d-none`} createoredit-cancel-button-container f-c pointer`}>
                             <h3>Cancel</h3>
                     </div>
+                    <div onClick={() => setToggleCreate()}
+                        className={`${invoice().id !== undefined && `d-none`} createoredit-cancel-button-container f-c pointer`}>
+                            <h3>Discard</h3>
+                    </div>
+                    <div className={`${invoice().id !== undefined && `d-none`} createoredit-footer-button-gap`}></div>
+                    <div
+                        className={`${invoice().id !== undefined && `d-none`} createoredit-saveasdraft-button-container f-c`}>
+                            <h3>Save as Draft</h3>
+                    </div>
                     <div className="createoredit-footer-button-gap"></div>
-                    <div className="createoredit-savechanges-button-container f-c">
+                    <div className={`${invoice().id === undefined && `d-none`} createoredit-savechanges-button-container f-c`}>
                         <h3>Save Changes</h3>
+                    </div>
+                    <div className={`${invoice().id !== undefined && `d-none`} createoredit-saveandsend-button-container f-c`}>
+                        <h3>Save & Send</h3>
                     </div>
                 </div>
             </div>
@@ -376,6 +388,7 @@ const CreateOrEdit = () => {
                     {formBody()}
                 </div>
             </div>
+            <div className="createoredit-bottom-filler"></div>
             {footerButtons()}   
         </div>
     )
