@@ -7,6 +7,27 @@ let SERVERLIST = [];
 
 // HTTP Requests & State Update
 
+    // HTTP Response Timer.  Sets HTTP Response Status State And Reverts Back To Starting Default After 1 Second
+
+    const httpStatusAndReset = (res) => {
+        switch (res) {
+            case false:
+                console.log("Request Failed");
+                setHttpRes("Request Failed");
+                break;
+            case true:
+                console.log("Request Fulfilled");
+                setHttpRes("Request Fulfilled");
+                break;
+            default:
+                console.log(res);
+                break;
+        }
+        setTimeout(() => {
+            setHttpRes("No Request Made");
+        }, 2000);
+    }
+
     // GET INVOICES - Sent To App.Js For Formatting
 
     const fetchInvoices = async () => { // HTTP GET
@@ -28,39 +49,51 @@ let SERVERLIST = [];
 
     const delInvoice = (store, id) => { // STATE DELETE
         delReq(id);
-        const state = store.filter(item => item.id !== id);
-        return state;
+        const updateState = store.filter(invoice => invoice.id !== id);
+        return updateState;
     }
 
-    const delReq = async (id) => { // HTTP DELETE
-        const res = await fetch(`${Url}/${id}`, {
+    const delReq = async (id) => {
+        const res = await fetch(`${Url}/${id}`, { // HTTP DELETE
             method: 'DELETE'
-        });
-        const data = await res;
-        console.log(`Delete Invoice Response: ${data.status} Ok: ${data.ok}`);       
+        })
+        .then((res) => httpStatusAndReset(true))
+        .catch((err) => httpStatusAndReset(false)); 
+        // const data = await res;
+        // if (data === undefined) {
+        //     httpStatusAndReset(false)
+        // } else {
+        //     httpStatusAndReset(true);
+        // }
     }
 
     // MARK INVOICE PAID
 
     const paidInvoice = (store, id) => { // STATE PAID
-        paidUpdateReq(id);
+        paidUpdateReq(store, id);
         const state = store.map(item => item.id === id 
             ? {...item, status: 'paid'} : item);
         return state;
     }
 
-    const paidUpdateReq = async (id) => { // HTTP PUT
-        const invoice = SERVERLIST.filter(invoice => 
-            invoice.id === id);
+    const paidUpdateReq = async (store, id) => { // HTTP PUT
+        const invoice = SERVERLIST.filter(item => 
+            item.id === id
+        );
         const res = await fetch(`${Url}/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify({...invoice[0], status: 'paid'})
-        });
+        })
+        .catch((err) => console.log(err)); 
         const data = await res;
-        console.log(`Mark Invoice Paid Response: ${data.status} Ok: ${data.ok}`);
+        if (data === undefined) {
+            httpStatusAndReset(false)
+        } else {
+            httpStatusAndReset(true);
+        }
     }
 
 // Invoice List - Fetched Data Is Modified in App.Js To Reformat Dates And Currencies And Then Sent To Invoice List
@@ -73,17 +106,17 @@ let SERVERLIST = [];
             addInvoice: (store, invoice) => [...store, invoice],
             markPaidInvoice: (store, id) => paidInvoice(store, id),
             updateInvoice: (store, invoice) => (store.map((item) => item.id === invoice.id ? invoice : item)),
-            deleteInvoice: (store, id) => delInvoice(store, id)
+            deleteInvoice: (store, id) =>  delInvoice(store, id)
         });
 
 // Invoice Formatted Toggle
 
-const FORMATTOGGLE = false;
-    
-export const [toggleFormat, {setToggleFormat}] =
-    createReduxModule('formatToggle', FORMATTOGGLE, {
-        setToggleFormat: (toggle) => !toggle
-    })
+    const FORMATTOGGLE = false;
+        
+    export const [toggleFormat, {setToggleFormat}] =
+        createReduxModule('formatToggle', FORMATTOGGLE, {
+            setToggleFormat: (toggle) => toggle
+        });
 
 // Invoice Content For Viewer/Editor
 
@@ -96,7 +129,7 @@ export const [toggleFormat, {setToggleFormat}] =
 
 // NightMode Toggler
 
-    const NIGHTMODE = false;
+    const NIGHTMODE = true;
 
     export const [nightMode, {toggleNightMode}] = 
         createReduxModule('nightToggle', NIGHTMODE, {
@@ -105,12 +138,22 @@ export const [toggleFormat, {setToggleFormat}] =
 
 // Delete Modal Toggle
 
-const DELETEMODALTOGGLE = false;
-    
-export const [toggleDeleteModal, {setToggleDeleteModal}] =
-    createReduxModule('deleteToggle', DELETEMODALTOGGLE, {
-        setToggleDeleteModal: (store, toggle) => toggle
-    })
+    const DELETEMODALTOGGLE = false;
+        
+    export const [toggleDeleteModal, {setToggleDeleteModal}] =
+        createReduxModule('deleteToggle', DELETEMODALTOGGLE, {
+            setToggleDeleteModal: (store, toggle) => toggle
+        });
+
+// Error Modal Toggle
+
+    const ERRORMODALTOGGLE = false;
+        
+    export const [toggleErrorModal, {setToggleErrorModal}] =
+        createReduxModule('errorToggle', ERRORMODALTOGGLE, {
+            setToggleErrorModal: (store, toggle) => toggle
+        });
+
 
 // Viewer Toggle
 
@@ -118,14 +161,32 @@ export const [toggleDeleteModal, {setToggleDeleteModal}] =
     
     export const [toggleViewer, {setToggleViewer}] =
         createReduxModule('viewerToggle', VIEWERTOGGLE, {
-            setToggleViewer: (toggle) => !toggle
-        })
+            setToggleViewer: (store, toggle) => toggle
+        });
 
 // Create Or Edit Invoice Toggler
 
-    const CREATETOGGLE = false;
+    const CreateEditTOGGLE = false;
 
-    export const [toggleCreate, {setToggleCreate}] = 
-        createReduxModule('createToggle', CREATETOGGLE, {
-            setToggleCreate: (toggle) => !toggle
+    export const [toggleCreateEdit, {setToggleCreateEdit}] = 
+        createReduxModule('createOrEditToggle', CreateEditTOGGLE, {
+            setToggleCreateEdit: (store, toggle) => toggle
+        });
+
+// HTTP Request Response OK
+
+    const HTTPOK = "No Request Made";
+        
+    export const [httpRes, {setHttpRes}] =
+        createReduxModule('httpOk', HTTPOK, {
+            setHttpRes: (store, toggle) => toggle
+        });
+
+// Loading Spinner Toggle
+
+    const SPINNERTOGGLE = false;
+        
+    export const [toggleButtonSpinner, {setToggleButtonSpinner}] =
+        createReduxModule('spinnerToggle', SPINNERTOGGLE, {
+            setToggleButtonSpinner: (store, toggle) => toggle
         });

@@ -185,6 +185,20 @@ body {
             color: $e;
         }
     }
+    .error-modal-outer-container {
+        background-color: $c!important;
+    }
+    .error-modal-inner-container {
+        h1 {
+            color: $white;
+        }
+    }
+    .error-modal-ok-button-container {
+        background-color: $d;
+        h3 {
+            color: $e;
+        }
+    }
     #createoredit {
         h1 {
             span {
@@ -346,6 +360,20 @@ body {
         }
     }
     .delete-modal-cancel-button-container {
+        background-color: $u;
+        h3 {
+            color: $g;
+        }
+    }
+    .error-modal-outer-container {
+        background-color: $white!important;
+    }
+    .error-modal-inner-container {
+        h1 {
+            color: $h;
+        }
+    }
+    .error-modal-ok-button-container {
         background-color: $u;
         h3 {
             color: $g;

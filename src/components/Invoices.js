@@ -4,7 +4,7 @@ const Invoices = ({ listOutput }) => {
 
     const invoiceMapping = listOutput.map(item => {
         return (
-            <div key={item.id} onClick={() => {setInvoice(item); setToggleViewer();}}
+            <div key={item.id} onClick={() => {setInvoice(item); setToggleViewer(true);}}
                 id="invoices" className="invoice-outer-container position-relative pointer invoice-trans">
                 <div className="invoice-inner-container position-absolute w-100 my-auto mx-auto">
                     <div className="invoice-container-row">

@@ -3,7 +3,7 @@ import { optionTerms } from '../Arrays/Options';
 import { Schema, ItemAddSchema } from '../Schema-Invoice';
 import { invoice, 
     markPaidInvoice, setToggleDeleteModal, 
-    setToggleViewer, setToggleCreate } from '../redux/Store.js';
+    setToggleViewer, setToggleCreateEdit } from '../redux/Store.js';
 
 const CreateOrEdit = () => {
 
@@ -14,9 +14,18 @@ const CreateOrEdit = () => {
     const [invoiceEdit, setInvoiceEdit] = useState(input);
     const [toggleTerms, setToggleTerms] = useState(false);
 
+    const switchBackEval = () => {
+        if (invoice().id === undefined) {
+            setToggleCreateEdit(false);
+        } else {
+            setToggleViewer(true);
+            setToggleCreateEdit(false);
+        }
+    }
+
     const backHeader = () => {
         return (
-            <div onClick={() => setToggleCreate()} 
+            <div onClick={() => setToggleCreateEdit(false)} 
                 className="back-container pointer position-relative">
                 <div className="back-arrow"></div>
                 <div className="d-flex">
@@ -120,7 +129,7 @@ const CreateOrEdit = () => {
         itemKeyId += 1;
         
         return (
-            <div key={itemKeyId} className="createoredit-transition">
+            <div key={itemKeyId} className="createoredit-trans-item">
                 <div className="createoredit-form-row-full-container f-clb">
                     <h4>Item Name</h4>
                     <input 
@@ -354,11 +363,11 @@ const CreateOrEdit = () => {
         return (
             <div className="createoredit-footer-outer-container f-c">
                 <div className="createoredit-footer-inner-container f-e f-c">
-                    <div onClick={() => setToggleCreate()}
+                    <div onClick={() => setToggleCreateEdit(false)}
                         className={`${invoice().id === undefined && `d-none`} createoredit-cancel-button-container f-c pointer`}>
                             <h3>Cancel</h3>
                     </div>
-                    <div onClick={() => setToggleCreate()}
+                    <div onClick={() => setToggleCreateEdit(false)}
                         className={`${invoice().id !== undefined && `d-none`} createoredit-cancel-button-container f-c pointer`}>
                             <h3>Discard</h3>
                     </div>

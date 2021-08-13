@@ -1,12 +1,14 @@
 import CreateOrEdit from './components/CreateOrEdit';
 import Header from './components/Header';
 import List from './components/List';
+import ErrorModal from './components/ErrorModal';
 import Formatter from './components/List';
 import Viewer from './components/Viewer';
 import DeleteModal from './components/DeleteModal';
 import './App.scss';
 import { fetchData, initInvoices, nightMode, 
-  toggleViewer, toggleCreate, toggleDeleteModal  } from './redux/Store.js';
+  toggleViewer, toggleCreateEdit, toggleDeleteModal,
+  toggleErrorModal, setToggleErrorModal, setToggleDeleteModal, setToggleViewer, setToggleCreateEdit } from './redux/Store.js';
 import { useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
@@ -64,7 +66,7 @@ const App = () => {
 
   !toggleFormat && listFormatter();
 
-  const createToggle = toggleCreate();
+  const createToggle = toggleCreateEdit();
   const viewerToggle = toggleViewer();
 
   const invoiceSwitch = () => {
@@ -72,10 +74,18 @@ const App = () => {
       : viewerToggle ? <Viewer /> : <List /> 
   }
 
+  const errorModalSwitch = () => {
+    setToggleDeleteModal(false);
+    setToggleCreateEdit(false);
+    setToggleViewer(false);
+    return <ErrorModal />
+  }
+
   return (
     <div className={`${nightMode() ? 'night-mode' : 'day-mode'} window-height position-relative`}>
       <div className="d-flex flex-column flex-xl-row">
         <Header />
+        {toggleErrorModal() && errorModalSwitch()}
         {toggleDeleteModal() && <DeleteModal />}
         {invoiceSwitch()}
       </div>

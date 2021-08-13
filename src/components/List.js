@@ -1,6 +1,6 @@
 import Loading from './Loading';
 import Invoices from './Invoices';
-import { setToggleCreate, invoiceList, setInvoice } from '../redux/Store.js';
+import { setToggleCreateEdit, invoiceList, setInvoice } from '../redux/Store.js';
 import { useState } from 'react';
 import { filterItems } from '../Arrays/Filters';
 
@@ -105,7 +105,7 @@ const List = () => {
 
     const createNewInvoice = () => {
         setInvoice([]);
-        loadedEval() && setToggleCreate();
+        loadedEval() && setToggleCreateEdit(true);
     }
 
     const listHeader = () => {

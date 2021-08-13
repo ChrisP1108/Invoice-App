@@ -1,0 +1,97 @@
+#errorModal {
+    position: absolute!important;
+    z-index: 4;
+
+    .error-modal-page-container {
+        transition: .25s!important;
+        background-color: $halftrans!important;
+        width: 96.5vw;
+        height: 123vh;
+    }
+    .error-fill-transition {
+        animation-name: error-modal-trans-in;
+        animation-duration: .25s;
+        animation-fill-mode: forwards;
+    }
+    
+    @keyframes error-fill-trans-in {
+        from {opacity: 0}
+        to {opacity: 1}
+    }
+}
+
+.error-modal {
+
+    &-outer-container {
+        margin: 1.5rem!important;
+        width: 100%!important;
+        height: auto!important;
+        border-radius: 0.5rem!important;
+    }
+    &-inner-container {
+        padding: 2.313rem 2rem 2rem!important;
+        height: 100%!important;
+
+        h1 {
+            font-size: 1.25rem!important;
+            font-weight: 700!important;
+            letter-spacing: -0.026rem!important;
+            line-height: 2rem!important;
+            margin: 0!important;
+            padding: 0!important;
+        }
+        h2 {
+            font-size: 0.75rem!important;
+            font-weight: 500!important;
+            letter-spacing: -0.016rem!important;
+            margin: 0!important;
+            padding: 0!important;
+            display: flex;
+            align-items: center;
+            line-height: 1.375rem!important;
+            color: $f!important;
+        }
+        h3 {
+            font-size: 0.75rem!important;
+            font-weight: 700!important;
+            letter-spacing: -0.016rem!important;
+            line-height: .938rem!important;
+            margin: 0!important;
+            padding: 0!important;
+            span {
+                color: $v!important;
+            }
+        }
+    }
+
+    &-content-spacing {
+        margin: .75rem 0 1.938rem!important;
+    }
+    &-ok-button-container {
+        border-radius: 1.513rem!important;
+        width: 5.688rem!important;
+        height: 3rem!important;
+    }
+    &-error-button-container {
+        border-radius: 1.513rem!important;
+        width: 5.563rem!important;
+        background-color: $i;
+        height: 3rem!important;
+        h3 {
+            color: $white;
+        }
+    }
+    &-button-gap {
+        width: 0.5rem!important;
+    }
+    &-transition {
+        animation-name: error-modal-trans-in;
+        animation-duration: .5s;
+        animation-fill-mode: forwards;
+    }
+    
+    @keyframes error-modal-trans-in {
+        from {transform: translateY(10%); opacity: 0}
+        to {transform: translateY(0%); opacity: 1}
+    }
+}

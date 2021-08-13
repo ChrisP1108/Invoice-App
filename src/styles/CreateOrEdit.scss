@@ -186,11 +186,11 @@
             to {padding-top: 0rem; opacity: 1}
         }
         &-trans-item {
-            animation-name: createoredit-trans-in;
+            animation-name: createoredit-item-trans-in;
             animation-duration: .5s;
             animation-fill-mode: forwards;
         }
-        @keyframes createoredit-trans-in {
+        @keyframes createoredit-item-trans-in {
             from {transform: translateY(-20%); opacity: 0}
             to {transform: translateY(0%); opacity: 1}
         }
