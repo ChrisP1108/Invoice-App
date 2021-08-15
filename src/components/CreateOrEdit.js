@@ -38,17 +38,25 @@ const CreateOrEdit = () => {
     const [invoiceEdit, setInvoiceEdit] = useState(input);
     const [toggleTerms, setToggleTerms] = useState(false);
     const [emptyFields, setEmptyFields] = useState(false);
+    const [emptyItems, setEmptyItems] = useState(false);
+    const [toggleCalendar, setToggleCalendar] = useState(false);
 
     invoiceEdit.id === '' && setInvoiceEdit({...invoiceEdit, id: newInvoiceId});
 
     let itemKeyId = 0;
 
     let blankFieldTally;
+    let blankItemTally;
 
-    const valuesCheck = (items) => {
+    const valuesCheck = (items, type) => {
         Object.values(items).forEach(item => {
             if (item === '' || item === null || item == 0 || item < 0) {
-                blankFieldTally += 1;
+                if (type === 'fields') {
+                    blankFieldTally += 1;
+                }
+                if (type === 'items') {
+                    blankItemTally += 1;
+                }
             }
         });
     }
@@ -56,20 +64,28 @@ const CreateOrEdit = () => {
     const fieldsEval = () => {
         setInvoiceEdit({...invoiceEdit});
         blankFieldTally = 0;
-        valuesCheck(invoiceEdit);
-        valuesCheck(invoiceEdit.senderAddress);
-        valuesCheck(invoiceEdit.clientAddress);
-        valuesCheck(invoiceEdit.items[0]);
+        blankItemTally = 0;
+        valuesCheck(invoiceEdit, 'fields');
+        valuesCheck(invoiceEdit.senderAddress, 'fields');
+        valuesCheck(invoiceEdit.clientAddress, 'fields');
+        invoiceEdit.items.forEach(item => valuesCheck(item, 'items'));
         blankFieldTally > 0 ? setEmptyFields(true) : setEmptyFields(false);
-        const pass = blankFieldTally > 0 ? false : true;
-        if (pass) { 
+        const fieldPass = blankFieldTally > 0 ? false : true;
+        const itemPass = blankItemTally > 0 ? false : true;
+        if (fieldPass) { 
             console.log("Field Test Passed");
             setEmptyFields(false);
         } else {
             console.log("Field Test Failed");
             setEmptyFields(true);
         }
-
+        if (itemPass) { 
+            console.log("Item Test Passed");
+            setEmptyItems(false);
+        } else {
+            console.log("Item Test Failed");
+            setEmptyItems(true);
+        }
     }
 
     blankFieldTally > 0 && setEmptyFields(true);
@@ -153,6 +169,9 @@ const CreateOrEdit = () => {
                 : data.items[indexId].price = Number(value);
                 break;
             case 'deleteItem':
+                if (data.items.length == 1) {
+                    break;
+                }
                 data.items.splice(indexId, 1)
                 console.log(data);
                 break;
@@ -167,12 +186,23 @@ const CreateOrEdit = () => {
     const termsMapping = optionTerms.map(option => {
         return (
             <div onClick={() => formStateUpdate('paymentTerms', option.days)}
-                key={option.id} className="createoredit-option pointer">
-                <h4>{option.name}</h4>
+                key={option.id} 
+                className={`${option.id == 1 ? `createoredit-option-first`
+                : option.id == 4 ? `createoredit-option-last` : ``} createoredit-option pointer`}
+                style={{ borderBottom: option.id == 4 && '0rem $white solid' }}>
+                <span>{option.name}</span>
             </div>
         )
     });
 
+    const errorStylingEval = (field) => {
+        if (!emptyFields && !emptyItems) {
+            return false
+        }
+        if (field === '' || field == 0 || field === null) {
+            return true
+        } else return false
+    }
 
     const itemsMapping = invoiceEdit.items.map(item => {
 
@@ -184,8 +214,9 @@ const CreateOrEdit = () => {
             <div key={itemKeyId} className="createoredit-trans-item">
                 <div className="createoredit-form-row-full-container f-clb">
                     <div className="f-sb">
-                        <h4>Item Name</h4>
-                        {emptyFields && item.name === ''
+                        <h4 className={errorStylingEval(item.name) 
+                                && `createoredit-error-highlight`}>Item Name</h4>
+                        {errorStylingEval(item.name) 
                             && <p>can't be empty</p>}
                     </div>
                     <input 
@@ -193,15 +224,16 @@ const CreateOrEdit = () => {
                         name="item.name"
                         value={item.name}
                         onChange={(e) => formStateUpdate(e.target.name, e.target.value, indexId)}                            
-                        className={emptyFields && item.name === '' 
+                        className={errorStylingEval(item.name) 
                             ? `createoredit-field-error` : `createoredit-field`}> 
                     </input>
                 </div>
                 <div className="d-flex">
                     <div className="createoredit-form-row-full-container f-clb">
                     <div className="f-sb">
-                        <h4>Qty.</h4>
-                        {emptyFields && item.quantity == 0 
+                        <h4 className={errorStylingEval(item.quantity) 
+                                && `createoredit-error-highlight`}>Qty.</h4>
+                        {errorStylingEval(item.quantity) 
                             && <p>can't be 0</p>}
                     </div>
                         <input 
@@ -209,15 +241,16 @@ const CreateOrEdit = () => {
                             name="item.quantity"
                             value={item.quantity}
                             onChange={(e) => formStateUpdate(e.target.name, e.target.value, indexId)}
-                            className={emptyFields && item.quantity == 0 
+                            className={errorStylingEval(item.quantity)  
                                 ? `createoredit-field-error` : `createoredit-field`}> 
                         </input>
                     </div>
                     <div className="createoredit-column-gap"></div>
                     <div className="createoredit-form-row-full-container f-clb">
                         <div className="f-sb">
-                            <h4>Price</h4>
-                            {emptyFields && item.price == 0 
+                            <h4 className={errorStylingEval(item.price) 
+                                && `createoredit-error-highlight`}>Price</h4>
+                            {errorStylingEval(item.price)
                             && <p>can't be 0</p>}
                         </div>
                         <input 
@@ -225,7 +258,7 @@ const CreateOrEdit = () => {
                             name="item.price"
                             value={item.price.toFixed(2)}
                             onChange={(e) => formStateUpdate(e.target.name, e.target.value, indexId)}
-                            className={emptyFields && item.price == 0 
+                            className={errorStylingEval(item.price) 
                             ? `createoredit-field-error` : `createoredit-field`}> 
                         </input>
                     </div>
@@ -235,10 +268,12 @@ const CreateOrEdit = () => {
                         <div className="createoredit-item-total">
                             <h4><span>{itemTotal}</span></h4>
                             <div className="position-relative">
-                                <div className="createoredit-item-trash-icon"></div>
+                                <div className={itemKeyId == 1 && `d-none`}>
+                                    <div className="createoredit-item-trash-icon"></div>
                                 <div 
                                     onClick={() => formStateUpdate('deleteItem', item, indexId)}
                                     className="createoredit-item-trash-filler pointer">         
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -249,6 +284,14 @@ const CreateOrEdit = () => {
         )
     });
 
+    const calendarMenu = () => {
+        return (
+            <div className="position-absolute">
+
+            </div>
+        )
+    }
+
     const formBody = () => {
         return (
             <>
@@ -258,8 +301,9 @@ const CreateOrEdit = () => {
                 <div 
                     className="createoredit-form-row-full-container f-clb">
                         <div className="f-sb">
-                            <h4>Street Address</h4>
-                            {emptyFields && invoiceEdit.senderAddress.street === ''
+                            <h4 className={errorStylingEval(invoiceEdit.senderAddress.street) 
+                                && `createoredit-error-highlight`}>Street Address</h4>
+                            {errorStylingEval(invoiceEdit.senderAddress.street)
                             && <p>can't be empty</p>}
                         </div>
                         <input 
@@ -267,15 +311,16 @@ const CreateOrEdit = () => {
                             name="senderAddress.street"
                             value={invoiceEdit.senderAddress.street}
                             onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
-                            className={emptyFields && invoiceEdit.senderAddress.street === '' 
+                            className={errorStylingEval(invoiceEdit.senderAddress.street) 
                                 ? `createoredit-field-error` : `createoredit-field`}>
                         </input>
                 </div>
                 <div className="d-flex">
                     <div className="createoredit-form-row-full-container f-clb">
                         <div className="f-sb">
-                            <h4>City</h4>
-                            {emptyFields && invoiceEdit.senderAddress.city === ''
+                            <h4 className={errorStylingEval(invoiceEdit.senderAddress.city) 
+                                && `createoredit-error-highlight`}>City</h4>
+                            {errorStylingEval(invoiceEdit.senderAddress.city)
                             && <p>can't be empty</p>}
                         </div>
                         <input  
@@ -283,15 +328,16 @@ const CreateOrEdit = () => {
                             name="senderAddress.city"
                             value={invoiceEdit.senderAddress.city}
                             onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
-                            className={emptyFields && invoiceEdit.senderAddress.city === '' 
+                            className={errorStylingEval(invoiceEdit.senderAddress.city) 
                             ? `createoredit-field-error` : `createoredit-field`}>
                         </input>
                     </div>
                     <div className="createoredit-column-gap"></div>
                     <div className="createoredit-form-row-full-container f-clb">
                         <div className="f-sb">
-                            <h4>Post Code</h4>
-                            {emptyFields && invoiceEdit.senderAddress.postCode === ''
+                            <h4 className={errorStylingEval(invoiceEdit.senderAddress.postCode) 
+                                && `createoredit-error-highlight`}>Post Code</h4>
+                            {errorStylingEval(invoiceEdit.senderAddress.postCode)
                             && <p>can't be empty</p>}
                         </div>
                         <input 
@@ -299,15 +345,16 @@ const CreateOrEdit = () => {
                             name="senderAddress.postCode"
                             value={invoiceEdit.senderAddress.postCode}
                             onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
-                            className={emptyFields && invoiceEdit.senderAddress.postCode === '' 
+                            className={errorStylingEval(invoiceEdit.senderAddress.postCode) 
                                 ? `createoredit-field-error` : `createoredit-field`}> 
                             </input>
                     </div>
                 </div>
                 <div className="createoredit-form-row-full-container f-clb">
                         <div className="f-sb">
-                            <h4>Country</h4>
-                            {emptyFields && invoiceEdit.senderAddress.country === ''
+                            <h4 className={errorStylingEval(invoiceEdit.senderAddress.country) 
+                                && `createoredit-error-highlight`}>Country</h4>
+                            {errorStylingEval(invoiceEdit.senderAddress.country)
                             && <p>can't be empty</p>}
                         </div>
                     <input 
@@ -315,7 +362,7 @@ const CreateOrEdit = () => {
                         name="senderAddress.country"
                         value={invoiceEdit.senderAddress.country}
                         onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
-                        className={emptyFields && invoiceEdit.senderAddress.country === '' 
+                        className={errorStylingEval(invoiceEdit.senderAddress.country) 
                             ? `createoredit-field-error` : `createoredit-field`}> 
                     </input>
                 </div>
@@ -324,8 +371,9 @@ const CreateOrEdit = () => {
                 </div>
                 <div className="createoredit-form-row-full-container f-clb">
                     <div className="f-sb">
-                        <h4>Client's Name</h4>
-                        {emptyFields && invoiceEdit.clientName === ''
+                        <h4 className={errorStylingEval(invoiceEdit.clientName) 
+                                && `createoredit-error-highlight`}>Client's Name</h4>
+                        {errorStylingEval(invoiceEdit.clientName)
                             && <p>can't be empty</p>}
                     </div>
                     <input  
@@ -333,14 +381,15 @@ const CreateOrEdit = () => {
                         name="clientName"
                         value={invoiceEdit.clientName}
                         onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
-                        className={emptyFields && invoiceEdit.clientName === '' 
+                        className={errorStylingEval(invoiceEdit.clientName) 
                             ? `createoredit-field-error` : `createoredit-field`}>
                     </input>
                 </div>
                 <div className="createoredit-form-row-full-container f-clb">
                     <div className="f-sb">
-                        <h4>Client's Email</h4>
-                        {emptyFields && invoiceEdit.clientEmail === ''
+                        <h4 className={errorStylingEval(invoiceEdit.clientEmail) 
+                                && `createoredit-error-highlight`}>Client's Email</h4>
+                        {errorStylingEval(invoiceEdit.clientEmail)
                             && <p>can't be empty</p>}
                     </div>
                     <input  
@@ -348,14 +397,15 @@ const CreateOrEdit = () => {
                         name="clientEmail"
                         value={invoiceEdit.clientEmail}
                         onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
-                        className={emptyFields && invoiceEdit.clientEmail === '' 
+                        className={errorStylingEval(invoiceEdit.clientEmail) 
                         ? `createoredit-field-error` : `createoredit-field`}>
                     </input>
                 </div>
                 <div className="createoredit-form-row-full-container f-clb">
                     <div className="f-sb">
-                        <h4>Street Address</h4>
-                        {emptyFields && invoiceEdit.clientAddress.street === ''
+                        <h4 className={errorStylingEval(invoiceEdit.clientAddress.street) 
+                                && `createoredit-error-highlight`}>Street Address</h4>
+                        {errorStylingEval(invoiceEdit.clientAddress.street)
                             && <p>can't be empty</p>}
                     </div>
                     <input 
@@ -363,14 +413,15 @@ const CreateOrEdit = () => {
                         name="clientAddress.street"
                         value={invoiceEdit.clientAddress.street}
                         onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
-                        className={emptyFields && invoiceEdit.clientAddress.street === '' 
+                        className={errorStylingEval(invoiceEdit.clientAddress.street) 
                         ? `createoredit-field-error` : `createoredit-field`}> 
                     </input>
                 </div>
                 <div className="d-flex">
                     <div className="createoredit-form-row-full-container f-clb">
                         <div className="f-sb">
-                            <h4>City</h4>
+                            <h4 className={errorStylingEval(invoiceEdit.clientAddress.city) 
+                                && `createoredit-error-highlight`}>City</h4>
                             {emptyFields && invoiceEdit.clientAddress.city === ''
                             && <p>can't be empty</p>}
                         </div>
@@ -379,15 +430,16 @@ const CreateOrEdit = () => {
                             name="clientAddress.city"
                             value={invoiceEdit.clientAddress.city}
                             onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
-                            className={emptyFields && invoiceEdit.clientAddress.city === '' 
+                            className={errorStylingEval(invoiceEdit.clientAddress.city) 
                             ? `createoredit-field-error` : `createoredit-field`}> 
                         </input>
                     </div>
                     <div className="createoredit-column-gap"></div>
                     <div className="createoredit-form-row-full-container f-clb">
                         <div className="f-sb">
-                            <h4>Post Code</h4>
-                            {emptyFields && invoiceEdit.clientAddress.postCode === ''
+                            <h4 className={errorStylingEval(invoiceEdit.clientAddress.postCode) 
+                                && `createoredit-error-highlight`}>Post Code</h4>
+                            {errorStylingEval(invoiceEdit.clientAddress.postCode)
                             && <p>can't be empty</p>}
                         </div>
                         <input 
@@ -395,15 +447,16 @@ const CreateOrEdit = () => {
                             name="clientAddress.postCode"
                             value={invoiceEdit.clientAddress.postCode}
                             onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
-                            className={emptyFields && invoiceEdit.clientAddress.postCode === '' 
+                            className={errorStylingEval(invoiceEdit.clientAddress.postCode) 
                             ? `createoredit-field-error` : `createoredit-field`}> 
                         </input>
                     </div>
                 </div>
                 <div className="createoredit-form-row-full-container f-clb">
                     <div className="f-sb">
-                        <h4>Country</h4>
-                        {emptyFields && invoiceEdit.clientAddress.country === ''
+                        <h4 className={errorStylingEval(invoiceEdit.clientAddress.country) 
+                                && `createoredit-error-highlight`}>Country</h4>
+                        {errorStylingEval(invoiceEdit.clientAddress.country)
                             && <p>can't be empty</p>}
                     </div>
                     <input 
@@ -411,47 +464,52 @@ const CreateOrEdit = () => {
                         name="clientAddress.country"
                         value={invoiceEdit.clientAddress.country}
                         onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
-                        className={emptyFields && invoiceEdit.clientAddress.country === '' 
+                        className={errorStylingEval(invoiceEdit.clientAddress.country) 
                         ? `createoredit-field-error` : `createoredit-field`}> 
                     </input>
                 </div>
                 <div className="createoredit-invoice-top-gap"></div>
-                <div className={`${invoice().id === undefined && `d-none`} createoredit-form-row-full-container createoredit-invoice-disabled f-clb`}>
+                <div className={`${invoice().id === undefined && `d-none`} createoredit-form-row-full-container 
+                    createoredit-invoice-disabled f-clb`}>
                     <h4>Invoice Date</h4>
                     <div className="createoredit-date-disabled f-sb">
                         <h4><span>{invoiceEdit.createdAt}</span></h4>
                         <div className="createoredit-calendar-icon"></div>
                     </div>   
                 </div>
-                <div className={`${invoice().id !== undefined && `d-none`} createoredit-form-row-full-container f-clb`}>
+                <div className={`${invoice().id !== undefined && `d-none`} 
+                        createoredit-form-row-full-container f-clb position-relative`}>
                     <div className="f-sb">
-                        <h4>Invoice Date</h4>
+                        <h4 className={errorStylingEval(invoiceEdit.createdAt) 
+                                && `createoredit-error-highlight`}>Invoice Date</h4>
                         {emptyFields && invoiceEdit.createdAt === ''
                             && <p>date must be selected</p>}
                     </div>
                     <div className="f-sb">
-                        <input 
-                            value={invoiceEdit.createdAt}
-                            type="date"
-                            className={emptyFields && invoiceEdit.createdAt === '' 
-                        ? `createoredit-field-error` : `createoredit-field`}> 
-                        </input>
+                        <div onClick={() => setToggleCalendar(!toggleCalendar)}
+                            className={`${errorStylingEval(invoiceEdit.createdAt) 
+                            ? `createoredit-field-error` : `createoredit-field`} 
+                            createoredit-date-active f-sb pointer`}> 
+                                <span>{invoiceEdit.createdAt === '' ? `Select Invoice Date` : invoiceEdit.createdAt}</span>
+                                <div className="createoredit-calendar-icon"></div>
+                        </div>
                     </div>
                 </div>
                 <div className="position-relative">
                     <div className="createoredit-form-row-full-container f-clb">
                         <div className="f-sb">
-                            <h4>Payment Terms</h4>
-                            {emptyFields && invoiceEdit.paymentTerms === null
+                            <h4 className={errorStylingEval(invoiceEdit.paymentTerms) 
+                                && `createoredit-error-highlight`}>Payment Terms</h4>
+                            {errorStylingEval(invoiceEdit.paymentTerms)
                             && <p>payment term must be selected</p>}
                         </div>
                         <div onClick ={() => setToggleTerms(!toggleTerms)} 
-                            className={`${emptyFields && invoiceEdit.paymentTerms === null 
+                            className={`${errorStylingEval(invoiceEdit.paymentTerms) 
                                 ? `createoredit-field-error` : `createoredit-field`} f-sb pointer`}>
                             <span className={`${invoiceEdit.paymentTerms !== null && `d-none`}`}>
                                 Select Payment Status
                             </span>
-                            <span className={`${invoiceEdit.paymentTerms === null && `d-none`}`}>
+                            <span className={`${invoiceEdit.paymentTerms == null && `d-none`}`}>
                                 Net {invoiceEdit.paymentTerms} Day{invoiceEdit.paymentTerms > 1 ? 's' : ''}
                             </span>
                             <div className="f-c">
@@ -466,7 +524,8 @@ const CreateOrEdit = () => {
                 </div>
                 <div className="createoredit-form-row-full-container f-clb">
                     <div className="f-sb">
-                        <h4>Project / Description</h4>
+                        <h4 className={errorStylingEval(invoiceEdit.description) 
+                                && `createoredit-error-highlight`}>Project / Description</h4>
                         {emptyFields && invoiceEdit.description === ''
                             && <p>can't be empty</p>}
                     </div>
@@ -475,7 +534,7 @@ const CreateOrEdit = () => {
                         name="description"
                         value={invoiceEdit.description}
                         onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
-                        className={emptyFields && invoiceEdit.description === '' 
+                        className={errorStylingEval(invoiceEdit.description) 
                             ? `createoredit-field-error` : `createoredit-field`}> 
                     </input>
                 </div>
@@ -491,9 +550,9 @@ const CreateOrEdit = () => {
                     <h4>+ Add New Item</h4>
                 </div>
                 <div className="createoredit-bottom-filler">
-                    <div className={emptyFields ? `createoredit-bottom-filler-edit- f-clb` : `d-none`}>
-                        <p>- All fields must be added</p>
-                        <p>- An item must be added</p>
+                    <div className="createoredit-bottom-filler-error-text f-clb">
+                        <p className={!emptyFields && `d-none`}>- All fields must be added</p>
+                        <p className={!emptyItems && `d-none`}>- An item must be added</p>
                     </div>
                 </div>
             </>

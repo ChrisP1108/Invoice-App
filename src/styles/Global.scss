@@ -24,6 +24,7 @@
     $w: #373B53;
     $x: #777F98;
     $y: #bdbdbd;
+    $z: #0C0E16;
     $white: #ffffff;
     $halftrans: #00000080;
     $trans: #00000000;
@@ -221,15 +222,18 @@ body {
     }
     .createoredit-option {
         background-color: $d;
-        border: 0.063rem $w solid;
+        border-bottom: 0.063rem $c solid;
         color: $white;
 
         span {
-            color:$u;
+            transition: .25s;
+            color:$e;
         }
     }
     .createoredit-option:hover {
-        border: 0.063rem $g solid;
+        span {
+            color: $j;
+        }
     }
     input:focus {
         background-color: $c!important;
@@ -406,11 +410,18 @@ body {
     }
     .createoredit-option {
         background-color: $white;
-        border: 0.063rem $e solid;
-        color: $white;  
+        border-bottom: 0.063rem $e solid;
+        color: $z;
+
+        span {
+            transition: .25s;
+            color:$z;
+        }
     }
     .createoredit-option:hover {
-        border: 0.063rem $y solid;
+        span {
+            color: $j;
+        }
     }
     input:focus:-webkit-autofill {
         background-color: $white;

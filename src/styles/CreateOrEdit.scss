@@ -98,6 +98,9 @@
             font-weight: 700!important;
             transition: .25s!important;
         }
+        &-error-highlight {
+            color: $i!important;
+        }
         &-item-total {
             height: 3rem!important;
             width: 100%!important;
@@ -111,14 +114,28 @@
                 font-weight: 700!important;
             }
         }
+        &-calendar-outer-container {
+            width: 100%!important;
+            height: 15.188rem!important;
+        }
         &-option {
             height: 3rem!important;
             width: 100%!important;
-            border-radius: 0.25rem!important;
             padding: 1.063rem 0.875rem 1.063rem 1.25rem!important;
             font-size: 0.75rem!important;
             font-weight: 700!important;
             transition: .25s!important;
+        }
+        &-option-first {
+            border-top-left-radius: 0.25rem!important;
+            border-top-right-radius: 0.25rem!important;
+        }
+        &-option-last {
+            border-bottom-left-radius: 0.25rem!important;
+            border-bottom-right-radius: 0.25rem!important;
+        }
+        &-date-active {
+            padding: 1.063rem 0.875rem 1.063rem 1.25rem!important;
         }
         &-date-disabled {
             height: 3rem!important;
@@ -163,6 +180,10 @@
             animation-duration: .5s;
             animation-fill-mode: forwards;
         }
+        @keyframes option-trans-in {
+            from {transform: rotateX(90deg); top: 0.5rem; display: block}
+            to {transform: rotateX(0deg); top: 5.05rem; display: block}
+        }
         &-item-list-container {
             width: 100%!important;
             margin-top: 4.125rem!important
@@ -194,10 +215,6 @@
         }
         &-item-empty-button-gap {
             margin-top: 2.5rem!important;
-        }
-        @keyframes option-trans-in {
-            from {transform: rotateX(90deg); top: 0.5rem; display: block}
-            to {transform: rotateX(0deg); top: 4.55rem; display: block}
         }
         &-transition {
             animation-name: createoredit-trans-in;

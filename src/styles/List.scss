@@ -107,7 +107,7 @@
     }
 
     @keyframes filter-trans-in {
-        from {transform: rotateX(90deg); top: -1.25rem; display: block}
+        from {transform: rotateX(90deg); top: 0rem; display: block}
         to {transform: rotateX(0deg); top: 2.75rem; display: block}
     }
     @keyframes filter-trans-out {
