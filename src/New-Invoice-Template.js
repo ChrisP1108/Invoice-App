@@ -1,4 +1,4 @@
-export const Schema = {
+export const NewInvoiceTemplate = {
     id: "",
     createdAt: "",
     paymentDue: "",

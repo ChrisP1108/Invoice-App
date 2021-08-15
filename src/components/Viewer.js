@@ -1,28 +1,35 @@
 import Loading from './Loading';
 import ButtonReqSpinner from './ButtonReqSpinner';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { invoice, 
     markPaidInvoice, setToggleDeleteModal, 
     setToggleViewer, setToggleCreateEdit,
-    toggleButtonSpinner, setToggleButtonSpinner,
     httpRes, setHttpRes, setToggleErrorModal, initInvoices } from '../redux/Store.js';
 
 const Viewer = () => {
     
     const [viewInvoice, setViewInvoice] = useState(invoice());
+    const [markPaidSpinner, setMarkPaidSpinner] = useState(false);
+    const [clicked, setClicked] = useState(false);
 
-    if (httpRes() === "Request Failed") {
-        setToggleButtonSpinner(false);
-        setToggleErrorModal(true);
-    } else if (httpRes() === "Request Fulfilled") {
-        setViewInvoice({...viewInvoice, status: 'paid'})
-        setToggleButtonSpinner(false);
+    if (httpRes() === "Mark Paid Request Failed") {
+        setTimeout(() => {
+            setToggleErrorModal(true);
+            setMarkPaidSpinner(false);
+        }, 500);
+    } 
+    if (httpRes() === "Mark Paid Request Fulfilled") {
+        setTimeout(() => {
+            setClicked(true);
+            setMarkPaidSpinner(false);
+            setViewInvoice({...viewInvoice, status: 'paid'});
+        }, 500); 
     }
 
     const markPaid = () => {
-        setToggleButtonSpinner(true);
+        setMarkPaidSpinner(true);
+        setHttpRes("Mark Paid Request Pending");
         markPaidInvoice(viewInvoice.id);
-        setHttpRes("Request Pending");    
     }
 
     const backHeader = () => {
@@ -157,7 +164,7 @@ const Viewer = () => {
         return (
             <div className="viewer-footer-outer-container">
                 <div className="viewer-footer-inner-container f-e">
-                    <div onClick={() => {setToggleCreateEdit(true); setToggleViewer(false)}} 
+                    <div onClick={() => {setToggleCreateEdit(true); setToggleViewer(true)}} 
                         className="viewer-footer-edit-button-container f-c pointer">
                         <h3>Edit</h3>
                     </div>
@@ -168,9 +175,13 @@ const Viewer = () => {
                     <div className={viewInvoice.status === 'paid' || viewInvoice.status === 'draft'
                         ? `d-none` : `viewer-footer-button-gap`}></div>
                     <div onClick={() => markPaid()} 
-                        className={`${viewInvoice.status === 'paid' || viewInvoice.status === 'draft' ? `d-none` : ``} 
-                            viewer-footer-paid-button-container f-c pointer position-relative`}>
-                        {toggleButtonSpinner() ? <ButtonReqSpinner /> : <h3>Mark as Paid</h3>}
+                        className={`${viewInvoice.status === 'pending' 
+                            ? `viewer-footer-paid-button-container` 
+                            : clicked  && viewInvoice.status === 'paid' ? `viewer-footer-paid-button-animation`
+                            : viewInvoice.status === 'paid' && !clicked ? `d-none` : ``} 
+                            f-c pointer position-relative`}>
+                        {markPaidSpinner ? <ButtonReqSpinner /> : 
+                            viewInvoice.status === 'pending' &&  <h3>Mark as Paid</h3> }
                     </div>
                 </div>
             </div>

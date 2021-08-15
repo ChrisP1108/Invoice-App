@@ -195,6 +195,7 @@
             width: 5.563rem!important;
             background-color: $i;
             height: 100%!important;
+            transition: 0.5s;
             h3 {
                 color: $white;
             }
@@ -207,6 +208,17 @@
             h3 {
                 color: $white;
             }
+        }
+        &-paid-button-animation {
+            animation-name: paid-trans-out;
+            animation-duration: .5s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes paid-trans-out {
+            from {transform: rotateY(0deg); 
+                    width: 9.313rem; opacity: 1}
+            to {transform: rotateY(90deg); 
+                    width: 0rem; opacity: 0}
         }
     }
     .viewer-transition {

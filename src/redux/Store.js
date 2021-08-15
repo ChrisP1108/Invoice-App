@@ -10,25 +10,13 @@ let SERVERLIST = [];
     // HTTP Response Timer.  Sets HTTP Response Status State And Reverts Back To Starting Default After 1 Second
 
     const httpStatusAndReset = (res) => {
-        switch (res) {
-            case false:
-                console.log("Request Failed");
-                setHttpRes("Request Failed");
-                break;
-            case true:
-                console.log("Request Fulfilled");
-                setHttpRes("Request Fulfilled");
-                break;
-            default:
-                console.log(res);
-                break;
-        }
+            setHttpRes(res);
         setTimeout(() => {
             setHttpRes("No Request Made");
-        }, 2000);
+        }, 1000);
     }
 
-    // GET INVOICES - Sent To App.Js For Formatting
+    // GET INVOICES - Sent To App.Js For Formatting Date and Currency Fields
 
     const fetchInvoices = async () => { // HTTP GET
         const res = await fetch(Url)
@@ -57,14 +45,9 @@ let SERVERLIST = [];
         const res = await fetch(`${Url}/${id}`, { // HTTP DELETE
             method: 'DELETE'
         })
-        .then((res) => httpStatusAndReset(true))
-        .catch((err) => httpStatusAndReset(false)); 
-        // const data = await res;
-        // if (data === undefined) {
-        //     httpStatusAndReset(false)
-        // } else {
-        //     httpStatusAndReset(true);
-        // }
+        .then(() => httpStatusAndReset("Delete Request Fulfilled"))
+        .catch(() => httpStatusAndReset("Delete Request Failed"));
+        const data = await res; 
     }
 
     // MARK INVOICE PAID
@@ -87,13 +70,8 @@ let SERVERLIST = [];
             },
             body: JSON.stringify({...invoice[0], status: 'paid'})
         })
-        .catch((err) => console.log(err)); 
-        const data = await res;
-        if (data === undefined) {
-            httpStatusAndReset(false)
-        } else {
-            httpStatusAndReset(true);
-        }
+        .then(() => httpStatusAndReset("Mark Paid Request Fulfilled"))
+        .catch(() => httpStatusAndReset("Mark Paid Request Failed")); 
     }
 
 // Invoice List - Fetched Data Is Modified in App.Js To Reformat Dates And Currencies And Then Sent To Invoice List
@@ -180,13 +158,4 @@ let SERVERLIST = [];
     export const [httpRes, {setHttpRes}] =
         createReduxModule('httpOk', HTTPOK, {
             setHttpRes: (store, toggle) => toggle
-        });
-
-// Loading Spinner Toggle
-
-    const SPINNERTOGGLE = false;
-        
-    export const [toggleButtonSpinner, {setToggleButtonSpinner}] =
-        createReduxModule('spinnerToggle', SPINNERTOGGLE, {
-            setToggleButtonSpinner: (store, toggle) => toggle
         });

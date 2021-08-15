@@ -1,14 +1,14 @@
 {
   "invoices": [
     {
-      "id": "XM9141",
-      "createdAt": "2021-08-21",
-      "paymentDue": "2021-09-20",
-      "description": "Graphic Design",
-      "paymentTerms": 30,
-      "clientName": "Alex Grim",
-      "clientEmail": "alexgrim@mail.com",
-      "status": "pending",
+      "id": "RT2080",
+      "createdAt": "2021-10-11",
+      "paymentDue": "2021-10-12",
+      "description": "Logo Concept",
+      "paymentTerms": 1,
+      "clientName": "Alysa Werner",
+      "clientEmail": "alysa@email.co.uk",
+      "status": "paid",
       "senderAddress": {
         "street": "19 Union Terrace",
         "city": "London",
@@ -16,26 +16,51 @@
         "country": "United Kingdom"
       },
       "clientAddress": {
-        "street": "84 Church Way",
-        "city": "Bradford",
-        "postCode": "BD1 9PB",
+        "street": "63 Warwick Road",
+        "city": "Carlisle",
+        "postCode": "CA20 2TG",
         "country": "United Kingdom"
       },
       "items": [
         {
-          "name": "Banner Design",
+          "name": "Logo Sketches",
           "quantity": 1,
-          "price": 156,
-          "total": 156
-        },
-        {
-          "name": "Email Design",
-          "quantity": 2,
-          "price": 200,
-          "total": 400
+          "price": 102.04,
+          "total": 102.04
         }
       ],
-      "total": 556
+      "total": 102.04
+    },
+    {
+      "id": "TY9141",
+      "createdAt": "2021-10-01",
+      "paymentDue": "2021-10-31",
+      "description": "Landing Page Design",
+      "paymentTerms": 30,
+      "clientName": "Thomas Wayne",
+      "clientEmail": "thomas@dc.com",
+      "status": "paid",
+      "senderAddress": {
+        "street": "19 Union Terrace",
+        "city": "London",
+        "postCode": "E1 3EZ",
+        "country": "United Kingdom"
+      },
+      "clientAddress": {
+        "street": "3964  Queens Lane",
+        "city": "Gotham",
+        "postCode": "60457",
+        "country": "United States of America"
+      },
+      "items": [
+        {
+          "name": "Web Design",
+          "quantity": 1,
+          "price": 6155.91,
+          "total": 6155.91
+        }
+      ],
+      "total": 6155.91
     }
   ]
 }

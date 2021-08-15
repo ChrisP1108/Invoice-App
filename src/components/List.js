@@ -1,6 +1,7 @@
 import Loading from './Loading';
 import Invoices from './Invoices';
-import { setToggleCreateEdit, invoiceList, setInvoice } from '../redux/Store.js';
+import { setToggleCreateEdit, invoiceList, 
+    invoice, setInvoice } from '../redux/Store.js';
 import { useState } from 'react';
 import { filterItems } from '../Arrays/Filters';
 

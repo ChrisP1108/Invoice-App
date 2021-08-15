@@ -1,27 +1,28 @@
+import { useState, useEffect } from 'react';
 import ButtonReqSpinner from './ButtonReqSpinner';
 import { invoice, setToggleViewer, setToggleDeleteModal, 
-    deleteInvoice, httpRes, setHttpRes,
-    toggleButtonSpinner, setToggleButtonSpinner, setToggleErrorModal,
+    deleteInvoice, httpRes, setHttpRes, setToggleErrorModal,
     setToggleCreateEdit, initInvoices, invoiceList } from '../redux/Store.js';
 
 const DeleteModal = () => {
 
     const deletingId = invoice().id;
 
-    if (httpRes() === "Request Failed") {
-        setToggleButtonSpinner(false);
-        setToggleErrorModal(true);
-
-    } else if (httpRes() === "Request Fulfilled") {
-        setToggleButtonSpinner(false);
+    const [deleteSpinner, setDeleteSpinner] = useState(false);
+    
+    if (httpRes() === "Delete Request Failed") {
+        setToggleDeleteModal(false);
+        setToggleErrorModal(true); 
+    }
+    if (httpRes() === "Delete Request Fulfilled") {
         setToggleDeleteModal(false);
         setToggleViewer(false);
     }
 
     const confirmDelete = () => {
-        deleteInvoice(deletingId);
-        setToggleButtonSpinner(true);
-        setHttpRes("Request Pending");
+        setDeleteSpinner(true);   
+        setHttpRes("Delete Request Pending");
+        deleteInvoice(deletingId); 
     }
 
     return (
@@ -42,7 +43,7 @@ const DeleteModal = () => {
                             <div className="delete-modal-button-gap"></div>
                             <div onClick={() => confirmDelete()} 
                                 className="delete-modal-delete-button-container f-c pointer position-relative">
-                                {toggleButtonSpinner() ? <ButtonReqSpinner /> : <h3>Delete</h3>} 
+                                {deleteSpinner ? <ButtonReqSpinner /> : <h3>Delete</h3>} 
                             </div>
                         </div>
                     </div>

@@ -214,6 +214,11 @@ body {
         border: 0.063rem $d solid;
         color: $white;
     }
+    .createoredit-field-error {
+        background-color: $c;
+        border: 0.063rem $i solid;
+        color: $white;
+    }
     .createoredit-option {
         background-color: $d;
         border: 0.063rem $w solid;
@@ -392,6 +397,11 @@ body {
     .createoredit-field {
         background-color: $white;
         border: 0.063rem $e solid;
+        color: $h;
+    }
+    .createoredit-field-error {
+        background-color: $white;
+        border: 0.063rem $i solid;
         color: $h;
     }
     .createoredit-option {

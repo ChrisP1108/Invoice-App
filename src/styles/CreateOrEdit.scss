@@ -46,6 +46,18 @@
         transition: .25s!important;
         color: $x!important;
     }
+    p {
+        font-size: 0.625rem!important;
+        font-weight: 500!important;
+        letter-spacing: -0.013rem!important;
+        line-height: 0.938rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        transition: .25s!important;
+        color: $i!important;
+        display: flex;
+        align-items: center;
+    }
     .createoredit {
         &-container {
             margin: 2rem 1.5rem 0rem 1.5rem!important;
@@ -65,6 +77,17 @@
             width: 100%!important;
         }
         &-field {
+            height: 3rem!important;
+            width: 100%!important;
+            border-radius: 0.25rem!important;
+            padding-left: 1.25rem!important;
+            display: flex;
+            align-items: center;
+            font-size: 0.75rem!important;
+            font-weight: 700!important;
+            transition: .25s!important;
+        }
+        &-field-error {
             height: 3rem!important;
             width: 100%!important;
             border-radius: 0.25rem!important;
@@ -196,8 +219,12 @@
         }
         &-bottom-filler {
             margin-top: 1.5rem!important;
+            padding-top: 0.25rem!important;
             height: 4rem!important;
             width: 100%!important;
+        }
+        &-bottom-filler-error-text {
+            height: 1.938rem!important;
         }
         &-footer-outer-container {
             height: 5.688rem!important;
