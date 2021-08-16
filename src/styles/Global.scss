@@ -275,6 +275,15 @@ body {
             color: $e!important;
         }
     }
+    .createoredit-calendar-outer-container {
+        background-color: $d!important;
+        span {
+            color: $e!important;
+        }
+        h6 {
+            color: $e!important;
+        }
+    }
 }
 .day-mode {
     background-color: $k!important;
@@ -469,6 +478,15 @@ body {
         background-color: $w!important;
         h3 {
             color: $f!important;
+        }
+    }
+    .createoredit-calendar-outer-container {
+        background-color: $white!important;
+        span {
+            color: $h!important;
+        }
+        h6 {
+            color: $h!important;
         }
     }
 }

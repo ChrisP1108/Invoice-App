@@ -35,11 +35,18 @@ const CreateOrEdit = () => {
 
     input.id = input.id === '' ? newInvoiceId : input.id;
 
+    const currentDate = new Date().toString();
+    const currentMonth = currentDate.slice(4, 7);
+    const currentYear = currentDate.slice(11, 15);
+    const startingDate = `${currentMonth} ${currentYear}`;
+
     const [invoiceEdit, setInvoiceEdit] = useState(input);
     const [toggleTerms, setToggleTerms] = useState(false);
     const [emptyFields, setEmptyFields] = useState(false);
     const [emptyItems, setEmptyItems] = useState(false);
     const [toggleCalendar, setToggleCalendar] = useState(false);
+    const [calIncrement, setCalIncrement] = useState(0);
+    const [calHeader, setCalHeader] = useState(startingDate);
 
     invoiceEdit.id === '' && setInvoiceEdit({...invoiceEdit, id: newInvoiceId});
 
@@ -284,10 +291,65 @@ const CreateOrEdit = () => {
         )
     });
 
+    const calendarDateGenerator = (increment) => {
+        if (increment === '-') {
+            if (calIncrement < 0) {
+                return;
+            }
+            setCalIncrement(calIncrement - 1)
+        }
+        if (increment === '+') {
+            setCalIncrement(calIncrement + 1)
+        }
+        const date = new Date();
+        let dayOfWeekInput = date.getDay();
+        let day = date.getDate();
+        let monthInput = date.getMonth() + calIncrement;
+        let year = date.getFullYear();
+
+        if (monthInput > 12) {
+            year += 1;
+            monthInput = 0
+        }
+
+        const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July',
+        'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        // const daysofWeekArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 
+        //     'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        
+        const month = monthsArray[monthInput];
+    }
+
     const calendarMenu = () => {
         return (
-            <div className="position-absolute">
-
+            <div className="createoredit-calendar-outer-container position-absolute">
+                <div className="createoredit-calendar-inner-main-container f-sb flex-column">
+                    <div className="createoredit-calendar-inner-top-container">  
+                        <div className="f-ca">
+                            <div className="createoredit-calendar-left-arrow position-relative">
+                                <div onClick={() => calendarDateGenerator('-')}
+                                    className="createoredit-calendar-arrow-left-filler pointer"></div>
+                            </div>
+                                <span>{calHeader}</span>
+                            <div className="createoredit-calendar-right-arrow position-relative">
+                                <div onClick={() => calendarDateGenerator('+')}
+                                    className="createoredit-calendar-arrow-right-filler pointer"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="createoredit-calendar-days-container">
+                        <div className="f-sb">
+                            <h6>1</h6>
+                            <h6>2</h6>
+                            <h6>3</h6>
+                            <h6>4</h6>
+                            <h6>5</h6>
+                            <h6>6</h6>
+                            <h6>7</h6>  
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
@@ -486,7 +548,7 @@ const CreateOrEdit = () => {
                             && <p>date must be selected</p>}
                     </div>
                     <div className="f-sb">
-                        <div onClick={() => setToggleCalendar(!toggleCalendar)}
+                        <div onClick={() => {setToggleCalendar(!toggleCalendar); setToggleTerms(false)}}
                             className={`${errorStylingEval(invoiceEdit.createdAt) 
                             ? `createoredit-field-error` : `createoredit-field`} 
                             createoredit-date-active f-sb pointer`}> 
@@ -494,6 +556,7 @@ const CreateOrEdit = () => {
                                 <div className="createoredit-calendar-icon"></div>
                         </div>
                     </div>
+                    {toggleCalendar && !toggleTerms && calendarMenu()}
                 </div>
                 <div className="position-relative">
                     <div className="createoredit-form-row-full-container f-clb">
@@ -503,7 +566,7 @@ const CreateOrEdit = () => {
                             {errorStylingEval(invoiceEdit.paymentTerms)
                             && <p>payment term must be selected</p>}
                         </div>
-                        <div onClick ={() => setToggleTerms(!toggleTerms)} 
+                        <div onClick ={() => {setToggleTerms(!toggleTerms); setToggleCalendar(false)}} 
                             className={`${errorStylingEval(invoiceEdit.paymentTerms) 
                                 ? `createoredit-field-error` : `createoredit-field`} f-sb pointer`}>
                             <span className={`${invoiceEdit.paymentTerms !== null && `d-none`}`}>
@@ -518,7 +581,7 @@ const CreateOrEdit = () => {
                             </div>
                         </div>
                     </div>
-                    <div className={`${toggleTerms ? `createoredit-option-trans` : `d-none`} position-absolute w-100`}>
+                    <div className={`${toggleTerms && !toggleCalendar ? `createoredit-option-trans` : `d-none`} position-absolute w-100`}>
                         {termsMapping}
                     </div>
                 </div>

@@ -46,6 +46,24 @@
         transition: .25s!important;
         color: $x!important;
     }
+    h6 {
+        font-size: 0.75rem!important;
+        font-weight: 700!important;
+        letter-spacing: -0.016rem!important;
+        line-height: 0.938rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        transition: .25s!important;
+        height: 1.75rem!important;
+        width: 1.75rem!important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    h6:hover {
+        color: $n!important;
+        cursor: pointer;
+    }
     p {
         font-size: 0.625rem!important;
         font-weight: 500!important;
@@ -117,6 +135,79 @@
         &-calendar-outer-container {
             width: 100%!important;
             height: 15.188rem!important;
+            z-index: 1!important;
+            border-radius: 0.5rem!important;
+            animation-name: calendar-trans-in;
+            animation-duration: .5s;
+            animation-fill-mode: forwards;
+            span {
+                font-size: 0.75rem!important;
+                font-weight: 700!important;
+                letter-spacing: -0.016rem!important;
+                line-height: 0.938rem!important;
+                margin: 0!important;
+                padding: 0!important;
+                transition: .25s!important;
+            }
+        }
+        @keyframes calendar-trans-in {
+            from {transform: rotateX(90deg); top: 0rem; display: block}
+            to {transform: rotateX(0deg); top: 5.05rem; display: block}
+        }
+        &-calendar-inner-main-container {
+            padding: 1.5rem .75rem 2.125rem .75rem!important;
+            height: 100%!important;
+        }
+        &-calendar-inner-top-container {
+            padding: 0 0.75rem 0 0.75rem!important;
+        }
+        &-calendar-inner-body-container {
+            padding: 1.5rem 1.5rem 2.125rem 1.5rem!important;
+            height: 100%!important;
+        }
+        &-calendar-left-arrow {
+            background-image: url(../assets/icon-arrow-down.svg);
+            width: 0.625rem!important;
+            height: 0.438rem!important;
+            transform: rotate(90deg);
+        }
+        &-calendar-right-arrow {
+            background-image: url(../assets/icon-arrow-down.svg);
+            width: 0.625rem!important;
+            height: 0.438rem!important;
+            transform: rotate(-90deg);
+        }
+        &-calendar-arrow-left-filler {
+            position: absolute;
+            width: 2.75rem!important;
+            height: 2.75rem!important;
+            left: -1rem!important;
+            top: -1.2rem!important;
+        }
+        &-calendar-arrow-right-filler {
+            position: absolute;
+            width: 2.75rem!important;
+            height: 2.75rem!important;
+            left: -1.25rem!important;
+            top: -1.25rem!important;
+        }
+        &-calendar-days-container {
+            margin-top: 1.625rem!important;
+            padding: 0 0.30rem 0 0.30rem;
+            width: 100%!important;
+            height: 100%!important;
+        }
+        &-calendar-day-filler {
+            z-index: 0!important;
+            position: absolute;
+            width: 1.5rem!important;
+            height: 1.5rem!important;
+            top: -.1rem!important;
+            left: 0rem!important;
+
+        }
+        &-calendar-day-filler:hover {
+            cursor: pointer;
         }
         &-option {
             height: 3rem!important;
