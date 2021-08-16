@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { optionTerms } from '../Arrays/Options';
 import { NewInvoiceTemplate, ItemAddSchema } from '../New-Invoice-Template';
 import { invoice, setInvoice,
@@ -35,18 +35,35 @@ const CreateOrEdit = () => {
 
     input.id = input.id === '' ? newInvoiceId : input.id;
 
+    const date = new Date();
+    const dayOfWeek = date.getDay();
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
     const currentDate = new Date().toString();
     const currentMonth = currentDate.slice(4, 7);
     const currentYear = currentDate.slice(11, 15);
     const startingDate = `${currentMonth} ${currentYear}`;
+    const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July',
+        'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    const calStartingState = {
+        header: startingDate,
+        totalTally: 0,
+        monthTally: month,
+        yearTally: year,
+        prevMonthNumbers: [],
+        monthNumbers: [],
+        postMonthNumbers: []
+    }
 
     const [invoiceEdit, setInvoiceEdit] = useState(input);
     const [toggleTerms, setToggleTerms] = useState(false);
     const [emptyFields, setEmptyFields] = useState(false);
     const [emptyItems, setEmptyItems] = useState(false);
     const [toggleCalendar, setToggleCalendar] = useState(false);
-    const [calIncrement, setCalIncrement] = useState(0);
-    const [calHeader, setCalHeader] = useState(startingDate);
+    const [calState, setCalState] = useState(calStartingState);
+    const [calendarOutput, setCalendarOutput] = useState('');
 
     invoiceEdit.id === '' && setInvoiceEdit({...invoiceEdit, id: newInvoiceId});
 
@@ -292,34 +309,103 @@ const CreateOrEdit = () => {
     });
 
     const calendarDateGenerator = (increment) => {
+        const data = calState;
+
         if (increment === '-') {
-            if (calIncrement < 0) {
+            if (data.totalTally == 0) {
                 return;
             }
-            setCalIncrement(calIncrement - 1)
-        }
-        if (increment === '+') {
-            setCalIncrement(calIncrement + 1)
-        }
-        const date = new Date();
-        let dayOfWeekInput = date.getDay();
-        let day = date.getDate();
-        let monthInput = date.getMonth() + calIncrement;
-        let year = date.getFullYear();
-
-        if (monthInput > 12) {
-            year += 1;
-            monthInput = 0
+            data.totalTally -= 1;
+            data.monthTally -= 1;
+        } else if (increment === '+') {
+            data.totalTally += 1;
+            data.monthTally += 1;
         }
 
-        const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July',
-        'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        if (data.monthTally > 11) {
+            data.monthTally = 0;
+            data.yearTally += 1;
+        } else if (data.monthTally < 0) {
+            data.monthTally = 11;
+            data.yearTally -= 1;
+        } 
 
-        // const daysofWeekArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 
-        //     'Thursday', 'Friday', 'Saturday', 'Sunday'];
-        
-        const month = monthsArray[monthInput];
+        const monthText = monthsArray[data.monthTally];       
+        const headerOutput = `${monthText} ${data.yearTally}`;
+        data.header = headerOutput;
+
+        const daysInMonth = new Date(data.yearTally, data.monthTally, 0).getDate();
+        const prevDaysInMonth = new Date(data.monthTally == 0 ? data.yearTally - 1 
+            : data.yearTally, data.monthTally - 1, 0).getDate();
+        const startingDayOfWeek = new Date(data.yearTally, data.monthTally, 1).getDay();
+        let numbersTally = 0;
+        const prevNumbersArray = [];
+        const numbersArray = [];
+        const postNumbersArray = [];
+        if (startingDayOfWeek !== 0) {
+            let prevDaysOfMonth = prevDaysInMonth - startingDayOfWeek;
+            console.log(prevDaysOfMonth);
+            console.log(startingDayOfWeek);
+            for (let i = 1; i <= startingDayOfWeek; i++) {
+                prevNumbersArray.push(prevDaysOfMonth);
+                prevDaysOfMonth += 1;
+                numbersTally += 1;
+            }
+        }
+        for (let j = 1; j <= daysInMonth; j++) {
+            numbersArray.push(j);
+            numbersTally += 1;
+        }
+        if (numbersTally < 35) {
+            for (let k = 1; numbersTally < 35; k++) {
+                postNumbersArray.push(k);
+                numbersTally += 1;
+            }
+        }
+        data.prevMonthNumbers = prevNumbersArray;
+        data.monthNumbers = numbersArray;
+        data.postMonthNumbers = postNumbersArray;
+        setCalState({...calState, data});
     }
+
+    const setCalendarDate = (input) => {
+        const actualMonth = calState.monthTally + 1;
+        const month = actualMonth < 10 ? `0${actualMonth}` 
+            : actualMonth;
+        const number = input < 10 ? `0${input}` 
+            : input;
+        const invoiceDate = `${calState.yearTally}-${month}-${number}`;
+        setCalendarOutput(invoiceDate);
+        let randomMonth = Math.ceil(Math.random() * 11);
+        randomMonth = randomMonth < 10 ? randomMonth = `0${randomMonth}` : randomMonth;
+        let randomDay = Math.ceil(Math.random() * 28);
+        randomDay = randomDay < 10 ? randomDay = `0${randomDay}` : randomDay;
+        const randomYear = calState.yearTally + Math.ceil(Math.random() * 1);
+        const randomPaymentDueDate = `${randomYear}-${randomMonth}-${randomDay}`;
+        setInvoiceEdit({...invoiceEdit, createdAt: `${number} ${calState.header}`,
+            paymentDue: `${randomYear}-${randomMonth}-${randomDay}`});
+        setToggleCalendar(false);
+        console.log(calendarOutput);
+    }
+
+    const calendarPrevNumbers = calState.prevMonthNumbers.map(number => {
+        return (
+            <h6 className="o10">{number}</h6>
+        )
+    });
+
+    const calendarNumbers = calState.monthNumbers.map(number => {
+        return (
+            <h6 onClick={() => setCalendarDate(number)}
+                className="createoredit-calendar-day">{number}</h6>
+        )
+    });
+
+    const calendarPostNumbers = calState.postMonthNumbers.map(number => {
+        return (
+            <h6 className="o10">{number}</h6>
+        )
+    });
 
     const calendarMenu = () => {
         return (
@@ -331,7 +417,7 @@ const CreateOrEdit = () => {
                                 <div onClick={() => calendarDateGenerator('-')}
                                     className="createoredit-calendar-arrow-left-filler pointer"></div>
                             </div>
-                                <span>{calHeader}</span>
+                                <span>{calState.header}</span>
                             <div className="createoredit-calendar-right-arrow position-relative">
                                 <div onClick={() => calendarDateGenerator('+')}
                                     className="createoredit-calendar-arrow-right-filler pointer"></div>
@@ -339,15 +425,9 @@ const CreateOrEdit = () => {
                         </div>
                     </div>
                     <div className="createoredit-calendar-days-container">
-                        <div className="f-sb">
-                            <h6>1</h6>
-                            <h6>2</h6>
-                            <h6>3</h6>
-                            <h6>4</h6>
-                            <h6>5</h6>
-                            <h6>6</h6>
-                            <h6>7</h6>  
-                        </div>
+                        {calendarPrevNumbers}
+                        {calendarNumbers}
+                        {calendarPostNumbers}
                     </div>
                 </div>
             </div>
@@ -548,7 +628,8 @@ const CreateOrEdit = () => {
                             && <p>date must be selected</p>}
                     </div>
                     <div className="f-sb">
-                        <div onClick={() => {setToggleCalendar(!toggleCalendar); setToggleTerms(false)}}
+                        <div onClick={() => {setToggleCalendar(!toggleCalendar); 
+                            setToggleTerms(false); calendarDateGenerator()}}
                             className={`${errorStylingEval(invoiceEdit.createdAt) 
                             ? `createoredit-field-error` : `createoredit-field`} 
                             createoredit-date-active f-sb pointer`}> 

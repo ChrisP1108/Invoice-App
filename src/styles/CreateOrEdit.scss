@@ -54,15 +54,11 @@
         margin: 0!important;
         padding: 0!important;
         transition: .25s!important;
-        height: 1.75rem!important;
-        width: 1.75rem!important;
+        height: 2rem!important;
+        width: 2rem!important;
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-    h6:hover {
-        color: $n!important;
-        cursor: pointer;
     }
     p {
         font-size: 0.625rem!important;
@@ -176,6 +172,7 @@
             width: 0.625rem!important;
             height: 0.438rem!important;
             transform: rotate(-90deg);
+
         }
         &-calendar-arrow-left-filler {
             position: absolute;
@@ -183,6 +180,10 @@
             height: 2.75rem!important;
             left: -1rem!important;
             top: -1.2rem!important;
+        }
+        &-calendar-day:hover {
+            color: $n!important;
+            cursor: pointer;
         }
         &-calendar-arrow-right-filler {
             position: absolute;
@@ -192,8 +193,12 @@
             top: -1.25rem!important;
         }
         &-calendar-days-container {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(5, 1fr);
             margin-top: 1.625rem!important;
-            padding: 0 0.30rem 0 0.30rem;
+            align-items: center;
+            justify-items: center;
             width: 100%!important;
             height: 100%!important;
         }
@@ -204,7 +209,6 @@
             height: 1.5rem!important;
             top: -.1rem!important;
             left: 0rem!important;
-
         }
         &-calendar-day-filler:hover {
             cursor: pointer;
