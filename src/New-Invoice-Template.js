@@ -32,6 +32,7 @@ export const NewInvoiceTemplate = {
 
 export const ItemAddSchema = 
     {
+        id: null,
         name: "",
         quantity: 0,
         price: 0,

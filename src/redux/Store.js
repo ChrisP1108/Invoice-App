@@ -33,23 +33,6 @@ let SERVERLIST = [];
 
     export const fetchData = fetchInvoices();
 
-    // DELETE INVOICE
-
-    const delInvoice = (store, id) => { // STATE DELETE
-        delReq(id);
-        const updateState = store.filter(invoice => invoice.id !== id);
-        return updateState;
-    }
-
-    const delReq = async (id) => {
-        const res = await fetch(`${Url}/${id}`, { // HTTP DELETE
-            method: 'DELETE'
-        })
-        .then(() => httpStatusAndReset("Delete Request Fulfilled"))
-        .catch(() => httpStatusAndReset("Delete Request Failed"));
-        const data = await res; 
-    }
-
     // MARK INVOICE PAID
 
     const paidInvoice = (store, id) => { // STATE PAID
@@ -74,6 +57,44 @@ let SERVERLIST = [];
         .catch(() => httpStatusAndReset("Mark Paid Request Failed")); 
     }
 
+    // UPDATE INVOICE
+
+    const updInvoice = (store, invoice) => { // STATE PAID
+        updReq(store, invoice);
+        const state = store.map(item => item.id === invoice.id 
+            ? invoice : item);
+        return state;
+    }
+
+    const updReq = async (store, invoice) => { // HTTP PUT
+        const res = await fetch(`${Url}/${invoice.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(invoice)
+        })
+        .then(() => httpStatusAndReset("Update Invoice Request Fulfilled"))
+        .catch(() => httpStatusAndReset("Update Invoice Request Failed")); 
+    }
+
+    // DELETE INVOICE
+
+    const delInvoice = (store, id) => { // STATE DELETE
+        delReq(id);
+        const updateState = store.filter(invoice => invoice.id !== id);
+        return updateState;
+    }
+
+    const delReq = async (id) => {
+        const res = await fetch(`${Url}/${id}`, { // HTTP DELETE
+            method: 'DELETE'
+        })
+        .then(() => httpStatusAndReset("Delete Request Fulfilled"))
+        .catch(() => httpStatusAndReset("Delete Request Failed"));
+        const data = await res; 
+    }
+
 // Invoice List - Fetched Data Is Modified in App.Js To Reformat Dates And Currencies And Then Sent To Invoice List
 
     const INVOICE_LIST = ['loading']
@@ -83,7 +104,7 @@ let SERVERLIST = [];
             initInvoices: (store, invoice) => invoice,
             addInvoice: (store, invoice) => [...store, invoice],
             markPaidInvoice: (store, id) => paidInvoice(store, id),
-            updateInvoice: (store, invoice) => (store.map((item) => item.id === invoice.id ? invoice : item)),
+            updateInvoice: (store, invoice) => updInvoice(store, invoice),
             deleteInvoice: (store, id) =>  delInvoice(store, id)
         });
 

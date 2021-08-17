@@ -1,3 +1,4 @@
+import ButtonReqSpinner from './ButtonReqSpinner';
 import { useState, useEffect } from 'react';
 import { optionTerms } from '../Arrays/Options';
 import { NewInvoiceTemplate, ItemAddSchema } from '../New-Invoice-Template';
@@ -20,17 +21,40 @@ const CreateOrEdit = () => {
     const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July',
         'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+    const valuesCheck = (items) => {
+        Object.values(items).forEach(item => {
+            if (item === '' || item === null || item == 0 || item < 0) {
+                blankFieldTally += 1;
+            }
+        });
+    }
+
     const fieldsEval = () => {
-        setInvoiceEdit({...invoiceEdit});
+        const data = invoiceEdit; 
+        // Final Item Price Calculations Before Evaluating Object
+        data.items.forEach(item => item.total = item.price * item.quantity);
+        console.log(data);
+        setInvoiceEdit({...data});
         blankFieldTally = 0;
         blankItemTally = 0;
-        valuesCheck(invoiceEdit, 'fields');
-        valuesCheck(invoiceEdit.senderAddress, 'fields');
-        valuesCheck(invoiceEdit.clientAddress, 'fields');
-        invoiceEdit.items.forEach(item => valuesCheck(item, 'items'));
+        valuesCheck(invoiceEdit);
+        valuesCheck(invoiceEdit.senderAddress);
+        valuesCheck(invoiceEdit.clientAddress);
+        invoiceEdit.items.forEach(item => {
+            if (item.name === '') {
+                blankItemTally += 1;
+            }
+            if (item.quantity == 0) {
+                blankItemTally += 1;
+            }
+            if (item.price == 0) {
+                blankItemTally += 1;
+            }
+        });
         blankFieldTally > 0 ? setEmptyFields(true) : setEmptyFields(false);
         const fieldPass = blankFieldTally > 0 ? false : true;
         const itemPass = blankItemTally > 0 ? false : true;
+        console.log(invoiceEdit);
         if (fieldPass) { 
             setEmptyFields(false);
         } else {
@@ -47,17 +71,20 @@ const CreateOrEdit = () => {
     if (httpRes() === "Update Invoice Request Failed") {
         setTimeout(() => {
             setToggleErrorModal(true);
-            setSaveSendSpinner(false);
+            setSaveChangeSpinner(false);
         }, 500);
     } 
     if (httpRes() === "Update Invoice Request Fulfilled") {
         setTimeout(() => {
-            setSaveSendSpinner(false);
+            setSaveChangeSpinner(false);
             setToggleCreateEdit(false);
         }, 500); 
     }
 
     const serverFormatting = (input) => {
+        if (input.createdAt.slice(4, 5) === '-') {
+            return input
+        }
         let createdDay = input.createdAt.slice(0, 2);
         createdDay = createdDay < 10 ? `0${createdDay}` : createdDay;
         let createdMonth = monthsArray.indexOf(input.createdAt.slice(3, 6)) + 1;
@@ -71,16 +98,18 @@ const CreateOrEdit = () => {
         const paymentYear = input.paymentDue.slice(7, 11);
         input.paymentDue = `${paymentYear}-${paymentMonth}-${paymentDay}`;
         input.total = input.total.slice(2);
-        input.items.forEach(item => item.total = item.quantity * item.price);
         return input;
     }
 
     const updateInvoice = () => {
-        const data = serverFormatting(invoiceEdit);
-        console.log(data);
-        // setSaveSendSpinner(true);
-        // setHttpRes("Update Invoice Request Pending");
-        // fieldsEval() && updateInvoice(invoiceEdit);
+        fieldsEval();
+        if (fieldsEval()) {
+            const data = serverFormatting(invoiceEdit);
+            console.log(data);
+            setSaveChangeSpinner(true);
+            // setHttpRes("Update Invoice Request Pending");
+            // updateInvoice(invoiceEdit);
+        } else console.log("Fields Missing");
     }
 
     const input = invoice().id === undefined ? NewInvoiceTemplate : invoice();
@@ -121,6 +150,12 @@ const CreateOrEdit = () => {
         postMonthNumbers: []
     }
 
+    let itemId = 0;
+    input.items.forEach(item => {
+        item.id = itemId;
+        itemId += 1;
+    });
+
     const [invoiceEdit, setInvoiceEdit] = useState(input);
     const [toggleTerms, setToggleTerms] = useState(false);
     const [emptyFields, setEmptyFields] = useState(false);
@@ -135,19 +170,6 @@ const CreateOrEdit = () => {
 
     let blankFieldTally;
     let blankItemTally;
-
-    const valuesCheck = (items, type) => {
-        Object.values(items).forEach(item => {
-            if (item === '' || item === null || item == 0 || item < 0) {
-                if (type === 'fields') {
-                    blankFieldTally += 1;
-                }
-                if (type === 'items') {
-                    blankItemTally += 1;
-                }
-            }
-        });
-    }
 
     blankFieldTally > 0 && setEmptyFields(true);
     
@@ -175,7 +197,7 @@ const CreateOrEdit = () => {
         )
     }
 
-    const formStateUpdate = (type, value, indexId) => {
+    const formStateUpdate = (type, value, id) => {
         const data = invoiceEdit;
         switch (type) {
             case 'senderAddress.street':
@@ -219,21 +241,21 @@ const CreateOrEdit = () => {
                 data.description = value;
                 break;
             case 'item.name':
-                data.items[indexId].name = value;
+                data.items[id].name = value;
                 break;
             case 'item.quantity':
-                value < 0  ? data.items[indexId].quantity = Number(0)
-                : data.items[indexId].quantity = Number(value);
+                value < 0  ? data.items[id].quantity = Number(0)
+                : data.items[id].quantity = Number(value);
                 break;
             case 'item.price':
-                value < 0  ? data.items[indexId].price = 0
-                : data.items[indexId].price = Number(value);
+                value < 0  ? data.items[id].price = 0
+                : data.items[id].price = Number(value);
                 break;
             case 'deleteItem':
                 if (data.items.length == 1) {
                     break;
                 }
-                data.items.splice(indexId, 1)
+                data.items.splice(id, 1)
                 console.log(data);
                 break;
             case 'addItem':
@@ -250,7 +272,7 @@ const CreateOrEdit = () => {
                 key={option.id} 
                 className={`${option.id == 1 ? `createoredit-option-first`
                 : option.id == 4 ? `createoredit-option-last` : ``} createoredit-option pointer`}
-                style={{ borderBottom: option.id == 4 && '0rem $white solid' }}>
+                style={{ borderBottom: option.id == 4 && `0rem $white solid` }}>
                 <span>{option.name}</span>
             </div>
         )
@@ -268,10 +290,9 @@ const CreateOrEdit = () => {
     const itemsMapping = invoiceEdit.items.map(item => {
 
         const itemTotal = (item.quantity * item.price).toFixed(2);
-        const indexId = invoiceEdit.items.indexOf(item);
-        
+
         return (
-            <div key={indexId} className="createoredit-trans-item">
+            <div key={item.id} className="createoredit-trans-item">
                 <div className="createoredit-form-row-full-container f-clb">
                     <div className="f-sb">
                         <h4 className={errorStylingEval(item.name) 
@@ -283,7 +304,7 @@ const CreateOrEdit = () => {
                         type="text"
                         name="item.name"
                         value={item.name}
-                        onChange={(e) => formStateUpdate(e.target.name, e.target.value, indexId)}                            
+                        onChange={(e) => formStateUpdate(e.target.name, e.target.value, item.id)}                            
                         className={errorStylingEval(item.name) 
                             ? `createoredit-field-error` : `createoredit-field`}> 
                     </input>
@@ -300,7 +321,7 @@ const CreateOrEdit = () => {
                             type="number"
                             name="item.quantity"
                             value={item.quantity}
-                            onChange={(e) => formStateUpdate(e.target.name, e.target.value, indexId)}
+                            onChange={(e) => formStateUpdate(e.target.name, e.target.value, item.id)}
                             className={errorStylingEval(item.quantity)  
                                 ? `createoredit-field-error` : `createoredit-field`}> 
                         </input>
@@ -317,7 +338,7 @@ const CreateOrEdit = () => {
                             type="number"
                             name="item.price"
                             value={item.price.toFixed(2)}
-                            onChange={(e) => formStateUpdate(e.target.name, e.target.value, indexId)}
+                            onChange={(e) => formStateUpdate(e.target.name, e.target.value, item.id)}
                             className={errorStylingEval(item.price) 
                             ? `createoredit-field-error` : `createoredit-field`}> 
                         </input>
@@ -328,10 +349,10 @@ const CreateOrEdit = () => {
                         <div className="createoredit-item-total">
                             <h4><span>{itemTotal}</span></h4>
                             <div className="position-relative">
-                                <div className={indexId == 1 && `d-none`}>
+                                <div>
                                     <div className="createoredit-item-trash-icon"></div>
                                 <div 
-                                    onClick={() => formStateUpdate('deleteItem', item, indexId)}
+                                    onClick={() => formStateUpdate('deleteItem', item, item.id)}
                                     className="createoredit-item-trash-filler pointer">         
                                 </div>
                                 </div>
@@ -754,8 +775,8 @@ const CreateOrEdit = () => {
                     <div className="createoredit-footer-button-gap"></div>
                     <div onClick={() => updateInvoice()}
                         className={`${invoice().id === undefined && `d-none`} 
-                            createoredit-savechanges-button-container f-c pointer`}>
-                        <h3>Save Changes</h3>
+                            createoredit-savechanges-button-container f-c pointer position-relative`}>
+                        {saveChangeSpinner ? <ButtonReqSpinner /> : <h3>Save Changes</h3>}
                     </div>
                     <div onClick={() => fieldsEval()}
                         className={`${invoice().id !== undefined && `d-none`} 
