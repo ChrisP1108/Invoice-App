@@ -2,10 +2,86 @@ import { useState, useEffect } from 'react';
 import { optionTerms } from '../Arrays/Options';
 import { NewInvoiceTemplate, ItemAddSchema } from '../New-Invoice-Template';
 import { invoice, setInvoice,
-    markPaidInvoice, setToggleDeleteModal, 
-    setToggleViewer, setToggleCreateEdit, updateInvoice } from '../redux/Store.js';
+    markPaidInvoice, setToggleDeleteModal, setHttpRes, httpRes,
+    setToggleErrorModal, setToggleViewer, 
+    setToggleCreateEdit, updateInvoice } from '../redux/Store.js';
 
 const CreateOrEdit = () => {
+
+    const date = new Date();
+    const dayOfWeek = date.getDay();
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+    const currentDate = new Date().toString();
+    const currentMonth = currentDate.slice(4, 7);
+    const currentYear = currentDate.slice(11, 15);
+    const startingDate = `${currentMonth} ${currentYear}`;
+    const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July',
+        'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    const fieldsEval = () => {
+        setInvoiceEdit({...invoiceEdit});
+        blankFieldTally = 0;
+        blankItemTally = 0;
+        valuesCheck(invoiceEdit, 'fields');
+        valuesCheck(invoiceEdit.senderAddress, 'fields');
+        valuesCheck(invoiceEdit.clientAddress, 'fields');
+        invoiceEdit.items.forEach(item => valuesCheck(item, 'items'));
+        blankFieldTally > 0 ? setEmptyFields(true) : setEmptyFields(false);
+        const fieldPass = blankFieldTally > 0 ? false : true;
+        const itemPass = blankItemTally > 0 ? false : true;
+        if (fieldPass) { 
+            setEmptyFields(false);
+        } else {
+            setEmptyFields(true);
+        }
+        if (itemPass) { 
+            setEmptyItems(false);
+        } else {
+            setEmptyItems(true);
+        }
+        return itemPass && fieldPass ? true : false;
+    }
+
+    if (httpRes() === "Update Invoice Request Failed") {
+        setTimeout(() => {
+            setToggleErrorModal(true);
+            setSaveSendSpinner(false);
+        }, 500);
+    } 
+    if (httpRes() === "Update Invoice Request Fulfilled") {
+        setTimeout(() => {
+            setSaveSendSpinner(false);
+            setToggleCreateEdit(false);
+        }, 500); 
+    }
+
+    const serverFormatting = (input) => {
+        let createdDay = input.createdAt.slice(0, 2);
+        createdDay = createdDay < 10 ? `0${createdDay}` : createdDay;
+        let createdMonth = monthsArray.indexOf(input.createdAt.slice(3, 6)) + 1;
+        createdMonth = createdMonth < 10 ? `0${createdMonth}` : createdMonth;
+        const createdYear = input.createdAt.slice(7, 11);
+        input.createdAt = `${createdYear}-${createdMonth}-${createdDay}`;
+        let paymentDay = input.paymentDue.slice(0, 2);
+        paymentDay = paymentDay < 10 ? `0${paymentDay}` : paymentDay;
+        let paymentMonth = monthsArray.indexOf(input.paymentDue.slice(3, 6)) + 1;
+        paymentMonth = paymentMonth < 10 ? `0${paymentMonth}` : paymentMonth;
+        const paymentYear = input.paymentDue.slice(7, 11);
+        input.paymentDue = `${paymentYear}-${paymentMonth}-${paymentDay}`;
+        input.total = input.total.slice(2);
+        input.items.forEach(item => item.total = item.quantity * item.price);
+        return input;
+    }
+
+    const updateInvoice = () => {
+        const data = serverFormatting(invoiceEdit);
+        console.log(data);
+        // setSaveSendSpinner(true);
+        // setHttpRes("Update Invoice Request Pending");
+        // fieldsEval() && updateInvoice(invoiceEdit);
+    }
 
     const input = invoice().id === undefined ? NewInvoiceTemplate : invoice();
 
@@ -35,18 +111,6 @@ const CreateOrEdit = () => {
 
     input.id = input.id === '' ? newInvoiceId : input.id;
 
-    const date = new Date();
-    const dayOfWeek = date.getDay();
-    const day = date.getDate();
-    const month = date.getMonth();
-    const year = date.getFullYear();
-    const currentDate = new Date().toString();
-    const currentMonth = currentDate.slice(4, 7);
-    const currentYear = currentDate.slice(11, 15);
-    const startingDate = `${currentMonth} ${currentYear}`;
-    const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July',
-        'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
     const calStartingState = {
         header: startingDate,
         totalTally: 0,
@@ -63,11 +127,11 @@ const CreateOrEdit = () => {
     const [emptyItems, setEmptyItems] = useState(false);
     const [toggleCalendar, setToggleCalendar] = useState(false);
     const [calState, setCalState] = useState(calStartingState);
-    const [calendarOutput, setCalendarOutput] = useState('');
+    const [saveChangeSpinner, setSaveChangeSpinner] = useState(false);
+    const [draftSpinner, setDraftSpinner] = useState(false);
+    const [saveSendSpinner, setSaveSendSpinner] = useState(false);
 
     invoiceEdit.id === '' && setInvoiceEdit({...invoiceEdit, id: newInvoiceId});
-
-    let itemKeyId = 0;
 
     let blankFieldTally;
     let blankItemTally;
@@ -83,33 +147,6 @@ const CreateOrEdit = () => {
                 }
             }
         });
-    }
-
-    const fieldsEval = () => {
-        setInvoiceEdit({...invoiceEdit});
-        blankFieldTally = 0;
-        blankItemTally = 0;
-        valuesCheck(invoiceEdit, 'fields');
-        valuesCheck(invoiceEdit.senderAddress, 'fields');
-        valuesCheck(invoiceEdit.clientAddress, 'fields');
-        invoiceEdit.items.forEach(item => valuesCheck(item, 'items'));
-        blankFieldTally > 0 ? setEmptyFields(true) : setEmptyFields(false);
-        const fieldPass = blankFieldTally > 0 ? false : true;
-        const itemPass = blankItemTally > 0 ? false : true;
-        if (fieldPass) { 
-            console.log("Field Test Passed");
-            setEmptyFields(false);
-        } else {
-            console.log("Field Test Failed");
-            setEmptyFields(true);
-        }
-        if (itemPass) { 
-            console.log("Item Test Passed");
-            setEmptyItems(false);
-        } else {
-            console.log("Item Test Failed");
-            setEmptyItems(true);
-        }
     }
 
     blankFieldTally > 0 && setEmptyFields(true);
@@ -185,8 +222,8 @@ const CreateOrEdit = () => {
                 data.items[indexId].name = value;
                 break;
             case 'item.quantity':
-                value < 0  ? data.items[indexId].quantity = 0
-                : data.items[indexId].quantity = value;
+                value < 0  ? data.items[indexId].quantity = Number(0)
+                : data.items[indexId].quantity = Number(value);
                 break;
             case 'item.price':
                 value < 0  ? data.items[indexId].price = 0
@@ -204,7 +241,7 @@ const CreateOrEdit = () => {
             default:
                 break;
         }
-        setInvoiceEdit({...invoiceEdit, data});
+        setInvoiceEdit({...data});
     }
 
     const termsMapping = optionTerms.map(option => {
@@ -232,10 +269,9 @@ const CreateOrEdit = () => {
 
         const itemTotal = (item.quantity * item.price).toFixed(2);
         const indexId = invoiceEdit.items.indexOf(item);
-        itemKeyId += 1;
         
         return (
-            <div key={itemKeyId} className="createoredit-trans-item">
+            <div key={indexId} className="createoredit-trans-item">
                 <div className="createoredit-form-row-full-container f-clb">
                     <div className="f-sb">
                         <h4 className={errorStylingEval(item.name) 
@@ -292,7 +328,7 @@ const CreateOrEdit = () => {
                         <div className="createoredit-item-total">
                             <h4><span>{itemTotal}</span></h4>
                             <div className="position-relative">
-                                <div className={itemKeyId == 1 && `d-none`}>
+                                <div className={indexId == 1 && `d-none`}>
                                     <div className="createoredit-item-trash-icon"></div>
                                 <div 
                                     onClick={() => formStateUpdate('deleteItem', item, indexId)}
@@ -344,8 +380,6 @@ const CreateOrEdit = () => {
         const postNumbersArray = [];
         if (startingDayOfWeek !== 0) {
             let prevDaysOfMonth = prevDaysInMonth - startingDayOfWeek;
-            console.log(prevDaysOfMonth);
-            console.log(startingDayOfWeek);
             for (let i = 1; i <= startingDayOfWeek; i++) {
                 prevNumbersArray.push(prevDaysOfMonth);
                 prevDaysOfMonth += 1;
@@ -356,8 +390,8 @@ const CreateOrEdit = () => {
             numbersArray.push(j);
             numbersTally += 1;
         }
-        if (numbersTally < 35) {
-            for (let k = 1; numbersTally < 35; k++) {
+        if (numbersTally < 42) {
+            for (let k = 1; numbersTally < 42; k++) {
                 postNumbersArray.push(k);
                 numbersTally += 1;
             }
@@ -374,18 +408,13 @@ const CreateOrEdit = () => {
             : actualMonth;
         const number = input < 10 ? `0${input}` 
             : input;
-        const invoiceDate = `${calState.yearTally}-${month}-${number}`;
-        setCalendarOutput(invoiceDate);
-        let randomMonth = Math.ceil(Math.random() * 11);
-        randomMonth = randomMonth < 10 ? randomMonth = `0${randomMonth}` : randomMonth;
+        const randomMonth = Math.ceil(Math.random() * 11);
         let randomDay = Math.ceil(Math.random() * 28);
         randomDay = randomDay < 10 ? randomDay = `0${randomDay}` : randomDay;
         const randomYear = calState.yearTally + Math.ceil(Math.random() * 1);
-        const randomPaymentDueDate = `${randomYear}-${randomMonth}-${randomDay}`;
         setInvoiceEdit({...invoiceEdit, createdAt: `${number} ${calState.header}`,
-            paymentDue: `${randomYear}-${randomMonth}-${randomDay}`});
+            paymentDue: `${randomDay} ${monthsArray[randomMonth]} ${randomYear}`});
         setToggleCalendar(false);
-        console.log(calendarOutput);
     }
 
     const calendarPrevNumbers = calState.prevMonthNumbers.map(number => {
@@ -723,7 +752,7 @@ const CreateOrEdit = () => {
                             <h3>Save as Draft</h3>
                     </div>
                     <div className="createoredit-footer-button-gap"></div>
-                    <div onClick={() => fieldsEval()}
+                    <div onClick={() => updateInvoice()}
                         className={`${invoice().id === undefined && `d-none`} 
                             createoredit-savechanges-button-container f-c pointer`}>
                         <h3>Save Changes</h3>

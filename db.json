@@ -25,11 +25,11 @@
         {
           "name": "Brand Guidelines",
           "quantity": 1,
-          "price": 1800.9,
-          "total": 1800.9
+          "price": 1800.90,
+          "total": 1800.90
         }
       ],
-      "total": 1800.9
+      "total": 1800.90
     },
     {
       "id": "XM9141",
@@ -39,7 +39,7 @@
       "paymentTerms": 30,
       "clientName": "Alex Grim",
       "clientEmail": "alexgrim@mail.com",
-      "status": "paid",
+      "status": "pending",
       "senderAddress": {
         "street": "19 Union Terrace",
         "city": "London",
@@ -56,17 +56,17 @@
         {
           "name": "Banner Design",
           "quantity": 1,
-          "price": 156,
-          "total": 156
+          "price": 156.00,
+          "total": 156.00
         },
         {
           "name": "Email Design",
           "quantity": 2,
-          "price": 200,
-          "total": 400
+          "price": 200.00,
+          "total": 400.00
         }
       ],
-      "total": 556
+      "total": 556.00
     },
     {
       "id": "RG0314",
@@ -161,8 +161,8 @@
         {
           "name": "Brand Guidelines",
           "quantity": 1,
-          "price": 2500,
-          "total": 2500
+          "price": 2500.00,
+          "total": 2500.00
         }
       ],
       "total": 4032.33
@@ -175,7 +175,7 @@
       "paymentTerms": 30,
       "clientName": "Thomas Wayne",
       "clientEmail": "thomas@dc.com",
-      "status": "paid",
+      "status": "pending",
       "senderAddress": {
         "street": "19 Union Terrace",
         "city": "London",
@@ -197,6 +197,37 @@
         }
       ],
       "total": 6155.91
+    },
+    {
+      "id": "FV2353",
+      "createdAt": "2021-11-05",
+      "paymentDue": "2021-11-12",
+      "description": "Logo Re-design",
+      "paymentTerms": 7,
+      "clientName": "Anita Wainwright",
+      "clientEmail": "",
+      "status": "draft",
+      "senderAddress": {
+        "street": "19 Union Terrace",
+        "city": "London",
+        "postCode": "E1 3EZ",
+        "country": "United Kingdom"
+      },
+      "clientAddress": {
+        "street": "",
+        "city": "",
+        "postCode": "",
+        "country": ""
+      },
+      "items": [
+        {
+          "name": "Logo Re-design",
+          "quantity": 1,
+          "price": 3102.04,
+          "total": 3102.04
+        }
+      ],
+      "total": 3102.04
     }
   ]
 }

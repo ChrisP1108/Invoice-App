@@ -130,7 +130,7 @@
         }
         &-calendar-outer-container {
             width: 100%!important;
-            height: 15.188rem!important;
+            height: 17.188rem!important;
             z-index: 1!important;
             border-radius: 0.5rem!important;
             animation-name: calendar-trans-in;
@@ -195,7 +195,7 @@
         &-calendar-days-container {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            grid-template-rows: repeat(5, 1fr);
+            grid-template-rows: repeat(6, 1fr);
             margin-top: 1.625rem!important;
             align-items: center;
             justify-items: center;
