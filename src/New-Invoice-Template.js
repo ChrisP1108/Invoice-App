@@ -6,7 +6,7 @@ export const NewInvoiceTemplate = {
     paymentTerms: null,
     clientName: "",
     clientEmail: "",
-    status: "",
+    status: "Not Set",
     senderAddress: {
         street: "",
         city: "",
@@ -27,7 +27,7 @@ export const NewInvoiceTemplate = {
             total: 0
         }
     ],
-    total: ""
+    total: "Not Set"
 }
 
 export const ItemAddSchema = 

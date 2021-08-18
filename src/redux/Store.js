@@ -11,6 +11,7 @@ let SERVERLIST = [];
 
     const httpStatusAndReset = (res) => {
             setHttpRes(res);
+            console.log(res);
         setTimeout(() => {
             setHttpRes("No Request Made");
         }, 1000);
@@ -32,6 +33,48 @@ let SERVERLIST = [];
     }
 
     export const fetchData = fetchInvoices();
+
+    // ADD INVOICE
+
+    const addOnInvoice = (store, invoice) => { // STATE PAID
+        addReq(invoice);
+        const state = {...store, invoice, status: 'pending'};
+        console.log(state)
+        return state;
+    }
+
+    const addReq = async (invoice) => { // HTTP PUT
+        const res = await fetch( Url, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({...invoice, status: 'pending'})
+        })
+        .then(() => httpStatusAndReset("Save & Send Invoice Request Fulfilled"))
+        .catch(() => httpStatusAndReset("Save & Send Invoice Request Failed")); 
+    }
+
+    // ADD DRAFT INVOICE
+
+    const addOnDraftInvoice = (store, invoice) => { // STATE PAID
+        addDraftReq(store, invoice);
+        const state = {...store, invoice, status: 'draft'};
+        console.log(state)
+        return state;
+    }
+
+    const addDraftReq = async (invoice) => { // HTTP PUT
+        const res = await fetch( Url, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({...invoice, status: 'draft'})
+        })
+        .then(() => httpStatusAndReset("Add Draft Invoice Request Fulfilled"))
+        .catch(() => httpStatusAndReset("Add Draft Invoice Request Failed")); 
+    }
 
     // MARK INVOICE PAID
 
@@ -63,6 +106,7 @@ let SERVERLIST = [];
         updReq(store, invoice);
         const state = store.map(item => item.id === invoice.id 
             ? invoice : item);
+        console.log(state)
         return state;
     }
 
@@ -99,10 +143,11 @@ let SERVERLIST = [];
 
     const INVOICE_LIST = ['loading']
 
-    export const [invoiceList, {initInvoices, addInvoice, markPaidInvoice, updateInvoice, deleteInvoice}] = 
+    export const [invoiceList, {initInvoices, addInvoice, addDraftInvoice, markPaidInvoice, updateInvoice, deleteInvoice}] = 
         createReduxModule('invoice', INVOICE_LIST, {
             initInvoices: (store, invoice) => invoice,
-            addInvoice: (store, invoice) => [...store, invoice],
+            addInvoice: (store, invoice) => addOnInvoice(store, invoice),
+            addDraftInvoice: (store, invoice) => addOnDraftInvoice(store, invoice),
             markPaidInvoice: (store, id) => paidInvoice(store, id),
             updateInvoice: (store, invoice) => updInvoice(store, invoice),
             deleteInvoice: (store, id) =>  delInvoice(store, id)

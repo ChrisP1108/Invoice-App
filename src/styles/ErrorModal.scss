@@ -1,6 +1,6 @@
 #errorModal {
     position: absolute!important;
-    z-index: 4;
+    z-index: 10!important;
 
     .error-modal-page-container {
         transition: .25s!important;

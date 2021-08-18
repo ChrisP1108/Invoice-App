@@ -6,7 +6,7 @@ import Formatter from './components/List';
 import Viewer from './components/Viewer';
 import DeleteModal from './components/DeleteModal';
 import './App.scss';
-import { fetchData, initInvoices, nightMode, 
+import { fetchData, initInvoices, invoiceList, nightMode, 
   toggleViewer, toggleCreateEdit, toggleDeleteModal,
   toggleErrorModal, setToggleErrorModal, setToggleDeleteModal, 
   setToggleViewer, setToggleCreateEdit, httpRes } from './redux/Store.js';
@@ -55,15 +55,57 @@ const App = () => {
       const formattedList = [];
 
       fetchedList.forEach(invoice => {
-        formattedList.push({...invoice, 
-          createdAt: dateFormat(invoice.createdAt), 
-          paymentDue: dateFormat(invoice.paymentDue), 
-          total: currencyFormat(invoice.total) 
-        })
+        if (invoice.createdAt == '') {
+          formattedList.push({...invoice,  
+            paymentDue: dateFormat(invoice.paymentDue), 
+            total: currencyFormat(invoice.total) 
+          })
+        } else if (invoice.paymentDue == '') {
+          formattedList.push({...invoice,  
+            createdAt: dateFormat(invoice.createdAt), 
+            total: currencyFormat(invoice.total) 
+          })
+        } else if (invoice.total == '') {
+          formattedList.push({...invoice,  
+            createdAt: dateFormat(invoice.createdAt), 
+            paymentDue: dateFormat(invoice.paymentDue)
+          })
+        } else if (invoice.createdAt == '' && invoice.paymentDue == '') {
+          formattedList.push({...invoice,  
+            total: currencyFormat(invoice.total)
+          })
+        } else if (invoice.createdAt == '' && invoice.total == '') {
+          formattedList.push({...invoice,  
+            paymentDue: dateFormat(invoice.paymentDue),
+          })
+        } else if (invoice.paymentDue == '' && invoice.total == '') {
+          formattedList.push({...invoice,  
+            createdAt: dateFormat(invoice.paymentDue),
+          })
+        } else if (invoice.createdAt == '' && invoice.paymentDue == '' && invoice.total == '') {
+          formattedList.push(invoice)
+        } else {
+          formattedList.push({...invoice, 
+            createdAt: dateFormat(invoice.createdAt), 
+            paymentDue: dateFormat(invoice.paymentDue), 
+            total: currencyFormat(invoice.total)
+          }) 
+        }     
+      });
+
+      let idAssign = 0;
+
+      formattedList.forEach(itemlist => {
+        itemlist.items.forEach(item => {
+          item.id = idAssign;
+          idAssign += 1;
+        });
+        idAssign = 0;
       });
 
       initInvoices(formattedList);
       setToggleFormat(true);
+
     }
   }
 
