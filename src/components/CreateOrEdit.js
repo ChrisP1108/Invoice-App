@@ -199,7 +199,7 @@ const CreateOrEdit = () => {
     const [saveSendSpinner, setSaveSendSpinner] = useState(false);
     const [itemClicked, setItemClicked] = useState(false);
 
-
+    console.log(invoiceEdit.createdAt);
     invoiceEdit.id === '' && setInvoiceEdit({...invoiceEdit, id: newInvoiceId});
 
     let blankFieldTally;
@@ -724,7 +724,7 @@ const CreateOrEdit = () => {
                     </input>
                 </div>
                 <div className="createoredit-invoice-top-gap"></div>
-                <div className={`${INVOICE().id === undefined && `d-none`} createoredit-form-row-full-container 
+                <div className={`${INVOICE().id === undefined || INVOICE().status === 'draft' ? `d-none` : ``} createoredit-form-row-full-container 
                     createoredit-invoice-disabled f-clb`}>
                     <h4>Invoice Date</h4>
                     <div className="createoredit-date-disabled f-sb">
@@ -732,7 +732,7 @@ const CreateOrEdit = () => {
                         <div className="createoredit-calendar-icon"></div>
                     </div>   
                 </div>
-                <div className={`${INVOICE().id !== undefined && `d-none`} 
+                <div className={`${INVOICE().id !== undefined && INVOICE().status !== 'draft' ? `d-none` : ``} 
                         createoredit-form-row-full-container f-clb position-relative`}>
                     <div className="f-sb">
                         <h4 className={errorStylingEval(invoiceEdit.createdAt) 

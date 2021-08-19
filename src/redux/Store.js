@@ -73,8 +73,7 @@ import { createReduxModule } from 'hooks-for-redux';
         })
         .then(() => { 
             httpStatusAndReset("Add Draft Invoice Request Fulfilled");
-            const updateState = store.map(list => list.id === invoice.id 
-                ? invoice : list);
+            const updateState = store.concat(invoice);
             INITINVOICES(updateState);
         })
         .catch(() => httpStatusAndReset("Add Draft Invoice Request Failed")); 

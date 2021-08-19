@@ -23,13 +23,13 @@ const Invoices = ({ listOutput }) => {
                 <div className="invoice-inner-container position-absolute w-100 my-auto mx-auto">
                     <div className="invoice-container-row">
                         <h3><span>#</span>{item.id}</h3>
-                        <h2>{item.clientName}</h2>
+                        <h2>{item.clientName === '' ? `No Name Entered` : item.clientName}</h2>
                     </div>
                     <div className="f-ca">
                         <div className="d-flex flex-column w-50">
-                            <h2>Due {dateFormat(item.paymentDue)}</h2>
+                            <h2>Due {item.paymentDue === '' ? `Date Not Selected` : dateFormat(item.paymentDue)}</h2>
                             <div className="mt-2">
-                                <h4>{currencyFormat(item.total)}</h4>
+                                <h4>{item.total === 0 ? `No total` : currencyFormat(item.total)}</h4>
                             </div>
                         </div>
                         <div className="f-ae">

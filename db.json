@@ -63,11 +63,11 @@
       "total": 6155.91
     },
     {
-      "id": "EZ5394",
-      "createdAt": "",
-      "paymentDue": "",
+      "id": "IL6570",
+      "createdAt": "2021-08-19",
+      "paymentDue": "2021-09-02",
       "description": "",
-      "paymentTerms": null,
+      "paymentTerms": 14,
       "clientName": "",
       "clientEmail": "",
       "status": "draft",
