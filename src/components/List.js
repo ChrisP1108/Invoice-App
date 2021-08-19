@@ -1,13 +1,15 @@
 import Loading from './Loading';
 import Invoices from './Invoices';
-import { setToggleCreateEdit, invoiceList, 
-    invoice, setInvoice } from '../redux/Store.js';
+import { SETTOGGLECREATEEDIT, INVOICELIST, 
+    invoice, SETINVOICE } from '../redux/Store.js';
 import { useState } from 'react';
 import { filterItems } from '../Arrays/Filters';
 
 const List = () => {
 
-    const list = invoiceList();
+    console.log(INVOICELIST());
+
+    const list = INVOICELIST();
 
     const [toggleFilter, setToggleFilter] = useState(false);
     const [draftFilter, setDraftFilter] = useState(false);
@@ -105,8 +107,8 @@ const List = () => {
     }
 
     const createNewInvoice = () => {
-        setInvoice([]);
-        loadedEval() && setToggleCreateEdit(true);
+        SETINVOICE([]);
+        loadedEval() && SETTOGGLECREATEEDIT(true);
     }
 
     const listHeader = () => {

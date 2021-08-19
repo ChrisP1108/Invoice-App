@@ -1,28 +1,28 @@
 import { useState, useEffect } from 'react';
 import ButtonReqSpinner from './ButtonReqSpinner';
-import { invoice, setToggleViewer, setToggleDeleteModal, 
-    deleteInvoice, httpRes, setHttpRes, setToggleErrorModal,
-    setToggleCreateEdit, initInvoices, invoiceList } from '../redux/Store.js';
+import { INVOICE, SETTOGGLEVIEWER, SETTOGGLEDELETEMODAL, 
+    DELETEINVOICE, HTTPRES, SETHTTPRES, SETTOGGLEERRORMODAL,
+    SETTOGGLECREATEEDIT, INITINVOICES, INVOICELIST } from '../redux/Store.js';
 
 const DeleteModal = () => {
 
-    const deletingId = invoice().id;
+    const deletingId = INVOICE().id;
 
     const [deleteSpinner, setDeleteSpinner] = useState(false);
     
-    if (httpRes() === "Delete Request Failed") {
-        setToggleDeleteModal(false);
-        setToggleErrorModal(true); 
+    if (HTTPRES() === "Delete Request Failed") {
+        SETTOGGLEDELETEMODAL(false);
+        SETTOGGLEERRORMODAL(true); 
     }
-    if (httpRes() === "Delete Request Fulfilled") {
-        setToggleDeleteModal(false);
-        setToggleViewer(false);
+    if (HTTPRES() === "Delete Request Fulfilled") {
+        SETTOGGLEDELETEMODAL(false);
+        SETTOGGLEVIEWER(false);
     }
 
     const confirmDelete = () => {
         setDeleteSpinner(true);   
-        setHttpRes("Delete Request Pending");
-        deleteInvoice(deletingId); 
+        SETHTTPRES("Delete Request Pending");
+        DELETEINVOICE(deletingId); 
     }
 
     return (
@@ -36,7 +36,7 @@ const DeleteModal = () => {
                             #{deletingId}? This action cannot be undone.</h2>
                         </div>
                         <div className="f-ae">
-                            <div onClick={() => setToggleDeleteModal(false)}
+                            <div onClick={() => SETTOGGLEDELETEMODAL(false)}
                                 className="delete-modal-cancel-button-container f-c pointer">
                                 <h3>Cancel</h3>
                             </div>

@@ -1,10 +1,10 @@
-import { setInvoice, setToggleViewer, dateFormatter, setDateFormatter } from '../redux/Store.js';
+import { SETINVOICE, SETTOGGLEVIEWER, dateFormatter, setDateFormatter } from '../redux/Store.js';
 
 const Invoices = ({ listOutput }) => {
 
     const invoiceMapping = listOutput.map(item => {
         return (
-            <div key={item.id} onClick={() => {setInvoice(item); setToggleViewer(true);}}
+            <div key={item.id} onClick={() => {SETINVOICE(item); SETTOGGLEVIEWER(true);}}
                 id="invoices" className="invoice-outer-container position-relative pointer invoice-trans">
                 <div className="invoice-inner-container position-absolute w-100 my-auto mx-auto">
                     <div className="invoice-container-row">

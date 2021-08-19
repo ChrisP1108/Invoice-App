@@ -1,24 +1,24 @@
-import Loading from './Loading';
 import ButtonReqSpinner from './ButtonReqSpinner';
-import { useState, useEffect } from 'react';
-import { invoice, 
-    markPaidInvoice, setToggleDeleteModal, 
-    setToggleViewer, setToggleCreateEdit,
-    httpRes, setHttpRes, setToggleErrorModal, initInvoices } from '../redux/Store.js';
+import { useState } from 'react';
+import { INVOICE, INVOICELIST, MARKASPAIDINVOICE, SETTOGGLEDELETEMODAL, 
+    SETTOGGLEVIEWER, SETTOGGLECREATEEDIT,
+    HTTPRES, SETHTTPRES, SETTOGGLEERRORMODAL } from '../redux/Store.js';
 
 const Viewer = () => {
+
+    const list = INVOICELIST();
     
-    const [viewInvoice, setViewInvoice] = useState(invoice());
+    const [viewInvoice, setViewInvoice] = useState(INVOICE());
     const [markPaidSpinner, setMarkPaidSpinner] = useState(false);
     const [clicked, setClicked] = useState(false);
 
-    if (httpRes() === "Mark Paid Request Failed") {
+    if (HTTPRES() === "Mark Paid Request Failed") {
         setTimeout(() => {
-            setToggleErrorModal(true);
+            SETTOGGLEERRORMODAL(true);
             setMarkPaidSpinner(false);
         }, 500);
     } 
-    if (httpRes() === "Mark Paid Request Fulfilled") {
+    if (HTTPRES() === "Mark Paid Request Fulfilled") {
         setTimeout(() => {
             setClicked(true);
             setMarkPaidSpinner(false);
@@ -28,13 +28,13 @@ const Viewer = () => {
 
     const markPaid = () => {
         setMarkPaidSpinner(true);
-        setHttpRes("Mark Paid Request Pending");
-        markPaidInvoice(viewInvoice.id);
+        SETHTTPRES("Mark Paid Request Pending");
+        MARKASPAIDINVOICE(viewInvoice.id);
     }
 
     const backHeader = () => {
         return (
-            <div onClick={() => setToggleViewer(false)} 
+            <div onClick={() => SETTOGGLEVIEWER(false)} 
                 className="back-container pointer position-relative">
                 <div className="back-arrow"></div>
                 <div className="d-flex">
@@ -164,12 +164,12 @@ const Viewer = () => {
         return (
             <div className="viewer-footer-outer-container">
                 <div className="viewer-footer-inner-container f-e">
-                    <div onClick={() => {setToggleCreateEdit(true); setToggleViewer(true)}} 
+                    <div onClick={() => {SETTOGGLECREATEEDIT(true); SETTOGGLEVIEWER(true)}} 
                         className="viewer-footer-edit-button-container f-c pointer">
                         <h3>Edit</h3>
                     </div>
                     <div className="viewer-footer-button-gap"></div>
-                    <div onClick={() => setToggleDeleteModal(true)} className="viewer-footer-delete-button-container f-c pointer">
+                    <div onClick={() => SETTOGGLEDELETEMODAL(true)} className="viewer-footer-delete-button-container f-c pointer">
                         <h3>Delete</h3>
                     </div>
                     <div className={viewInvoice.status === 'paid' || viewInvoice.status === 'draft'

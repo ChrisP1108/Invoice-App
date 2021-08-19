@@ -1,7 +1,7 @@
 import ButtonReqSpinner from './ButtonReqSpinner';
-import { invoice, setToggleViewer, setToggleerrorModal, 
-    errorInvoice, httpRes, setHttpRes,
-    toggleSpinner, setToggleSpinner, setToggleErrorModal } from '../redux/Store.js';
+import { INVOICE, SETTOGGLEVIEWER, 
+    errorInvoice, HTTPRES, SETHTTPRES,
+    toggleSpinner, setToggleSpinner, SETTOGGLEERRORMODAL } from '../redux/Store.js';
 
 const ErrorModal = () => {
 
@@ -16,7 +16,7 @@ const ErrorModal = () => {
                             try again.</h2>
                         </div>
                         <div className="f-ae">
-                            <div onClick={() => setToggleErrorModal(false)}
+                            <div onClick={() => SETTOGGLEERRORMODAL(false)}
                                 className="error-modal-ok-button-container f-c pointer">
                                 <h3>Ok</h3>
                             </div>

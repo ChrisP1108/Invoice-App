@@ -1,8 +1,6 @@
 import { Url } from './fetchUrl';
 import { createReduxModule } from 'hooks-for-redux';
 
-let SERVERLIST = [];
-
 // Redux Store Contains Both State And HTTP Request Management
 
 // HTTP Requests & State Update
@@ -10,218 +8,343 @@ let SERVERLIST = [];
     // HTTP Response Timer.  Sets HTTP Response Status State And Reverts Back To Starting Default After 1 Second
 
     const httpStatusAndReset = (res) => {
-            setHttpRes(res);
+            SETHTTPRES(res);
             console.log(res);
         setTimeout(() => {
-            setHttpRes("No Request Made");
+            SETHTTPRES("No Request Made");
         }, 1000);
+    }
+
+    // FORMAT INVOICES TO BE ADDED/MARK PAID/UPDATED TO SERVER
+
+    const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July',
+        'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    const toServerFormatting = (input) => {
+        console.log(input);
+        if (input.createdAt.slice(4,5) !== '-') {
+            let createdDay = input.createdAt.slice(0, 2);
+            createdDay = createdDay < 10 ? `0${createdDay}` : createdDay;
+            let createdMonth = monthsArray.indexOf(input.createdAt.slice(3, 6)) + 1;
+            createdMonth = createdMonth < 10 ? `0${createdMonth}` : createdMonth;
+            const createdYear = input.createdAt.slice(7, 11);
+            input.createdAt = `${createdYear}-${createdMonth}-${createdDay}`;
+        }
+        if (input.paymentDue.slice(4,5) !== '-') {
+            let paymentDay = input.paymentDue.slice(0, 2);
+            paymentDay = paymentDay < 10 ? `0${paymentDay}` : paymentDay;
+            let paymentMonth = monthsArray.indexOf(input.paymentDue.slice(3, 6)) + 1;
+            paymentMonth = paymentMonth < 10 ? `0${paymentMonth}` : paymentMonth;
+            const paymentYear = input.paymentDue.slice(7, 11);
+            input.paymentDue = `${paymentYear}-${paymentMonth}-${paymentDay}`;
+        }
+        if (typeof(input.total) == 'string') {
+            let grandTotal = input.total.slice(2);
+            input.total = grandTotal;
+        }
+        input.items.forEach(item => delete item.id);
+        console.log(input)
+        return input;
+    }
+
+    // TALLYS ITEM TOTAL WHENEVER INVOICE IS SAVED OR UPDATED
+
+    const grandTotalTally = (input) => {
+        let grandTotal = 0;
+        input.items.forEach(item => {
+            const amount = item.price * item.quantity;
+            item.total = amount;
+            grandTotal += amount;
+        });
+        input.total = grandTotal;
+        return input;
+    }
+    
+    // FORMAT FETCHED INVOICES FOR STATE
+
+    const listFormatter = (data) => {
+
+        const dateFormat = (input) => {
+            const day= input.slice(8, 10);
+            let month = monthsArray[Number(input.slice(5, 7)) - 1];
+            const year = input.slice(0, 4);
+            const formatted = `${day} ${month} ${year}`;
+            return formatted;
+        }
+
+        const currencyFormat = (amount) => {
+            const output = `£ ${new Intl.NumberFormat ('en-UK', { style: 'currency', currency: 'GBP'}).format(amount).toString().slice(1)}`;
+            return output;
+        }
+
+        const formattedList = [];
+
+        data.forEach(invoice => {
+            if (invoice.createdAt === '') {
+                formattedList.push({...invoice,  
+                paymentDue: dateFormat(invoice.paymentDue), 
+                total: currencyFormat(invoice.total) 
+                })
+            } else if (invoice.paymentDue === '') {
+                formattedList.push({...invoice,  
+                createdAt: dateFormat(invoice.createdAt), 
+                total: currencyFormat(invoice.total) 
+                })
+            } else if (invoice.total === '') {
+                formattedList.push({...invoice,  
+                createdAt: dateFormat(invoice.createdAt), 
+                paymentDue: dateFormat(invoice.paymentDue)
+                })
+            } else if (invoice.createdAt === '' && invoice.paymentDue === '') {
+                formattedList.push({...invoice,  
+                total: currencyFormat(invoice.total)
+                })
+            } else if (invoice.createdAt === '' && invoice.total === '') {
+                formattedList.push({...invoice,  
+                paymentDue: dateFormat(invoice.paymentDue),
+                })
+            } else if (invoice.paymentDue === '' && invoice.total === '') {
+                formattedList.push({...invoice,  
+                createdAt: dateFormat(invoice.paymentDue),
+                })
+            } else if (invoice.createdAt === '' && invoice.paymentDue === '' && invoice.total === '') {
+                formattedList.push(invoice)
+            } else {
+                formattedList.push({...invoice, 
+                createdAt: dateFormat(invoice.createdAt), 
+                paymentDue: dateFormat(invoice.paymentDue), 
+                total: currencyFormat(invoice.total)
+                }) 
+            }     
+        });
+
+        let idAssign = 0;
+
+        formattedList.forEach(itemlist => {
+            itemlist.items.forEach(item => {
+                item.id = idAssign;
+                idAssign += 1;
+            });
+            idAssign = 0;
+        });
+        INITINVOICES(formattedList);
     }
 
     // GET INVOICES - Sent To App.Js For Formatting Date and Currency Fields
 
     const fetchInvoices = async () => { // HTTP GET
         const res = await fetch(Url)
-        .catch((err) => console.log(err));     
+        .catch((err) => console.log(err));   
         if (res === undefined) {
-            const data = ["error"]
-            return data;
+            INITINVOICES(["error"]);
         } else {
             const data = await res.json();
-            SERVERLIST = data;
-            return data;
+            listFormatter(data);
         }
     }
 
-    export const fetchData = fetchInvoices();
+    fetchInvoices();
 
-    // ADD INVOICE
+    // SAVE AND SEND
 
-    const addOnInvoice = (store, invoice) => { // STATE PAID
-        addReq(invoice);
-        const state = {...store, invoice, status: 'pending'};
-        console.log(state)
-        return state;
+    const saveSendInvoice = (store, invoice) => { // STATE
+        const totalTallied = grandTotalTally(invoice);
+        addReq(store, totalTallied);
+        return store;
     }
 
-    const addReq = async (invoice) => { // HTTP PUT
-        const res = await fetch( Url, {
+    const addReq = async (store, invoice) => { // HTTP POST
+        const data = toServerFormatting(invoice);
+        await fetch( Url, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({...invoice, status: 'pending'})
+            body: JSON.stringify({...data, status: 'pending'})
         })
-        .then(() => httpStatusAndReset("Save & Send Invoice Request Fulfilled"))
+        .then(() => { 
+            httpStatusAndReset("Save & Send Invoice Request Fulfilled");
+            const updateState = store;
+            invoice.status = 'pending';
+            updateState.push(invoice);
+            console.log(updateState);
+            INITINVOICES(updateState);
+        })
         .catch(() => httpStatusAndReset("Save & Send Invoice Request Failed")); 
     }
 
-    // ADD DRAFT INVOICE
+    // SAVE AS DRAFT
 
-    const addOnDraftInvoice = (store, invoice) => { // STATE PAID
-        addDraftReq(store, invoice);
-        const state = {...store, invoice, status: 'draft'};
-        console.log(state)
-        return state;
+    const draftInvoice = (store, invoice) => { // STATE
+        const data = grandTotalTally(invoice);
+        addDraftReq(data, invoice);
+        return store;
     }
 
-    const addDraftReq = async (invoice) => { // HTTP PUT
-        const res = await fetch( Url, {
+    const addDraftReq = async (store, invoice) => { // HTTP POST
+        const data = toServerFormatting(invoice);
+        await fetch( Url, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({...invoice, status: 'draft'})
+            body: JSON.stringify({...data, status: 'draft'})
         })
-        .then(() => httpStatusAndReset("Add Draft Invoice Request Fulfilled"))
+        .then(() => { 
+            httpStatusAndReset("Add Draft Invoice Request Fulfilled");
+            const updateState = store;
+            invoice.status = 'draft';
+            updateState.push(invoice);
+            INITINVOICES(updateState);
+        })
         .catch(() => httpStatusAndReset("Add Draft Invoice Request Failed")); 
     }
 
-    // MARK INVOICE PAID
+    // MARK AS PAID
 
-    const paidInvoice = (store, id) => { // STATE PAID
+    const markPaidInvoice = (store, id) => { // STATE
         paidUpdateReq(store, id);
-        const state = store.map(item => item.id === id 
-            ? {...item, status: 'paid'} : item);
-        return state;
+        return store;
     }
 
     const paidUpdateReq = async (store, id) => { // HTTP PUT
-        const invoice = SERVERLIST.filter(item => 
-            item.id === id
-        );
-        const res = await fetch(`${Url}/${id}`, {
+        const invoice = store.filter(store => store.id === id)
+        const data = toServerFormatting(invoice[0]);
+        await fetch(`${Url}/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({...invoice[0], status: 'paid'})
+            body: JSON.stringify({...data, status: 'paid'})
         })
-        .then(() => httpStatusAndReset("Mark Paid Request Fulfilled"))
+        .then(() => { 
+            httpStatusAndReset("Mark Paid Request Fulfilled");
+            const updateState = store.map(item => item.id === id 
+                ? {...item, status: 'paid'} : item);
+            INITINVOICES(updateState);
+        })
         .catch(() => httpStatusAndReset("Mark Paid Request Failed")); 
     }
 
-    // UPDATE INVOICE
+    // SAVE CHANGES
 
-    const updInvoice = (store, invoice) => { // STATE PAID
+    const saveChangeInvoice = (store, invoice) => { // STATE
         updReq(store, invoice);
-        const state = store.map(item => item.id === invoice.id 
-            ? invoice : item);
-        console.log(state)
-        return state;
+        return store;
     }
 
     const updReq = async (store, invoice) => { // HTTP PUT
-        const res = await fetch(`${Url}/${invoice.id}`, {
+        const data = toServerFormatting(invoice);
+        await fetch(`${Url}/${invoice.id}`, {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify(invoice)
+            body: JSON.stringify({...data, status: 'pending'})
         })
-        .then(() => httpStatusAndReset("Update Invoice Request Fulfilled"))
-        .catch(() => httpStatusAndReset("Update Invoice Request Failed")); 
+        .then(() => { 
+            httpStatusAndReset("Save Changes Request Fulfilled");
+            const data = ({...invoice, status: 'pending'});
+            const updateState = store.map(item => item.id === invoice.id 
+                ? invoice : item);
+            INITINVOICES(updateState);
+        })
+        .catch(() => httpStatusAndReset("Save Changes Request Failed")); 
     }
 
     // DELETE INVOICE
 
     const delInvoice = (store, id) => { // STATE DELETE
-        delReq(id);
-        const updateState = store.filter(invoice => invoice.id !== id);
-        return updateState;
+        delReq(store, id);
+        return store;
     }
 
-    const delReq = async (id) => {
-        const res = await fetch(`${Url}/${id}`, { // HTTP DELETE
+    const delReq = async (store, id) => {
+        await fetch(`${Url}/${id}`, { // HTTP DELETE
             method: 'DELETE'
         })
-        .then(() => httpStatusAndReset("Delete Request Fulfilled"))
+        .then(() => { 
+            httpStatusAndReset("Delete Request Fulfilled");
+            const updateState = store.filter(invoice => invoice.id !== id);
+            INITINVOICES(updateState);
+        })
         .catch(() => httpStatusAndReset("Delete Request Failed"));
-        const data = await res; 
     }
 
 // Invoice List - Fetched Data Is Modified in App.Js To Reformat Dates And Currencies And Then Sent To Invoice List
 
-    const INVOICE_LIST = ['loading']
+    const INVOICE_LIST_START = ['loading']
 
-    export const [invoiceList, {initInvoices, addInvoice, addDraftInvoice, markPaidInvoice, updateInvoice, deleteInvoice}] = 
-        createReduxModule('invoice', INVOICE_LIST, {
-            initInvoices: (store, invoice) => invoice,
-            addInvoice: (store, invoice) => addOnInvoice(store, invoice),
-            addDraftInvoice: (store, invoice) => addOnDraftInvoice(store, invoice),
-            markPaidInvoice: (store, id) => paidInvoice(store, id),
-            updateInvoice: (store, invoice) => updInvoice(store, invoice),
-            deleteInvoice: (store, id) =>  delInvoice(store, id)
-        });
-
-// Invoice Formatted Toggle
-
-    const FORMATTOGGLE = false;
-        
-    export const [toggleFormat, {setToggleFormat}] =
-        createReduxModule('formatToggle', FORMATTOGGLE, {
-            setToggleFormat: (toggle) => toggle
+    export const [INVOICELIST, {INITINVOICES, SAVEANDSENDINVOICE, SAVEASDRAFTINVOICE, MARKASPAIDINVOICE, SAVECHANGESINVOICE, DELETEINVOICE}] = 
+        createReduxModule('invoice', INVOICE_LIST_START, {
+            INITINVOICES: (store, invoice) => invoice,
+            SAVEANDSENDINVOICE: (store, invoice) => saveSendInvoice(store, invoice),
+            SAVEASDRAFTINVOICE: (store, invoice) => draftInvoice(store, invoice),
+            MARKASPAIDINVOICE: (store, id) => markPaidInvoice(store, id),
+            SAVECHANGESINVOICE: (store, invoice) => saveChangeInvoice(store, invoice),
+            DELETEINVOICE: (store, id) =>  delInvoice(store, id)
         });
 
 // Invoice Content For Viewer/Editor
 
-    const INVOICE = [];
+    const INVOICE_START = [];
 
-    export const [invoice, {setInvoice}] = 
-        createReduxModule('invoiceSet', INVOICE, {
-            setInvoice: (store, invoice) => invoice
+    export const [INVOICE, {SETINVOICE}] = 
+        createReduxModule('invoiceSet', INVOICE_START, {
+            SETINVOICE: (store, invoice) => invoice
         });
 
-// NightMode Toggler
+// NIGHTMODE Toggler
 
-    const NIGHTMODE = true;
+    const NIGHTMODE_START = true;
 
-    export const [nightMode, {toggleNightMode}] = 
-        createReduxModule('nightToggle', NIGHTMODE, {
-            toggleNightMode: (toggle) => !toggle
+    export const [NIGHTMODE, {TOGGLENIGHTMODE}] = 
+        createReduxModule('nightToggle', NIGHTMODE_START, {
+            TOGGLENIGHTMODE: (toggle) => !toggle
         });
 
 // Delete Modal Toggle
 
-    const DELETEMODALTOGGLE = false;
+    const DELETEMODALTOGGLE_START = false;
         
-    export const [toggleDeleteModal, {setToggleDeleteModal}] =
-        createReduxModule('deleteToggle', DELETEMODALTOGGLE, {
-            setToggleDeleteModal: (store, toggle) => toggle
+    export const [TOGGLEDELETEMODAL, {SETTOGGLEDELETEMODAL}] =
+        createReduxModule('deleteToggle', DELETEMODALTOGGLE_START, {
+            SETTOGGLEDELETEMODAL: (store, toggle) => toggle
         });
 
 // Error Modal Toggle
 
-    const ERRORMODALTOGGLE = false;
+    const ERRORMODALTOGGLE_START = false;
         
-    export const [toggleErrorModal, {setToggleErrorModal}] =
-        createReduxModule('errorToggle', ERRORMODALTOGGLE, {
-            setToggleErrorModal: (store, toggle) => toggle
+    export const [TOGGLEERRORMODAL, {SETTOGGLEERRORMODAL}] =
+        createReduxModule('errorToggle', ERRORMODALTOGGLE_START, {
+            SETTOGGLEERRORMODAL: (store, toggle) => toggle
         });
 
 
 // Viewer Toggle
 
-    const VIEWERTOGGLE = false;
+    const VIEWERTOGGLE_START = false;
     
-    export const [toggleViewer, {setToggleViewer}] =
-        createReduxModule('viewerToggle', VIEWERTOGGLE, {
-            setToggleViewer: (store, toggle) => toggle
+    export const [TOGGLEVIEWER, {SETTOGGLEVIEWER}] =
+        createReduxModule('viewerToggle', VIEWERTOGGLE_START, {
+            SETTOGGLEVIEWER: (store, toggle) => toggle
         });
 
 // Create Or Edit Invoice Toggler
 
-    const CreateEditTOGGLE = false;
+    const CREATEOREDITTOGGLE_START = false;
 
-    export const [toggleCreateEdit, {setToggleCreateEdit}] = 
-        createReduxModule('createOrEditToggle', CreateEditTOGGLE, {
-            setToggleCreateEdit: (store, toggle) => toggle
+    export const [TOGGLECREATEEDIT, {SETTOGGLECREATEEDIT}] = 
+        createReduxModule('createOrEditToggle', CREATEOREDITTOGGLE_START, {
+            SETTOGGLECREATEEDIT: (store, toggle) => toggle
         });
 
 // HTTP Request Response OK
 
-    const HTTPOK = "No Request Made";
+    const HTTPOK_START = "No Request Made";
         
-    export const [httpRes, {setHttpRes}] =
-        createReduxModule('httpOk', HTTPOK, {
-            setHttpRes: (store, toggle) => toggle
+    export const [HTTPRES, {SETHTTPRES}] =
+        createReduxModule('httpOk', HTTPOK_START, {
+            SETHTTPRES: (store, toggle) => toggle
         });

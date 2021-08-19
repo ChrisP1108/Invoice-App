@@ -2,10 +2,11 @@ import ButtonReqSpinner from './ButtonReqSpinner';
 import { useState, useEffect } from 'react';
 import { optionTerms } from '../Arrays/Options';
 import { NewInvoiceTemplate, ItemAddSchema } from '../New-Invoice-Template';
-import { invoice, setInvoice,
-    markPaidInvoice, setToggleDeleteModal, setHttpRes, httpRes, 
-    toggleErrorModal, setToggleErrorModal, setToggleViewer, 
-    setToggleCreateEdit, updateInvoice, addInvoice, addDraftInvoice } from '../redux/Store.js';
+import { INVOICE, SETINVOICE,
+    MARKASPAIDINVOICE, SETTOGGLEDELETEMODAL, SETHTTPRES, HTTPRES, 
+    TOGGLEERRORMODAL, SETTOGGLEERRORMODAL, SETTOGGLEVIEWER, 
+    SETTOGGLECREATEEDIT, SAVECHANGESINVOICE, SAVEANDSENDINVOICE, 
+    SAVEASDRAFTINVOICE } from '../redux/Store.js';
 
 const CreateOrEdit = () => {
 
@@ -65,110 +66,76 @@ const CreateOrEdit = () => {
         return itemPass && fieldPass ? true : false;
     }
 
-    if (httpRes() === "Update Invoice Request Failed") {
+    if (HTTPRES() === "Save Changes Request Failed") {
         setTimeout(() => {
-            setToggleErrorModal(true);
+            SETTOGGLEERRORMODAL(true);
             setSaveChangeSpinner(false);
         }, 500);
     } 
-    if (httpRes() === "Update Invoice Request Fulfilled") {
+    if (HTTPRES() === "Save Changes Request Fulfilled") {
         setTimeout(() => {
             setSaveChangeSpinner(false);
-            setToggleCreateEdit(false);
+            SETTOGGLECREATEEDIT(false);
         }, 500); 
     }
-    if (httpRes() === "Save & Send Invoice Request Failed") {
+    if (HTTPRES() === "Save & Send Invoice Request Failed") {
         setTimeout(() => {
-            setToggleErrorModal(true);
+            SETTOGGLEERRORMODAL(true);
             setSaveSendSpinner(false);
         }, 500);
     } 
-    if (httpRes() === "Save & Send Invoice Request Fulfilled") {
+    if (HTTPRES() === "Save & Send Invoice Request Fulfilled") {
         setTimeout(() => {
             setSaveSendSpinner(false);
-            setToggleCreateEdit(false);
+            SETTOGGLECREATEEDIT(false);
         }, 500); 
     }
-    if (httpRes() === "Add Draft Invoice Request Failed") {
+    if (HTTPRES() === "Add Draft Invoice Request Failed") {
         setTimeout(() => {
-            setToggleErrorModal(true);
+            SETTOGGLEERRORMODAL(true);
             setDraftSpinner(false);
         }, 500);
     } 
-    if (httpRes() === "Add Draft Invoice Request Fulfilled") {
+    if (HTTPRES() === "Add Draft Invoice Request Fulfilled") {
         setTimeout(() => {
             setDraftSpinner(false);
-            setToggleCreateEdit(false);
+            SETTOGGLECREATEEDIT(false);
         }, 500); 
     }
 
-    const serverFormatting = (input) => {
-        if (input.createdAt.slice(4, 5) !== '-') {
-            let createdDay = input.createdAt.slice(0, 2);
-            createdDay = createdDay < 10 ? `0${createdDay}` : createdDay;
-            let createdMonth = monthsArray.indexOf(input.createdAt.slice(3, 6)) + 1;
-            createdMonth = createdMonth < 10 ? `0${createdMonth}` : createdMonth;
-            const createdYear = input.createdAt.slice(7, 11);
-            input.createdAt = `${createdYear}-${createdMonth}-${createdDay}`;
-        }
-        if (input.paymentDue.slice(4, 5) !== '-') {
-            let paymentDay = input.paymentDue.slice(0, 2);
-            paymentDay = paymentDay < 10 ? `0${paymentDay}` : paymentDay;
-            let paymentMonth = monthsArray.indexOf(input.paymentDue.slice(3, 6)) + 1;
-            paymentMonth = paymentMonth < 10 ? `0${paymentMonth}` : paymentMonth;
-            const paymentYear = input.paymentDue.slice(7, 11);
-            input.paymentDue = `${paymentYear}-${paymentMonth}-${paymentDay}`;
-        }
-        if (input.total.charAt[0] !== '£') {
-            input.total = input.total.slice(2);
-        }
-        input.items.forEach(item => delete item.id);
-        return input;
-    }
-
-    const updateInvoiceToggle = () => {
+    const saveChangesInvoiceToggle = () => {
         fieldsEval();
         if (fieldsEval()) {
-            const data = serverFormatting(invoiceEdit);
-            console.log(data);
             setSaveChangeSpinner(true);
-            setHttpRes("Update Invoice Request Pending");
-            updateInvoice(data);
+            SETHTTPRES("Save Changes Request Pending");
+            SAVECHANGESINVOICE(invoiceEdit);
         } else console.log("Fields & Or Items Are Empty");
     }
 
-    const addInvoiceInitiate = (type) => {
-        const data = serverFormatting(invoiceEdit);
+    const saveAndSendInvoiceInitiate = (type) => {
         if (type === 'Save') {
-            let grandTotal = 0;
-            data.items.forEach(item => {
-                const amount = item.price * item.quantity;
-                item.total = amount;
-                grandTotal += amount;
-            });
-            data.total = grandTotal;
             setSaveSendSpinner(true);
-            setHttpRes("Save & Send Invoice Request Pending");
-            addInvoice(data);
+            SETHTTPRES("Save & Send Invoice Request Pending");
+            SAVEANDSENDINVOICE(invoiceEdit);
         } else if (type === 'Draft') {
             setDraftSpinner(true);
-            setHttpRes("Add Draft Invoice Request Pending");
-            addDraftInvoice(data);
+            SETHTTPRES("Add Draft Invoice Request Pending");
+            SAVEASDRAFTINVOICE(invoiceEdit);
         }
     }
 
-    const addInvoiceToggle = (evalFields) => {
+    const saveAndSendInvoiceToggle = (evalFields) => {
         if (evalFields) {
             fieldsEval();
             if (fieldsEval()) {
-                addInvoiceInitiate('Save');
+                saveAndSendInvoiceInitiate('Save');
             } else console.log("Fields & Or Items Are Empty");
         } else {
-            addInvoiceInitiate('Draft');
+            saveAndSendInvoiceInitiate('Draft');
         }     
     }
 
-    const input = invoice().id === undefined ? NewInvoiceTemplate : invoice();
+    const input = INVOICE().id === undefined ? NewInvoiceTemplate : INVOICE();
 
     const randomIdGenerator = () => {  
         let alphabet;
@@ -227,7 +194,7 @@ const CreateOrEdit = () => {
     
     const backHeader = () => {
         return (
-            <div onClick={() => setToggleCreateEdit(false)} 
+            <div onClick={() => SETTOGGLECREATEEDIT(false)} 
                 className="back-container pointer position-relative">
                 <div className="back-arrow"></div>
                 <div className="d-flex">
@@ -241,7 +208,7 @@ const CreateOrEdit = () => {
     const title = () => {
         return (
             <div className="createoredit-title">
-                {invoice().id === undefined ?
+                {INVOICE().id === undefined ?
                     <h1>New Invoice</h1>
                     : <h1>Edit <span>#</span>{invoiceEdit.id}</h1>
                 }
@@ -252,7 +219,6 @@ const CreateOrEdit = () => {
     const formStateUpdate = (type, value, id) => {
         let data = invoiceEdit;
         const index = id === undefined ? invoiceEdit.items.length - 1 : id; 
-        console.log(invoiceEdit.items.length);
         switch (type) {
             case 'senderAddress.street':
                 data.senderAddress.street = value;
@@ -290,6 +256,7 @@ const CreateOrEdit = () => {
             case 'paymentTerms':
                 data.paymentTerms = value;
                 setToggleTerms(false);
+                setCalendarDate('payment');
                 break;
             case 'description':
                 data.description = value;
@@ -482,18 +449,28 @@ const CreateOrEdit = () => {
     }
 
     const setCalendarDate = (input) => {
-        const actualMonth = calState.monthTally + 1;
-        const month = actualMonth < 10 ? `0${actualMonth}` 
-            : actualMonth;
-        const number = input < 10 ? `0${input}` 
-            : input;
-        const randomMonth = Math.ceil(Math.random() * 11);
-        let randomDay = Math.ceil(Math.random() * 28);
-        randomDay = randomDay < 10 ? randomDay = `0${randomDay}` : randomDay;
-        const randomYear = calState.yearTally + Math.ceil(Math.random() * 1);
-        setInvoiceEdit({...invoiceEdit, createdAt: `${number} ${calState.header}`,
-            paymentDue: `${randomDay} ${monthsArray[randomMonth]} ${randomYear}`});
-        setToggleCalendar(false);
+        if (input !== 'payment') {
+            const actualMonth = calState.monthTally + 1;
+            const month = actualMonth < 10 ? `0${actualMonth}` 
+                : actualMonth;
+            const number = input < 10 ? `0${input}` 
+                : input;
+            const createdAtUpdate = invoiceEdit;
+            createdAtUpdate.createdAt = `${number} ${calState.header}`;
+            setInvoiceEdit({...createdAtUpdate});
+            console.log(`${number} ${calState.header}`);
+            setToggleCalendar(false);
+        }
+        const createdDateNumber = Number(invoiceEdit.createdAt.slice(0, 2));
+        const paymentDueFullDate = new Date(calState.yearTally, 
+            calState.monthTally, createdDateNumber + invoiceEdit.paymentTerms);
+        let paymentDueDate = paymentDueFullDate.getDate();
+        paymentDueDate = paymentDueDate < 10 ? `0${paymentDueDate}` : paymentDueDate;
+        let paymentDueMonth = paymentDueFullDate.getMonth();
+        let paymentDueYear = paymentDueFullDate.getFullYear();
+        const paymentDueUpdate = invoiceEdit;
+        paymentDueUpdate.paymentDue = `${paymentDueDate} ${monthsArray[paymentDueMonth]} ${paymentDueYear}`;
+        setInvoiceEdit({...paymentDueUpdate});
     }
 
     const calendarPrevNumbers = calState.prevMonthNumbers.map(number => {
@@ -719,7 +696,7 @@ const CreateOrEdit = () => {
                     </input>
                 </div>
                 <div className="createoredit-invoice-top-gap"></div>
-                <div className={`${invoice().id === undefined && `d-none`} createoredit-form-row-full-container 
+                <div className={`${INVOICE().id === undefined && `d-none`} createoredit-form-row-full-container 
                     createoredit-invoice-disabled f-clb`}>
                     <h4>Invoice Date</h4>
                     <div className="createoredit-date-disabled f-sb">
@@ -727,7 +704,7 @@ const CreateOrEdit = () => {
                         <div className="createoredit-calendar-icon"></div>
                     </div>   
                 </div>
-                <div className={`${invoice().id !== undefined && `d-none`} 
+                <div className={`${INVOICE().id !== undefined && `d-none`} 
                         createoredit-form-row-full-container f-clb position-relative`}>
                     <div className="f-sb">
                         <h4 className={errorStylingEval(invoiceEdit.createdAt) 
@@ -818,27 +795,27 @@ const CreateOrEdit = () => {
         return (
             <div className="createoredit-footer-outer-container f-c">
                 <div className="createoredit-footer-inner-container f-e f-c">
-                    <div onClick={() => setToggleCreateEdit(false)}
-                        className={`${invoice().id === undefined && `d-none`} createoredit-cancel-button-container f-c pointer`}>
+                    <div onClick={() => SETTOGGLECREATEEDIT(false)}
+                        className={`${INVOICE().id === undefined && `d-none`} createoredit-cancel-button-container f-c pointer`}>
                             <h3>Cancel</h3>
                     </div>
-                    <div onClick={() => setToggleCreateEdit(false)}
-                        className={`${invoice().id !== undefined && `d-none`} createoredit-cancel-button-container f-c pointer`}>
+                    <div onClick={() => SETTOGGLECREATEEDIT(false)}
+                        className={`${INVOICE().id !== undefined && `d-none`} createoredit-cancel-button-container f-c pointer`}>
                             <h3>Discard</h3>
                     </div>
-                    <div className={`${invoice().id !== undefined && `d-none`} createoredit-footer-button-gap`}></div>
-                    <div onClick={() => addInvoiceToggle(false)}
-                        className={`${invoice().id !== undefined && `d-none`} createoredit-saveasdraft-button-container f-c pointer`}>
+                    <div className={`${INVOICE().id !== undefined && `d-none`} createoredit-footer-button-gap`}></div>
+                    <div onClick={() => saveAndSendInvoiceToggle(false)}
+                        className={`${INVOICE().id !== undefined && `d-none`} createoredit-saveasdraft-button-container f-c pointer`}>
                             {draftSpinner ? <ButtonReqSpinner /> : <h3>Save as Draft</h3>}
                     </div>
                     <div className="createoredit-footer-button-gap"></div>
-                    <div onClick={() => updateInvoiceToggle()}
-                        className={`${invoice().id === undefined && `d-none`} 
+                    <div onClick={() => saveChangesInvoiceToggle()}
+                        className={`${INVOICE().id === undefined && `d-none`} 
                             createoredit-savechanges-button-container f-c pointer position-relative`}>
                         {saveChangeSpinner ? <ButtonReqSpinner /> : <h3>Save Changes</h3>}
                     </div>
-                    <div onClick={() => addInvoiceToggle(true)}
-                        className={`${invoice().id !== undefined && `d-none`} 
+                    <div onClick={() => saveAndSendInvoiceToggle(true)}
+                        className={`${INVOICE().id !== undefined && `d-none`} 
                             createoredit-saveandsend-button-container f-c pointer`}>
                         {saveSendSpinner ? <ButtonReqSpinner /> : <h3>Save & Send</h3>}
                     </div>
