@@ -74,7 +74,7 @@ const CreateOrEdit = () => {
     if (HTTPRES() === "Save Changes Request Fulfilled") {
         setTimeout(() => {
             setSaveChangeSpinner(false);
-            SETINVOICE(invoiceEdit);
+            SETINVOICE({...invoiceEdit, status: 'pending'});
             SETTOGGLECREATEEDIT(false);
         }, 500); 
     }
@@ -105,24 +105,37 @@ const CreateOrEdit = () => {
         }, 500); 
     }
 
+    const grandTotalTally = (input) => {
+        let grandTotal = 0;
+        input.items.forEach(item => {
+            const amount = item.price * item.quantity;
+            item.total = amount;
+            grandTotal += amount;
+        });
+        input.total = grandTotal;
+        return input;
+    }
+
     const saveChangesInvoiceToggle = () => {
+        const output = grandTotalTally(invoiceEdit);
         fieldsEval();
         if (fieldsEval()) {
             setSaveChangeSpinner(true);
             SETHTTPRES("Save Changes Request Pending");
-            SAVECHANGESINVOICE(invoiceEdit);
+            SAVECHANGESINVOICE(output);
         } else console.log("Fields & Or Items Are Empty");
     }
 
     const saveAndSendInvoiceInitiate = (type) => {
+        const output = grandTotalTally(invoiceEdit);
         if (type === 'Save') {
             setSaveSendSpinner(true);
             SETHTTPRES("Save & Send Invoice Request Pending");
-            SAVEANDSENDINVOICE(invoiceEdit);
+            SAVEANDSENDINVOICE(output);
         } else if (type === 'Draft') {
             setDraftSpinner(true);
             SETHTTPRES("Add Draft Invoice Request Pending");
-            SAVEASDRAFTINVOICE(invoiceEdit);
+            SAVEASDRAFTINVOICE(output);
         }
     }
 
@@ -451,21 +464,24 @@ const CreateOrEdit = () => {
     }
 
     const setCalendarDate = (input) => {
+        let createdAtYear = calState.yearTally;
+        let createdAtMonth = calState.monthTally + 1;
+        createdAtMonth = createdAtMonth < 10 ? `0${createdAtMonth}` : createdAtMonth;
+        let createdAtDate = input;
+        createdAtDate = createdAtDate < 10 ? `0${createdAtDate}` : createdAtDate;
         if (input !== 'payment') {
-            const actualMonth = calState.monthTally + 1;
-            const month = actualMonth < 10 ? `0${actualMonth}` 
-                : actualMonth;
-            const number = input < 10 ? `0${input}` 
-                : input;
             const createdAtUpdate = invoiceEdit;
-            createdAtUpdate.createdAt = `${number} ${calState.header}`;
+            createdAtUpdate.createdAt = 
+                `${createdAtYear}-${createdAtMonth}-${createdAtDate}`;
+            console.log(createdAtUpdate.createdAt);
             setInvoiceEdit({...createdAtUpdate});
-            console.log(`${number} ${calState.header}`);
             setToggleCalendar(false);
         }
-        const createdDateNumber = Number(invoiceEdit.createdAt.slice(0, 2));
-        const paymentDueFullDate = new Date(calState.yearTally, 
-            calState.monthTally, createdDateNumber + invoiceEdit.paymentTerms);
+        const createdYearNumber = Number(invoiceEdit.createdAt.slice(0, 4));
+        const createdMonthNumber = Number(invoiceEdit.createdAt.slice(5, 7) - 1);
+        const createdDateNumber = Number(invoiceEdit.createdAt.slice(8));
+        const paymentDueFullDate = new Date(createdYearNumber, 
+            createdMonthNumber, createdDateNumber + invoiceEdit.paymentTerms);
         let paymentDueDate = paymentDueFullDate.getDate();
         paymentDueDate = paymentDueDate == 0 ? 1 : paymentDueDate;
         paymentDueDate = paymentDueDate < 10 ? `0${paymentDueDate}` : paymentDueDate;
@@ -730,7 +746,7 @@ const CreateOrEdit = () => {
                             className={`${errorStylingEval(invoiceEdit.createdAt) 
                             ? `createoredit-field-error` : `createoredit-field`} 
                             createoredit-date-active f-sb pointer`}> 
-                                <span>{invoiceEdit.createdAt === '' ? `Select Invoice Date` : invoiceEdit.createdAt}</span>
+                                <span>{invoiceEdit.createdAt === '' ? `Select Invoice Date` : dateFormat(invoiceEdit.createdAt)}</span>
                                 <div className="createoredit-calendar-icon"></div>
                         </div>
                     </div>
@@ -800,8 +816,6 @@ const CreateOrEdit = () => {
             </>
         )
     }
-
-
 
     const footerButtons = () => { 
         return (

@@ -36,12 +36,19 @@
 
 //Global Classes
 
+html {
+    width: 100%!important;
+    height: 100%!important;
+}
+
 body {
     font-family: 'Spartan', sans-serif!important;
+    width: 100%!important;
+    height: 100%!important;
 }
 
 .window-height {
-    min-height: 60rem!important;
+    min-height: 59rem!important;
 }
 
 .pointer:hover {

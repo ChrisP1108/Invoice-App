@@ -22,6 +22,7 @@ const Viewer = () => {
         setTimeout(() => {
             setClicked(true);
             setMarkPaidSpinner(false);
+            SETTOGGLEVIEWER(false);
             setViewInvoice({...viewInvoice, status: 'paid'});
         }, 500); 
     }

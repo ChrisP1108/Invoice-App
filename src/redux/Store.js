@@ -15,122 +15,6 @@ import { createReduxModule } from 'hooks-for-redux';
         }, 1000);
     }
 
-    // FORMAT INVOICES TO BE ADDED/MARK PAID/UPDATED TO SERVER
-
-    // const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July',
-    //     'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-    // const toServerFormatting = (input) => {
-    //     console.log(input);
-    //     if (input.createdAt.slice(4,5) !== '-') {
-    //         let createdDay = input.createdAt.slice(0, 2);
-    //         createdDay = createdDay < 10 ? `0${createdDay}` : createdDay;
-    //         let createdMonth = monthsArray.indexOf(input.createdAt.slice(3, 6)) + 1;
-    //         createdMonth = createdMonth < 10 ? `0${createdMonth}` : createdMonth;
-    //         const createdYear = input.createdAt.slice(7, 11);
-    //         input.createdAt = `${createdYear}-${createdMonth}-${createdDay}`;
-    //     }
-    //     if (input.paymentDue.slice(4,5) !== '-') {
-    //         let paymentDay = input.paymentDue.slice(0, 2);
-    //         paymentDay = Number(paymentDay === 0 ? 1 : paymentDay);
-    //         paymentDay = paymentDay < 10 ? `0${paymentDay}` : paymentDay;
-    //         let paymentMonth = monthsArray.indexOf(input.paymentDue.slice(3, 6)) + 1;
-    //         paymentMonth = paymentMonth < 10 ? `0${paymentMonth}` : paymentMonth;
-    //         const paymentYear = input.paymentDue.slice(7, 11);
-    //         input.paymentDue = `${paymentYear}-${paymentMonth}-${paymentDay}`;
-    //     }
-    //     if (typeof(input.total) == 'string') {
-    //         let grandTotal = input.total.slice(2);
-    //         input.total = grandTotal;
-    //     }
-    //     input.items.forEach(item => delete item.id);
-    //     return input;
-    // }
-
-    // TALLYS ITEM TOTAL WHENEVER INVOICE IS SAVED OR UPDATED
-
-    // const grandTotalTally = (input) => {
-    //     let grandTotal = 0;
-    //     input.items.forEach(item => {
-    //         const amount = item.price * item.quantity;
-    //         item.total = amount;
-    //         grandTotal += amount;
-    //     });
-    //     input.total = grandTotal;
-    //     return input;
-    // }
-    
-    // FORMAT FETCHED INVOICES FOR STATE AND
-
-    // const listFormatter = (data) => {
-
-        // const dateFormat = (input) => {
-        //     const day= input.slice(8, 10);
-        //     let month = monthsArray[Number(input.slice(5, 7)) - 1];
-        //     const year = input.slice(0, 4);
-        //     const formatted = `${day} ${month} ${year}`;
-        //     return formatted;
-        // }
-
-        // const currencyFormat = (amount) => {
-        //     const output = `£ ${new Intl.NumberFormat ('en-UK', { style: 'currency', currency: 'GBP'}).format(amount).toString().slice(1)}`;
-        //     return output;
-        // }
-
-    //     const formattedList = [];
-
-    //     data.forEach(invoice => {
-    //         if (invoice.createdAt === '') {
-    //             formattedList.push({...invoice,  
-    //             paymentDue: dateFormat(invoice.paymentDue), 
-    //             total: currencyFormat(invoice.total) 
-    //             })
-    //         } else if (invoice.paymentDue === '') {
-    //             formattedList.push({...invoice,  
-    //             createdAt: dateFormat(invoice.createdAt), 
-    //             total: currencyFormat(invoice.total) 
-    //             })
-    //         } else if (invoice.total === '') {
-    //             formattedList.push({...invoice,  
-    //             createdAt: dateFormat(invoice.createdAt), 
-    //             paymentDue: dateFormat(invoice.paymentDue)
-    //             })
-    //         } else if (invoice.createdAt === '' && invoice.paymentDue === '') {
-    //             formattedList.push({...invoice,  
-    //             total: currencyFormat(invoice.total)
-    //             })
-    //         } else if (invoice.createdAt === '' && invoice.total === '') {
-    //             formattedList.push({...invoice,  
-    //             paymentDue: dateFormat(invoice.paymentDue),
-    //             })
-    //         } else if (invoice.paymentDue === '' && invoice.total === '') {
-    //             formattedList.push({...invoice,  
-    //             createdAt: dateFormat(invoice.paymentDue),
-    //             })
-    //         } else if (invoice.createdAt === '' && invoice.paymentDue === '' && invoice.total === '') {
-    //             formattedList.push(invoice)
-    //         } else {
-    //             formattedList.push({...invoice, 
-    //             createdAt: dateFormat(invoice.createdAt), 
-    //             paymentDue: dateFormat(invoice.paymentDue), 
-    //             total: currencyFormat(invoice.total)
-    //             }) 
-    //         }     
-    //     });
-
-    //     let idAssign = 0;
-
-    //     formattedList.forEach(itemlist => {
-    //         itemlist.items.forEach(item => {
-    //             item.id = idAssign;
-    //             idAssign += 1;
-    //         });
-    //         idAssign = 0;
-    //     });
-    //     INITINVOICES(formattedList);
-    //     return(formattedList);
-    // }
-
     // GET INVOICES - Sent To App.Js For Formatting Date and Currency Fields
 
     const fetchInvoices = async () => { // HTTP GET
@@ -229,7 +113,8 @@ import { createReduxModule } from 'hooks-for-redux';
         return store;
     }
 
-    const updReq = async (store, invoice) => { // HTTP PUT  
+    const updReq = async (store, invoice) => { // HTTP PUT
+        invoice.status = 'pending'
         await fetch(`${Url}/${invoice.id}`, {
             method: 'PUT',
             headers: {
@@ -239,6 +124,7 @@ import { createReduxModule } from 'hooks-for-redux';
         })
         .then(() => { 
             httpStatusAndReset("Save Changes Request Fulfilled");
+            invoice.status = 'pending';
             const updateState = store.map(list => list.id === invoice.id 
                 ? invoice : list);
             INITINVOICES(updateState);

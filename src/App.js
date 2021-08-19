@@ -25,11 +25,13 @@ const App = () => {
 
   return (
     <div className={`${NIGHTMODE() ? 'night-mode' : 'day-mode'} window-height position-relative`}>
+      {TOGGLEERRORMODAL() && <ErrorModal />}
+      {TOGGLEDELETEMODAL() && <DeleteModal />}
       <div className="d-flex flex-column flex-xl-row">
         <Header />
-        {TOGGLEERRORMODAL() && <ErrorModal />}
-        {TOGGLEDELETEMODAL() && <DeleteModal />}
-        {invoiceSwitch()}
+        <div className="w-100">
+          {invoiceSwitch()}
+        </div>
       </div>
     </div>
   )

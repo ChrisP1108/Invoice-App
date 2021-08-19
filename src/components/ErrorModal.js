@@ -1,13 +1,12 @@
-import ButtonReqSpinner from './ButtonReqSpinner';
-import { INVOICE, SETTOGGLEVIEWER, 
-    errorInvoice, HTTPRES, SETHTTPRES,
-    toggleSpinner, setToggleSpinner, SETTOGGLEERRORMODAL } from '../redux/Store.js';
+import { SETTOGGLEERRORMODAL, TOGGLEVIEWER, 
+    TOGGLECREATEEDIT } from '../redux/Store.js';
 
 const ErrorModal = () => {
 
     return (
         <div id="errorModal" className="d-flex align-items-stretch">
-            <div className="error-modal-page-container f-c error-fill-transition">
+            <div className={`${TOGGLEVIEWER() && !TOGGLECREATEEDIT()? `error-modal-page-container-viewer` 
+                : `error-modal-page-container-createoredit`} f-c error-fill-transition`}>
                 <div className="error-modal-outer-container error-modal-transition">
                     <div className="error-modal-inner-container">
                         <h1>Error</h1>

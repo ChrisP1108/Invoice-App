@@ -2,11 +2,17 @@
     position: absolute!important;
     z-index: 10!important;
 
-    .error-modal-page-container {
+    .error-modal-page-container-viewer {
         transition: .25s!important;
         background-color: $halftrans!important;
         width: 96.5vw;
-        height: 123vh;
+        height: 130vh;
+    }
+    .error-modal-page-container-createoredit {
+        transition: .25s!important;
+        background-color: $halftrans!important;
+        width: 96.5vw;
+        height: 262vh;
     }
     .error-fill-transition {
         animation-name: error-modal-trans-in;
