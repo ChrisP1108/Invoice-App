@@ -1,6 +1,20 @@
-import { SETINVOICE, SETTOGGLEVIEWER, dateFormatter, setDateFormatter } from '../redux/Store.js';
+import { SETINVOICE, SETTOGGLEVIEWER } from '../redux/Store.js';
+import { monthsArray } from '../Arrays/Months';
 
 const Invoices = ({ listOutput }) => {
+
+    const dateFormat = (input) => {
+        const day= input.slice(8, 10);
+        let month = monthsArray[Number(input.slice(5, 7)) - 1];
+        const year = input.slice(0, 4);
+        const formatted = `${day} ${month} ${year}`;
+        return formatted;
+    }
+
+    const currencyFormat = (amount) => {
+        const output = `£ ${new Intl.NumberFormat ('en-UK', { style: 'currency', currency: 'GBP'}).format(amount).toString().slice(1)}`;
+        return output;
+    }
 
     const invoiceMapping = listOutput.map(item => {
         return (
@@ -13,9 +27,9 @@ const Invoices = ({ listOutput }) => {
                     </div>
                     <div className="f-ca">
                         <div className="d-flex flex-column w-50">
-                            <h2>Due {item.paymentDue}</h2>
+                            <h2>Due {dateFormat(item.paymentDue)}</h2>
                             <div className="mt-2">
-                                <h4>{item.total}</h4>
+                                <h4>{currencyFormat(item.total)}</h4>
                             </div>
                         </div>
                         <div className="f-ae">

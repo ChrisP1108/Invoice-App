@@ -2,15 +2,13 @@ import Loading from './Loading';
 import Invoices from './Invoices';
 import { SETTOGGLECREATEEDIT, INVOICELIST, 
     invoice, SETINVOICE } from '../redux/Store.js';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { filterItems } from '../Arrays/Filters';
 
 const List = () => {
 
-    console.log(INVOICELIST());
-
     const list = INVOICELIST();
-
+    
     const [toggleFilter, setToggleFilter] = useState(false);
     const [draftFilter, setDraftFilter] = useState(false);
     const [pendingFilter, setPendingFilter] = useState(false);

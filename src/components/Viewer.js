@@ -1,12 +1,12 @@
+import { monthsArray } from '../Arrays/Months';
 import ButtonReqSpinner from './ButtonReqSpinner';
+
 import { useState } from 'react';
 import { INVOICE, INVOICELIST, MARKASPAIDINVOICE, SETTOGGLEDELETEMODAL, 
-    SETTOGGLEVIEWER, SETTOGGLECREATEEDIT,
+    SETTOGGLEVIEWER, SETTOGGLECREATEEDIT, UPDATEINVOICE,
     HTTPRES, SETHTTPRES, SETTOGGLEERRORMODAL } from '../redux/Store.js';
 
 const Viewer = () => {
-
-    const list = INVOICELIST();
     
     const [viewInvoice, setViewInvoice] = useState(INVOICE());
     const [markPaidSpinner, setMarkPaidSpinner] = useState(false);
@@ -86,6 +86,19 @@ const Viewer = () => {
         );
     });
 
+    const dateFormat = (input) => {
+        const day= input.slice(8, 10);
+        let month = monthsArray[Number(input.slice(5, 7)) - 1];
+        const year = input.slice(0, 4);
+        const formatted = `${day} ${month} ${year}`;
+        return formatted;
+    }
+
+    const currencyFormat = (amount) => {
+        const output = `£ ${new Intl.NumberFormat ('en-UK', { style: 'currency', currency: 'GBP'}).format(amount).toString().slice(1)}`;
+        return output;
+    }
+
     const mainContainer = () => {
         return (
             <div className="viewer-main-outer-container">
@@ -109,11 +122,11 @@ const Viewer = () => {
                         <div className="viewer-main-left-column-container">   
                             <div className="viewer-main-invoice-container f-clb">
                                 <h2>Invoice Date</h2>
-                                <p>{viewInvoice.createdAt}</p>
+                                <p>{dateFormat(viewInvoice.createdAt)}</p>
                             </div>
                             <div className="viewer-main-due-container f-clb">
                                 <h2>Payment Due</h2>
-                                <p>{viewInvoice.paymentDue}</p>
+                                <p>{dateFormat(viewInvoice.paymentDue)}</p>
                             </div>
                         </div>
                         <div className="viewer-main-right-column-container">

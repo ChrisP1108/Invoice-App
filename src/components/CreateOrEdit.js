@@ -1,12 +1,13 @@
 import ButtonReqSpinner from './ButtonReqSpinner';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { optionTerms } from '../Arrays/Options';
+import { monthsArray } from '../Arrays/Months';
 import { NewInvoiceTemplate, ItemAddSchema } from '../New-Invoice-Template';
 import { INVOICE, SETINVOICE,
     MARKASPAIDINVOICE, SETTOGGLEDELETEMODAL, SETHTTPRES, HTTPRES, 
     TOGGLEERRORMODAL, SETTOGGLEERRORMODAL, SETTOGGLEVIEWER, 
     SETTOGGLECREATEEDIT, SAVECHANGESINVOICE, SAVEANDSENDINVOICE, 
-    SAVEASDRAFTINVOICE } from '../redux/Store.js';
+    SAVEASDRAFTINVOICE, UPDATEINVOICE } from '../redux/Store.js';
 
 const CreateOrEdit = () => {
 
@@ -19,12 +20,10 @@ const CreateOrEdit = () => {
     const currentMonth = currentDate.slice(4, 7);
     const currentYear = currentDate.slice(11, 15);
     const startingDate = `${currentMonth} ${currentYear}`;
-    const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July',
-        'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     const valuesCheck = (items) => {
         Object.values(items).forEach(item => {
-            if (item === '' || item === null || item == 0 || item < 0) {
+            if (item === '' || item === null || item === 0 || item < 0) {
                 blankFieldTally += 1;
             }
         });
@@ -43,10 +42,10 @@ const CreateOrEdit = () => {
             if (item.name === '') {
                 blankItemTally += 1;
             }
-            if (item.quantity == 0) {
+            if (item.quantity === 0) {
                 blankItemTally += 1;
             }
-            if (item.price == 0) {
+            if (item.price === 0) {
                 blankItemTally += 1;
             }
         });
@@ -75,6 +74,7 @@ const CreateOrEdit = () => {
     if (HTTPRES() === "Save Changes Request Fulfilled") {
         setTimeout(() => {
             setSaveChangeSpinner(false);
+            SETINVOICE(invoiceEdit);
             SETTOGGLECREATEEDIT(false);
         }, 500); 
     }
@@ -88,6 +88,7 @@ const CreateOrEdit = () => {
         setTimeout(() => {
             setSaveSendSpinner(false);
             SETTOGGLECREATEEDIT(false);
+            setInvoiceEdit({...invoiceEdit, status: 'pending'})
         }, 500); 
     }
     if (HTTPRES() === "Add Draft Invoice Request Failed") {
@@ -100,6 +101,7 @@ const CreateOrEdit = () => {
         setTimeout(() => {
             setDraftSpinner(false);
             SETTOGGLECREATEEDIT(false);
+            setInvoiceEdit({...invoiceEdit, status: 'draft'});
         }, 500); 
     }
 
@@ -465,11 +467,13 @@ const CreateOrEdit = () => {
         const paymentDueFullDate = new Date(calState.yearTally, 
             calState.monthTally, createdDateNumber + invoiceEdit.paymentTerms);
         let paymentDueDate = paymentDueFullDate.getDate();
+        paymentDueDate = paymentDueDate == 0 ? 1 : paymentDueDate;
         paymentDueDate = paymentDueDate < 10 ? `0${paymentDueDate}` : paymentDueDate;
-        let paymentDueMonth = paymentDueFullDate.getMonth();
+        let paymentDueMonth = paymentDueFullDate.getMonth() + 1;
+        paymentDueMonth = paymentDueMonth < 10 ? `0${paymentDueMonth}` : paymentDueMonth;
         let paymentDueYear = paymentDueFullDate.getFullYear();
         const paymentDueUpdate = invoiceEdit;
-        paymentDueUpdate.paymentDue = `${paymentDueDate} ${monthsArray[paymentDueMonth]} ${paymentDueYear}`;
+        paymentDueUpdate.paymentDue = `${paymentDueYear}-${paymentDueMonth}-${paymentDueDate}`;
         setInvoiceEdit({...paymentDueUpdate});
     }
 
@@ -517,6 +521,14 @@ const CreateOrEdit = () => {
                 </div>
             </div>
         )
+    }
+
+    const dateFormat = (input) => {
+        const day= input.slice(8, 10);
+        let month = monthsArray[Number(input.slice(5, 7)) - 1];
+        const year = input.slice(0, 4);
+        const formatted = `${day} ${month} ${year}`;
+        return formatted;
     }
 
     const formBody = () => {
@@ -700,7 +712,7 @@ const CreateOrEdit = () => {
                     createoredit-invoice-disabled f-clb`}>
                     <h4>Invoice Date</h4>
                     <div className="createoredit-date-disabled f-sb">
-                        <h4><span>{invoiceEdit.createdAt}</span></h4>
+                        <h4><span>{dateFormat(invoiceEdit.createdAt)}</span></h4>
                         <div className="createoredit-calendar-icon"></div>
                     </div>   
                 </div>

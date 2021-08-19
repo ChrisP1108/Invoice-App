@@ -12,7 +12,7 @@ export const optionTerms = [
     {
         id: 3,
         name: 'Net 14 Days',
-        days: 7
+        days: 14
     },
     {
         id: 4,

@@ -17,118 +17,119 @@ import { createReduxModule } from 'hooks-for-redux';
 
     // FORMAT INVOICES TO BE ADDED/MARK PAID/UPDATED TO SERVER
 
-    const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July',
-        'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    // const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July',
+    //     'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-    const toServerFormatting = (input) => {
-        console.log(input);
-        if (input.createdAt.slice(4,5) !== '-') {
-            let createdDay = input.createdAt.slice(0, 2);
-            createdDay = createdDay < 10 ? `0${createdDay}` : createdDay;
-            let createdMonth = monthsArray.indexOf(input.createdAt.slice(3, 6)) + 1;
-            createdMonth = createdMonth < 10 ? `0${createdMonth}` : createdMonth;
-            const createdYear = input.createdAt.slice(7, 11);
-            input.createdAt = `${createdYear}-${createdMonth}-${createdDay}`;
-        }
-        if (input.paymentDue.slice(4,5) !== '-') {
-            let paymentDay = input.paymentDue.slice(0, 2);
-            paymentDay = paymentDay < 10 ? `0${paymentDay}` : paymentDay;
-            let paymentMonth = monthsArray.indexOf(input.paymentDue.slice(3, 6)) + 1;
-            paymentMonth = paymentMonth < 10 ? `0${paymentMonth}` : paymentMonth;
-            const paymentYear = input.paymentDue.slice(7, 11);
-            input.paymentDue = `${paymentYear}-${paymentMonth}-${paymentDay}`;
-        }
-        if (typeof(input.total) == 'string') {
-            let grandTotal = input.total.slice(2);
-            input.total = grandTotal;
-        }
-        input.items.forEach(item => delete item.id);
-        console.log(input)
-        return input;
-    }
+    // const toServerFormatting = (input) => {
+    //     console.log(input);
+    //     if (input.createdAt.slice(4,5) !== '-') {
+    //         let createdDay = input.createdAt.slice(0, 2);
+    //         createdDay = createdDay < 10 ? `0${createdDay}` : createdDay;
+    //         let createdMonth = monthsArray.indexOf(input.createdAt.slice(3, 6)) + 1;
+    //         createdMonth = createdMonth < 10 ? `0${createdMonth}` : createdMonth;
+    //         const createdYear = input.createdAt.slice(7, 11);
+    //         input.createdAt = `${createdYear}-${createdMonth}-${createdDay}`;
+    //     }
+    //     if (input.paymentDue.slice(4,5) !== '-') {
+    //         let paymentDay = input.paymentDue.slice(0, 2);
+    //         paymentDay = Number(paymentDay === 0 ? 1 : paymentDay);
+    //         paymentDay = paymentDay < 10 ? `0${paymentDay}` : paymentDay;
+    //         let paymentMonth = monthsArray.indexOf(input.paymentDue.slice(3, 6)) + 1;
+    //         paymentMonth = paymentMonth < 10 ? `0${paymentMonth}` : paymentMonth;
+    //         const paymentYear = input.paymentDue.slice(7, 11);
+    //         input.paymentDue = `${paymentYear}-${paymentMonth}-${paymentDay}`;
+    //     }
+    //     if (typeof(input.total) == 'string') {
+    //         let grandTotal = input.total.slice(2);
+    //         input.total = grandTotal;
+    //     }
+    //     input.items.forEach(item => delete item.id);
+    //     return input;
+    // }
 
     // TALLYS ITEM TOTAL WHENEVER INVOICE IS SAVED OR UPDATED
 
-    const grandTotalTally = (input) => {
-        let grandTotal = 0;
-        input.items.forEach(item => {
-            const amount = item.price * item.quantity;
-            item.total = amount;
-            grandTotal += amount;
-        });
-        input.total = grandTotal;
-        return input;
-    }
+    // const grandTotalTally = (input) => {
+    //     let grandTotal = 0;
+    //     input.items.forEach(item => {
+    //         const amount = item.price * item.quantity;
+    //         item.total = amount;
+    //         grandTotal += amount;
+    //     });
+    //     input.total = grandTotal;
+    //     return input;
+    // }
     
-    // FORMAT FETCHED INVOICES FOR STATE
+    // FORMAT FETCHED INVOICES FOR STATE AND
 
-    const listFormatter = (data) => {
+    // const listFormatter = (data) => {
 
-        const dateFormat = (input) => {
-            const day= input.slice(8, 10);
-            let month = monthsArray[Number(input.slice(5, 7)) - 1];
-            const year = input.slice(0, 4);
-            const formatted = `${day} ${month} ${year}`;
-            return formatted;
-        }
+        // const dateFormat = (input) => {
+        //     const day= input.slice(8, 10);
+        //     let month = monthsArray[Number(input.slice(5, 7)) - 1];
+        //     const year = input.slice(0, 4);
+        //     const formatted = `${day} ${month} ${year}`;
+        //     return formatted;
+        // }
 
-        const currencyFormat = (amount) => {
-            const output = `£ ${new Intl.NumberFormat ('en-UK', { style: 'currency', currency: 'GBP'}).format(amount).toString().slice(1)}`;
-            return output;
-        }
+        // const currencyFormat = (amount) => {
+        //     const output = `£ ${new Intl.NumberFormat ('en-UK', { style: 'currency', currency: 'GBP'}).format(amount).toString().slice(1)}`;
+        //     return output;
+        // }
 
-        const formattedList = [];
+    //     const formattedList = [];
 
-        data.forEach(invoice => {
-            if (invoice.createdAt === '') {
-                formattedList.push({...invoice,  
-                paymentDue: dateFormat(invoice.paymentDue), 
-                total: currencyFormat(invoice.total) 
-                })
-            } else if (invoice.paymentDue === '') {
-                formattedList.push({...invoice,  
-                createdAt: dateFormat(invoice.createdAt), 
-                total: currencyFormat(invoice.total) 
-                })
-            } else if (invoice.total === '') {
-                formattedList.push({...invoice,  
-                createdAt: dateFormat(invoice.createdAt), 
-                paymentDue: dateFormat(invoice.paymentDue)
-                })
-            } else if (invoice.createdAt === '' && invoice.paymentDue === '') {
-                formattedList.push({...invoice,  
-                total: currencyFormat(invoice.total)
-                })
-            } else if (invoice.createdAt === '' && invoice.total === '') {
-                formattedList.push({...invoice,  
-                paymentDue: dateFormat(invoice.paymentDue),
-                })
-            } else if (invoice.paymentDue === '' && invoice.total === '') {
-                formattedList.push({...invoice,  
-                createdAt: dateFormat(invoice.paymentDue),
-                })
-            } else if (invoice.createdAt === '' && invoice.paymentDue === '' && invoice.total === '') {
-                formattedList.push(invoice)
-            } else {
-                formattedList.push({...invoice, 
-                createdAt: dateFormat(invoice.createdAt), 
-                paymentDue: dateFormat(invoice.paymentDue), 
-                total: currencyFormat(invoice.total)
-                }) 
-            }     
-        });
+    //     data.forEach(invoice => {
+    //         if (invoice.createdAt === '') {
+    //             formattedList.push({...invoice,  
+    //             paymentDue: dateFormat(invoice.paymentDue), 
+    //             total: currencyFormat(invoice.total) 
+    //             })
+    //         } else if (invoice.paymentDue === '') {
+    //             formattedList.push({...invoice,  
+    //             createdAt: dateFormat(invoice.createdAt), 
+    //             total: currencyFormat(invoice.total) 
+    //             })
+    //         } else if (invoice.total === '') {
+    //             formattedList.push({...invoice,  
+    //             createdAt: dateFormat(invoice.createdAt), 
+    //             paymentDue: dateFormat(invoice.paymentDue)
+    //             })
+    //         } else if (invoice.createdAt === '' && invoice.paymentDue === '') {
+    //             formattedList.push({...invoice,  
+    //             total: currencyFormat(invoice.total)
+    //             })
+    //         } else if (invoice.createdAt === '' && invoice.total === '') {
+    //             formattedList.push({...invoice,  
+    //             paymentDue: dateFormat(invoice.paymentDue),
+    //             })
+    //         } else if (invoice.paymentDue === '' && invoice.total === '') {
+    //             formattedList.push({...invoice,  
+    //             createdAt: dateFormat(invoice.paymentDue),
+    //             })
+    //         } else if (invoice.createdAt === '' && invoice.paymentDue === '' && invoice.total === '') {
+    //             formattedList.push(invoice)
+    //         } else {
+    //             formattedList.push({...invoice, 
+    //             createdAt: dateFormat(invoice.createdAt), 
+    //             paymentDue: dateFormat(invoice.paymentDue), 
+    //             total: currencyFormat(invoice.total)
+    //             }) 
+    //         }     
+    //     });
 
-        let idAssign = 0;
+    //     let idAssign = 0;
 
-        formattedList.forEach(itemlist => {
-            itemlist.items.forEach(item => {
-                item.id = idAssign;
-                idAssign += 1;
-            });
-            idAssign = 0;
-        });
-        INITINVOICES(formattedList);
-    }
+    //     formattedList.forEach(itemlist => {
+    //         itemlist.items.forEach(item => {
+    //             item.id = idAssign;
+    //             idAssign += 1;
+    //         });
+    //         idAssign = 0;
+    //     });
+    //     INITINVOICES(formattedList);
+    //     return(formattedList);
+    // }
 
     // GET INVOICES - Sent To App.Js For Formatting Date and Currency Fields
 
@@ -139,7 +140,7 @@ import { createReduxModule } from 'hooks-for-redux';
             INITINVOICES(["error"]);
         } else {
             const data = await res.json();
-            listFormatter(data);
+            INITINVOICES(data);
         }
     }
 
@@ -148,26 +149,23 @@ import { createReduxModule } from 'hooks-for-redux';
     // SAVE AND SEND
 
     const saveSendInvoice = (store, invoice) => { // STATE
-        const totalTallied = grandTotalTally(invoice);
-        addReq(store, totalTallied);
+        addReq(store,invoice);
         return store;
     }
 
     const addReq = async (store, invoice) => { // HTTP POST
-        const data = toServerFormatting(invoice);
+        invoice.status = 'pending';
         await fetch( Url, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({...data, status: 'pending'})
+            body: JSON.stringify({...invoice })
         })
         .then(() => { 
             httpStatusAndReset("Save & Send Invoice Request Fulfilled");
             const updateState = store;
-            invoice.status = 'pending';
             updateState.push(invoice);
-            console.log(updateState);
             INITINVOICES(updateState);
         })
         .catch(() => httpStatusAndReset("Save & Send Invoice Request Failed")); 
@@ -176,25 +174,23 @@ import { createReduxModule } from 'hooks-for-redux';
     // SAVE AS DRAFT
 
     const draftInvoice = (store, invoice) => { // STATE
-        const data = grandTotalTally(invoice);
-        addDraftReq(data, invoice);
+        addDraftReq(store, invoice);
         return store;
     }
 
     const addDraftReq = async (store, invoice) => { // HTTP POST
-        const data = toServerFormatting(invoice);
+        invoice.status = 'draft'
         await fetch( Url, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({...data, status: 'draft'})
+            body: JSON.stringify({...invoice })
         })
         .then(() => { 
             httpStatusAndReset("Add Draft Invoice Request Fulfilled");
-            const updateState = store;
-            invoice.status = 'draft';
-            updateState.push(invoice);
+            const updateState = store.map(list => list.id === invoice.id 
+                ? invoice : list);
             INITINVOICES(updateState);
         })
         .catch(() => httpStatusAndReset("Add Draft Invoice Request Failed")); 
@@ -208,19 +204,19 @@ import { createReduxModule } from 'hooks-for-redux';
     }
 
     const paidUpdateReq = async (store, id) => { // HTTP PUT
-        const invoice = store.filter(store => store.id === id)
-        const data = toServerFormatting(invoice[0]);
+        const invoice = store.filter(store => store.id === id);
         await fetch(`${Url}/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({...data, status: 'paid'})
+            body: JSON.stringify({...invoice[0], status: 'paid' })
         })
         .then(() => { 
             httpStatusAndReset("Mark Paid Request Fulfilled");
-            const updateState = store.map(item => item.id === id 
-                ? {...item, status: 'paid'} : item);
+            invoice[0].status = 'paid';
+            const updateState = store.map(list => list.id === invoice[0].id 
+                ? invoice[0] : list);
             INITINVOICES(updateState);
         })
         .catch(() => httpStatusAndReset("Mark Paid Request Failed")); 
@@ -233,20 +229,18 @@ import { createReduxModule } from 'hooks-for-redux';
         return store;
     }
 
-    const updReq = async (store, invoice) => { // HTTP PUT
-        const data = toServerFormatting(invoice);
+    const updReq = async (store, invoice) => { // HTTP PUT  
         await fetch(`${Url}/${invoice.id}`, {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({...data, status: 'pending'})
+            body: JSON.stringify({...invoice, status: 'pending'})
         })
         .then(() => { 
             httpStatusAndReset("Save Changes Request Fulfilled");
-            const data = ({...invoice, status: 'pending'});
-            const updateState = store.map(item => item.id === invoice.id 
-                ? invoice : item);
+            const updateState = store.map(list => list.id === invoice.id 
+                ? invoice : list);
             INITINVOICES(updateState);
         })
         .catch(() => httpStatusAndReset("Save Changes Request Failed")); 
@@ -275,7 +269,8 @@ import { createReduxModule } from 'hooks-for-redux';
 
     const INVOICE_LIST_START = ['loading']
 
-    export const [INVOICELIST, {INITINVOICES, SAVEANDSENDINVOICE, SAVEASDRAFTINVOICE, MARKASPAIDINVOICE, SAVECHANGESINVOICE, DELETEINVOICE}] = 
+    export const [INVOICELIST, {INITINVOICES, SAVEANDSENDINVOICE, SAVEASDRAFTINVOICE, 
+            MARKASPAIDINVOICE, SAVECHANGESINVOICE, DELETEINVOICE }] = 
         createReduxModule('invoice', INVOICE_LIST_START, {
             INITINVOICES: (store, invoice) => invoice,
             SAVEANDSENDINVOICE: (store, invoice) => saveSendInvoice(store, invoice),
