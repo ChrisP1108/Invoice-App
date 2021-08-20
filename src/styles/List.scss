@@ -198,9 +198,11 @@
         .list-container {
             margin: 3.5rem 3rem 6.563rem 3rem!important
         }
-        h1 {
-            font-size: 2rem!important;
-            margin-bottom: 1rem!important;
+        .list-container-filter {
+            h1 {
+                font-size: 2rem!important;
+                margin-bottom: 1rem!important;
+            }
         }
         .button-container {
             width: 9.375rem!important;
@@ -220,6 +222,12 @@
             right: 10rem;
             top: 2.75rem;
             border-radius: 0.5rem!important;
+        }
+        .no-invoices-container {
+            margin-top: 13rem!important;
+        }
+        .no-invoices-container-error {
+            margin-top: 19rem!important;
         }
     }
 }
