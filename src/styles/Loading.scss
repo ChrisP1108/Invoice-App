@@ -85,4 +85,10 @@
     .margin {
         margin-top: 11.5rem!important;
     }
+
+    @media(min-width: 768px) {
+        .margin {
+            margin-top: 18rem!important;
+        }
+    }
 }

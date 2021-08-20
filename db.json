@@ -57,25 +57,16 @@
           "name": "Banner Design",
           "quantity": 1,
           "price": 156,
-          "total": 156,
-          "id": 0
+          "total": 156
         },
         {
           "name": "Email Design",
           "quantity": 2,
           "price": 200,
-          "total": 400,
-          "id": 1
-        },
-        {
-          "id": 2,
-          "name": "Pooping on Desks",
-          "quantity": 8,
-          "price": 11,
-          "total": 88
+          "total": 400
         }
       ],
-      "total": 644
+      "total": 556
     },
     {
       "id": "RG0314",
@@ -206,37 +197,6 @@
         }
       ],
       "total": 6155.91
-    },
-    {
-      "id": "FV2353",
-      "createdAt": "2021-11-05",
-      "paymentDue": "2021-11-12",
-      "description": "Logo Re-design",
-      "paymentTerms": 7,
-      "clientName": "Anita Wainwright",
-      "clientEmail": "",
-      "status": "draft",
-      "senderAddress": {
-        "street": "19 Union Terrace",
-        "city": "London",
-        "postCode": "E1 3EZ",
-        "country": "United Kingdom"
-      },
-      "clientAddress": {
-        "street": "",
-        "city": "",
-        "postCode": "",
-        "country": ""
-      },
-      "items": [
-        {
-          "name": "Logo Re-design",
-          "quantity": 1,
-          "price": 3102.04,
-          "total": 3102.04
-        }
-      ],
-      "total": 3102.04
     }
   ]
 }

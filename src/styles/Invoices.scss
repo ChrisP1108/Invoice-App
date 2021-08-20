@@ -64,16 +64,28 @@
     .margin-invoice-left {
         margin-left: 1.75rem!important;
     }
-    .invoice-container-width-12 {
-        width: 12%;
+    .invoice-container-width-15 {
+        width: 15%;
+    }
+    .invoice-container-width-15 {
+        width: 15%;
+    }
+    .invoice-container-width-17 {
+        width: 18%;
     }
     .invoice-container-width-20 {
         width: 20%;
+    }
+    .invoice-container-width-22 {
+        width: 22%;
     }
     .invoice-container-width-28 {
         width: 28%
     }
     .text-right {
         text-align: right!important;
+    }
+    .invoice-top-margin {
+        margin-top: 4.5rem!important;
     }
 }

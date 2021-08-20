@@ -54,16 +54,16 @@ const Invoices = ({ listOutput }) => {
                 id="invoices" className="invoice-outer-container position-relative pointer invoice-trans">
                 <div className="invoice-inner-container">
                     <div className="d-flex align-items-center"> 
-                        <div className="invoice-container-width-12">
+                        <div className="invoice-container-width-15">
                             <h3><span>#</span>{item.id}</h3>
                         </div>
-                        <div className="invoice-container-width-20">
+                        <div className="invoice-container-width-22">
                             <h2>Due {item.paymentDue === '' ? `Date Not Selected` : dateFormat(item.paymentDue)}</h2>
                         </div>
                         <div className="invoice-container-width-20">
                             <h2>{item.clientName === '' ? `No Name Entered` : item.clientName}</h2>
                         </div>
-                        <div className="invoice-container-width-20 f-ae">
+                        <div className="invoice-container-width-17 f-ae">
                             <h4>{item.total === 0 ? `No total` : currencyFormat(item.total)}</h4>
                         </div>
                         <div className="invoice-container-width-28 d-flex f-ae">
