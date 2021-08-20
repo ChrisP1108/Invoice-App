@@ -1,26 +1,33 @@
-#deleteModal {
+#errorModal {
     position: absolute!important;
-    z-index: 2;
+    z-index: 10!important;
 
-    .delete-modal-page-container {
+    .error-modal-page-container-viewer {
         transition: .25s!important;
         background-color: $halftrans!important;
         width: 96.5vw;
-        height: 130vh;
+        height: 116vh;
     }
-    .delete-fill-transition {
-        animation-name: delete-modal-trans-in;
+    .error-modal-page-container-createoredit {
+        transition: .25s!important;
+        background-color: $halftrans!important;
+        width: 96.5vw;
+        height: 213vh;
+        padding-top: 69rem;
+    }
+    .error-fill-transition {
+        animation-name: error-modal-trans-in;
         animation-duration: .25s;
         animation-fill-mode: forwards;
     }
     
-    @keyframes delete-fill-trans-in {
+    @keyframes error-fill-trans-in {
         from {opacity: 0}
         to {opacity: 1}
     }
 }
 
-.delete-modal {
+.error-modal {
 
     &-outer-container {
         margin: 1.5rem!important;
@@ -67,12 +74,12 @@
     &-content-spacing {
         margin: .75rem 0 1.938rem!important;
     }
-    &-cancel-button-container {
+    &-ok-button-container {
         border-radius: 1.513rem!important;
         width: 5.688rem!important;
         height: 3rem!important;
     }
-    &-delete-button-container {
+    &-error-button-container {
         border-radius: 1.513rem!important;
         width: 5.563rem!important;
         background-color: $i;
@@ -85,14 +92,13 @@
         width: 0.5rem!important;
     }
     &-transition {
-        animation-name: delete-modal-trans-in;
+        animation-name: error-modal-trans-in;
         animation-duration: .5s;
         animation-fill-mode: forwards;
     }
     
-    @keyframes delete-modal-trans-in {
+    @keyframes error-modal-trans-in {
         from {transform: translateY(10%); opacity: 0}
         to {transform: translateY(0%); opacity: 1}
     }
 }
-

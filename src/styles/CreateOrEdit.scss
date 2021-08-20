@@ -1,0 +1,392 @@
+#createoredit {
+    h1 {
+        font-size: 1.5rem!important;
+        font-weight: 700!important;
+        letter-spacing: -0.031rem!important;
+        line-height: 2rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        transition: .25s!important;
+    }
+    h2 {
+        font-size: 0.75rem!important;
+        font-weight: 700!important;
+        letter-spacing: -0.016rem!important;
+        line-height: 0.938rem!important;
+        color: $n!important;
+        margin: 0!important;
+        padding: 0!important;
+        transition: .25s!important;
+    }
+    h3 {
+        font-size: 0.75rem!important;
+        font-weight: 700!important;
+        letter-spacing: -0.016rem!important;
+        line-height: .938rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        transition: .25s!important;
+    }
+    h4 {
+        font-size: 0.75rem!important;
+        font-weight: 500!important;
+        letter-spacing: -0.016rem!important;
+        line-height: 0.938rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        transition: .25s!important;
+    }
+    h5 {
+        font-size: 1.125rem!important;
+        font-weight: 700!important;
+        letter-spacing: -0.024rem!important;
+        line-height: 2rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        transition: .25s!important;
+        color: $x!important;
+    }
+    h6 {
+        font-size: 0.75rem!important;
+        font-weight: 700!important;
+        letter-spacing: -0.016rem!important;
+        line-height: 0.938rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        transition: .25s!important;
+        height: 2rem!important;
+        width: 2rem!important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    p {
+        font-size: 0.625rem!important;
+        font-weight: 500!important;
+        letter-spacing: -0.013rem!important;
+        line-height: 0.938rem!important;
+        margin: 0!important;
+        padding: 0!important;
+        transition: .25s!important;
+        color: $i!important;
+        display: flex;
+        align-items: center;
+    }
+    .createoredit {
+        &-container {
+            margin: 2rem 1.5rem 0rem 1.5rem!important;
+        }
+        &-title {
+            margin-top: 1.875rem!important;
+        }
+        &-bill-top-margin {
+            margin: 2.063rem 0 0.25rem 0 !important;
+        }
+        &-bill-margin {
+            margin: 2.5rem 0 0.25rem 0 !important;
+        }
+        &-form-row-full-container {
+            margin-top: 1.5rem!important;
+            height: 4.563rem!important;
+            width: 100%!important;
+        }
+        &-field {
+            height: 3rem!important;
+            width: 100%!important;
+            border-radius: 0.25rem!important;
+            padding-left: 1.25rem!important;
+            display: flex;
+            align-items: center;
+            font-size: 0.75rem!important;
+            font-weight: 700!important;
+            transition: .25s!important;
+        }
+        &-field-error {
+            height: 3rem!important;
+            width: 100%!important;
+            border-radius: 0.25rem!important;
+            padding-left: 1.25rem!important;
+            display: flex;
+            align-items: center;
+            font-size: 0.75rem!important;
+            font-weight: 700!important;
+            transition: .25s!important;
+        }
+        &-error-highlight {
+            color: $i!important;
+        }
+        &-item-total {
+            height: 3rem!important;
+            width: 100%!important;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.75rem!important;
+            font-weight: 700!important;
+            transition: .25s!important;
+            span {
+                font-weight: 700!important;
+            }
+        }
+        &-calendar-outer-container {
+            width: 100%!important;
+            height: 17.188rem!important;
+            z-index: 1!important;
+            border-radius: 0.5rem!important;
+            animation-name: calendar-trans-in;
+            animation-duration: .5s;
+            animation-fill-mode: forwards;
+            span {
+                font-size: 0.75rem!important;
+                font-weight: 700!important;
+                letter-spacing: -0.016rem!important;
+                line-height: 0.938rem!important;
+                margin: 0!important;
+                padding: 0!important;
+                transition: .25s!important;
+            }
+        }
+        @keyframes calendar-trans-in {
+            from {transform: rotateX(90deg); top: 0rem; display: block}
+            to {transform: rotateX(0deg); top: 5.05rem; display: block}
+        }
+        &-calendar-inner-main-container {
+            padding: 1.5rem .75rem 2.125rem .75rem!important;
+            height: 100%!important;
+        }
+        &-calendar-inner-top-container {
+            padding: 0 0.75rem 0 0.75rem!important;
+        }
+        &-calendar-inner-body-container {
+            padding: 1.5rem 1.5rem 2.125rem 1.5rem!important;
+            height: 100%!important;
+        }
+        &-calendar-left-arrow {
+            background-image: url(../assets/icon-arrow-down.svg);
+            width: 0.625rem!important;
+            height: 0.438rem!important;
+            transform: rotate(90deg);
+        }
+        &-calendar-right-arrow {
+            background-image: url(../assets/icon-arrow-down.svg);
+            width: 0.625rem!important;
+            height: 0.438rem!important;
+            transform: rotate(-90deg);
+
+        }
+        &-calendar-arrow-left-filler {
+            position: absolute;
+            width: 2.75rem!important;
+            height: 2.75rem!important;
+            left: -1rem!important;
+            top: -1.2rem!important;
+        }
+        &-calendar-day:hover {
+            color: $n!important;
+            cursor: pointer;
+        }
+        &-calendar-arrow-right-filler {
+            position: absolute;
+            width: 2.75rem!important;
+            height: 2.75rem!important;
+            left: -1.25rem!important;
+            top: -1.25rem!important;
+        }
+        &-calendar-days-container {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            margin-top: 1.625rem!important;
+            align-items: center;
+            justify-items: center;
+            width: 100%!important;
+            height: 100%!important;
+        }
+        &-calendar-day-filler {
+            z-index: 0!important;
+            position: absolute;
+            width: 1.5rem!important;
+            height: 1.5rem!important;
+            top: -.1rem!important;
+            left: 0rem!important;
+        }
+        &-calendar-day-filler:hover {
+            cursor: pointer;
+        }
+        &-option {
+            height: 3rem!important;
+            width: 100%!important;
+            padding: 1.063rem 0.875rem 1.063rem 1.25rem!important;
+            font-size: 0.75rem!important;
+            font-weight: 700!important;
+            transition: .25s!important;
+        }
+        &-option-first {
+            border-top-left-radius: 0.25rem!important;
+            border-top-right-radius: 0.25rem!important;
+        }
+        &-option-last {
+            border-bottom-left-radius: 0.25rem!important;
+            border-bottom-right-radius: 0.25rem!important;
+        }
+        &-date-active {
+            padding: 1.063rem 0.875rem 1.063rem 1.25rem!important;
+        }
+        &-date-disabled {
+            height: 3rem!important;
+            width: 100%!important;
+            border-radius: 0.25rem!important;
+            padding: 1.063rem 0.875rem 1.063rem 1.25rem!important;
+            font-size: 0.75rem!important;
+            font-weight: 700!important;
+            transition: .25s!important;
+
+            span {
+                font-size: 0.75rem!important;
+                font-weight: 700!important;
+            }
+        }
+        &-column-gap {
+            width: 3.252rem!important;
+        }
+        &-invoice-top-gap {
+            height: 1rem!important;
+        }
+        &-invoice-disabled {
+            opacity: 0.6!important;
+        }
+        &-option-arrow {
+            background-image: url(../assets/icon-arrow-down.svg);
+            width: 0.625rem!important;
+            height: 0.438rem!important;
+            transition: .5s;
+            margin-right: 0.875rem;
+        }
+        &-option-arrow-clicked {
+            transform: rotateX(180deg);
+        }
+        &-calendar-icon {
+            background-image: url(../assets/icon-calendar.svg);
+            width: 1rem!important;
+            height: 1rem!important;
+        }
+        &-option-trans {
+            animation-name: option-trans-in;
+            animation-duration: .5s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes option-trans-in {
+            from {transform: rotateX(90deg); top: 0.5rem; display: block}
+            to {transform: rotateX(0deg); top: 5.05rem; display: block}
+        }
+        &-item-list-container {
+            width: 100%!important;
+            margin-top: 4.125rem!important
+        }
+        &-item-separation-margin {
+            margin-top: 3rem!important;
+        }
+        &-item-trash-icon {
+            background-image: url(../assets/icon-delete.svg);
+            width: 0.778rem!important;
+            height: 1rem!important;
+            margin-bottom: .1rem!important;
+            transition: .5s;
+        }
+        &-item-trash-filler {
+            position: absolute;
+            width: 2.75rem!important;
+            height: 2.75rem!important;
+            left: -.95rem!important;
+            top: -0.78rem!important;
+        }
+        &-item-add-button {
+            height: 3rem!important;
+            width: 100%!important;
+            border-radius: 1.5rem!important;
+            h4 {
+                font-weight: 700!important;
+            }
+        }
+        &-item-empty-button-gap {
+            margin-top: 2.5rem!important;
+        }
+        &-transition {
+            animation-name: createoredit-trans-in;
+            animation-duration: .5s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes createoredit-trans-in {
+            from {padding-top: 5rem; opacity: 0}
+            to {padding-top: 0rem; opacity: 1}
+        }
+        &-trans-item {
+            animation-name: createoredit-item-trans-in;
+            animation-duration: .5s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes createoredit-item-trans-in {
+            from {transform: translateY(-20%); opacity: 0}
+            to {transform: translateY(0%); opacity: 1}
+        }
+        &-bottom-filler {
+            margin-top: 1.5rem!important;
+            padding-top: 0.25rem!important;
+            height: 4rem!important;
+            width: 100%!important;
+        }
+        &-bottom-filler-error-text {
+            height: 1.938rem!important;
+        }
+        &-footer-outer-container {
+            height: 5.688rem!important;
+            width: 100%!important;
+        }
+        &-footer-inner-container {
+            height: 3rem!important;
+            width: 100%!important;
+            padding: 0 1.5rem 0!important;
+        }
+        &-footer-button-gap {
+            width: 0.5rem!important;
+        }
+        &-cancel-button-container {
+            border-radius: 1.513rem!important;
+            width: 6rem!important;
+            height: 3rem!important;
+        }
+        &-savechanges-button-container {
+            border-radius: 1.513rem!important;
+            width: 8.625rem!important;
+            height: 3rem!important;
+            background-color: $n;
+            h3 {
+                color: $white;
+            }
+        }
+        &-cancel-button-container {
+            border-radius: 1.513rem!important;
+            width: 6rem!important;
+            height: 3rem!important;
+        }
+        &-discard-button-container {
+            border-radius: 1.513rem!important;
+            width: 5.25rem!important;
+            height: 3rem!important;
+        }
+        &-saveandsend-button-container {
+            border-radius: 1.513rem!important;
+            width: 7rem!important;
+            height: 3rem!important;
+            background-color: $n;
+            h3 {
+                color: $white;
+            }
+        }
+        &-saveasdraft-button-container {
+            border-radius: 1.513rem!important;
+            width: 7.313rem!important;
+            height: 3rem!important;
+        }
+    }
+}

@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Loading = () => {
     return (
         <div id="loading" className="invoice-trans">
@@ -17,3 +15,4 @@ const Loading = () => {
 }
 
 export default Loading
+

@@ -55,6 +55,7 @@
         margin: 0!important;
         padding: 0!important;
     }
+}
     .back {
         &-container {
             display: flex;
@@ -181,6 +182,9 @@
             padding: 1.313rem 1.5rem 1.375rem 1.5rem!important;
             height: 100%!important;
         }
+        &-button-gap {
+            width: 0.5rem!important;
+        }
         &-edit-button-container {
             border-radius: 1.513rem!important;
             width: 4.563rem!important;
@@ -191,6 +195,7 @@
             width: 5.563rem!important;
             background-color: $i;
             height: 100%!important;
+            transition: 0.5s;
             h3 {
                 color: $white;
             }
@@ -204,6 +209,17 @@
                 color: $white;
             }
         }
+        &-paid-button-animation {
+            animation-name: paid-trans-out;
+            animation-duration: .5s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes paid-trans-out {
+            from {transform: rotateY(0deg); 
+                    width: 9.313rem; opacity: 1}
+            to {transform: rotateY(90deg); 
+                    width: 0rem; opacity: 0}
+        }
     }
     .viewer-transition {
         animation-name: viewer-trans-in;
@@ -215,4 +231,3 @@
         from {padding-top: 5rem; opacity: 0}
         to {padding-top: 0rem; opacity: 1}
     }
-}

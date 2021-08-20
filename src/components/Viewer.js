@@ -1,22 +1,41 @@
+import { monthsArray } from '../Arrays/Months';
+import ButtonReqSpinner from './ButtonReqSpinner';
+
 import { useState } from 'react';
-import { invoice, 
-    markPaidInvoice, setToggleDeleteModal, 
-    setToggleViewer, setToggleCreate } from '../redux/Store.js';
+import { INVOICE, INVOICELIST, MARKASPAIDINVOICE, SETTOGGLEDELETEMODAL, 
+    SETTOGGLEVIEWER, SETTOGGLECREATEEDIT, UPDATEINVOICE,
+    HTTPRES, SETHTTPRES, SETTOGGLEERRORMODAL } from '../redux/Store.js';
 
 const Viewer = () => {
+    
+    const [viewInvoice, setViewInvoice] = useState(INVOICE());
+    const [markPaidSpinner, setMarkPaidSpinner] = useState(false);
+    const [clicked, setClicked] = useState(false);
 
-    const [viewInvoice, setViewInvoice] = useState(invoice());
+    if (HTTPRES() === "Mark Paid Request Failed") {
+        setTimeout(() => {
+            SETTOGGLEERRORMODAL(true);
+            setMarkPaidSpinner(false);
+        }, 500);
+    } 
+    if (HTTPRES() === "Mark Paid Request Fulfilled") {
+        setTimeout(() => {
+            setClicked(true);
+            setMarkPaidSpinner(false);
+            SETTOGGLEVIEWER(false);
+            setViewInvoice({...viewInvoice, status: 'paid'});
+        }, 500); 
+    }
 
     const markPaid = () => {
-        if (viewInvoice.status !== 'paid') {
-            setViewInvoice({...viewInvoice, status: 'paid'})
-            markPaidInvoice(viewInvoice.id);
-        }       
+        setMarkPaidSpinner(true);
+        SETHTTPRES("Mark Paid Request Pending");
+        MARKASPAIDINVOICE(viewInvoice.id);
     }
 
     const backHeader = () => {
         return (
-            <div onClick={() => setToggleViewer()} 
+            <div onClick={() => SETTOGGLEVIEWER(false)} 
                 className="back-container pointer position-relative">
                 <div className="back-arrow"></div>
                 <div className="d-flex">
@@ -57,16 +76,42 @@ const Viewer = () => {
         }
         return (
             <div key={item.name} className="viewer-main-pricing-item-container f-sb">
-                <div className="f-clb">
+                <div className={`${item.name === '' && `d-none`} f-clb`}>
                     <h3>{item.name}</h3>
                     <h3><span>{`${item.quantity} x £ ${item.price.toFixed(2)}`}</span></h3>
                 </div>
-                <div className="f-c">
+                <div className={`${item.name === '' && `d-none`} f-c`}>
                     <h3>{calculateItemTotal(item)}</h3>
+                </div>
+                <div className={`${item.name !== '' && `d-none`} f-c mx-auto`}>
+                    <h3>No Items Have Been Added</h3>
                 </div>
             </div> 
         );
     });
+
+    const dateFormat = (input) => {
+        const day= input.slice(8, 10);
+        let month = monthsArray[Number(input.slice(5, 7)) - 1];
+        const year = input.slice(0, 4);
+        const formatted = `${day} ${month} ${year}`;
+        return formatted;
+    }
+
+    const currencyFormat = (amount) => {
+        const output = `£ ${new Intl.NumberFormat ('en-UK', { style: 'currency', currency: 'GBP'}).format(amount).toString().slice(1)}`;
+        return output;
+    }
+
+    const addressEval = (input) => {
+        let emptyTally = 0;
+        Object.values(input).forEach(field => {
+            if (field === '') {
+                emptyTally += 1;
+            }
+        })
+        return emptyTally > 0 ? false : true; 
+    }
 
     const mainContainer = () => {
         return (
@@ -76,13 +121,17 @@ const Viewer = () => {
                         <div className="viewer-main-left-column-container">
                             <div className="viewer-main-id-subscription-container f-clb">
                                 <h3><span>#</span>{viewInvoice.id}</h3>
-                                <h2>{viewInvoice.description}</h2>
+                                <h2>{viewInvoice.description === '' 
+                                    ? `No description Added` : viewInvoice.description}</h2>
                             </div>
-                            <div className="viewer-main-address-container f-clb">
+                            <div className={addressEval(viewInvoice.senderAddress) ? `viewer-main-address-container f-clb` : `d-none`}>
                                 <h6>{viewInvoice.senderAddress.street}</h6>
                                 <h6>{viewInvoice.senderAddress.city}</h6>
                                 <h6>{viewInvoice.senderAddress.postCode}</h6>
                                 <h6>{viewInvoice.senderAddress.country}</h6>
+                            </div>
+                            <div className={!addressEval(viewInvoice.senderAddress) ? `viewer-main-address-container f-clb` : `d-none`}>
+                                <h6>Sender Address Has Not Been Entered</h6>
                             </div>
                         </div>
                         <div className="viewer-main-right-column-container"></div>
@@ -91,24 +140,32 @@ const Viewer = () => {
                         <div className="viewer-main-left-column-container">   
                             <div className="viewer-main-invoice-container f-clb">
                                 <h2>Invoice Date</h2>
-                                <p>{viewInvoice.createdAt}</p>
+                                <p>{viewInvoice.createdAt === '' ? `No Date Selected` 
+                                    : dateFormat(viewInvoice.createdAt)}</p>
                             </div>
                             <div className="viewer-main-due-container f-clb">
                                 <h2>Payment Due</h2>
-                                <p>{viewInvoice.paymentDue}</p>
+                                <p>{viewInvoice.paymentDue === '' ? `No Date Selected` 
+                                    : dateFormat(viewInvoice.paymentDue)}</p>
                             </div>
                         </div>
                         <div className="viewer-main-right-column-container">
                             <div className="viewer-main-bill-container f-clb">
                                 <h2>Bill To</h2>
-                                <p>{viewInvoice.clientName}</p>
+                                <p>{viewInvoice.clientName === '' ? `Not Entered` 
+                                    : viewInvoice.clientName}</p>
                             </div>
                             <div className="viewer-main-bill-address-outer-container">
-                                <div className="viewer-main-bill-address-inner-container f-sb flex-column">
+                                <div className={addressEval(viewInvoice.clientAddress) 
+                                        ? `viewer-main-bill-address-inner-container f-sb flex-column` : `d-none`}>
                                     <h6>{viewInvoice.clientAddress.street}</h6>
                                     <h6>{viewInvoice.clientAddress.city}</h6>
                                     <h6>{viewInvoice.clientAddress.postCode}</h6>
                                     <h6>{viewInvoice.clientAddress.country}</h6>
+                                </div>
+                                <div className={!addressEval(viewInvoice.clientAddress) 
+                                        ? `viewer-main-bill-address-inner-container f-sb flex-column` : `d-none`}>
+                                    <h6>Client Address Has Not Been Entered</h6>
                                 </div>
                             </div>
                         </div>
@@ -118,7 +175,8 @@ const Viewer = () => {
                             <div className="viewer-main-sent-outer-container">
                                 <div className="viewer-main-sent-inner-container f-clb">
                                     <h2>Sent to</h2>
-                                    <p>{viewInvoice.clientEmail}</p>
+                                    {viewInvoice.clientEmail === '' 
+                                        ? <h2>Email not entered</h2> : <p>{viewInvoice.clientEmail}</p>}
                                 </div>
                             </div>
                         </div>
@@ -130,9 +188,12 @@ const Viewer = () => {
                         </div>
                         <div className="viewer-main-pricing-grand-total-outer-container">
                             <div className="viewer-main-pricing-grand-total-inner-container">
-                                <div className="f-ca">
+                                <div className={`${grandTotal === 0 && `d-none`} f-ca`}>
                                     <h6> Amount Due</h6>
                                     <h1>{`£ ${grandTotal.toFixed(2)}`}</h1>
+                                </div>
+                                <div className={`${grandTotal !== 0 && `d-none`} f-c`}>
+                                    <h1>No Total Calculated</h1>
                                 </div>
                             </div>
                         </div>
@@ -145,18 +206,25 @@ const Viewer = () => {
     const buttonsFooter = () => {
         return (
             <div className="viewer-footer-outer-container">
-                <div className="viewer-footer-inner-container f-sb">
-                    <div onClick={() => {setToggleCreate(); setToggleViewer()}} 
+                <div className="viewer-footer-inner-container f-e">
+                    <div onClick={() => {SETTOGGLECREATEEDIT(true); SETTOGGLEVIEWER(true)}} 
                         className="viewer-footer-edit-button-container f-c pointer">
                         <h3>Edit</h3>
                     </div>
-                    <div onClick={() => setToggleDeleteModal(true)} className="viewer-footer-delete-button-container f-c pointer">
+                    <div className="viewer-footer-button-gap"></div>
+                    <div onClick={() => SETTOGGLEDELETEMODAL(true)} className="viewer-footer-delete-button-container f-c pointer">
                         <h3>Delete</h3>
                     </div>
+                    <div className={viewInvoice.status === 'paid' || viewInvoice.status === 'draft'
+                        ? `d-none` : `viewer-footer-button-gap`}></div>
                     <div onClick={() => markPaid()} 
-                        className={`${viewInvoice.status === 'paid' || viewInvoice.status === 'draft' && `d-none`} 
-                            viewer-footer-paid-button-container f-c pointer`}>
-                        <h3>Mark as Paid</h3>
+                        className={`${viewInvoice.status === 'pending' 
+                            ? `viewer-footer-paid-button-container` 
+                            : clicked  && viewInvoice.status === 'paid' ? `viewer-footer-paid-button-animation`
+                            : viewInvoice.status === 'paid' && !clicked ? `d-none` : ``} 
+                            f-c pointer position-relative`}>
+                        {markPaidSpinner ? <ButtonReqSpinner /> : 
+                            viewInvoice.status === 'pending' &&  <h3>Mark as Paid</h3> }
                     </div>
                 </div>
             </div>

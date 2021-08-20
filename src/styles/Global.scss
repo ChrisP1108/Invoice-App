@@ -22,9 +22,13 @@
     $u: #F9FAFE;
     $v: #888EB0;
     $w: #373B53;
+    $x: #777F98;
+    $y: #bdbdbd;
+    $z: #0C0E16;
     $white: #ffffff;
     $halftrans: #00000080;
-    $trans: #f4ecc200;
+    $trans: #00000000;
+    $transgray: #00000017;
 
 //Font --> font-family: 'Spartan', sans-serif;
 
@@ -32,12 +36,19 @@
 
 //Global Classes
 
+html {
+    width: 100%!important;
+    height: 100%!important;
+}
+
 body {
     font-family: 'Spartan', sans-serif!important;
+    width: 100%!important;
+    height: 100%!important;
 }
 
 .window-height {
-    min-height: 60rem!important;
+    min-height: 59rem!important;
 }
 
 .pointer:hover {
@@ -49,10 +60,18 @@ body {
     padding: 0!important;
 }
 
+.o10 {
+    opacity: 0.10!important;
+}
+
 .f {
     &-ae {
         display: flex;
         justify-content: flex-end;
+        align-items: center;
+    }
+    &-as {
+        display: flex;
         align-items: center;
     }
     &-ca {
@@ -81,6 +100,10 @@ body {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+    }
+    &-ac {
+        display: flex;
+        align-items: center;
     }
 }
 
@@ -182,6 +205,104 @@ body {
             color: $e;
         }
     }
+    .error-modal-outer-container {
+        background-color: $c!important;
+    }
+    .error-modal-inner-container {
+        h1 {
+            color: $white;
+        }
+    }
+    .error-modal-ok-button-container {
+        background-color: $d;
+        h3 {
+            color: $e;
+        }
+    }
+    #createoredit {
+        h1 {
+            span {
+                color: $x;
+            }         
+        }
+        h4 {
+            color: $f;
+        }
+    }
+    .createoredit-field {
+        background-color: $c;
+        border: 0.063rem $d solid;
+        color: $white;
+    }
+    .createoredit-field-error {
+        background-color: $c;
+        border: 0.063rem $i solid;
+        color: $white;
+    }
+    .createoredit-option {
+        background-color: $d;
+        border-bottom: 0.063rem $c solid;
+        color: $white;
+
+        span {
+            transition: .25s;
+            color:$e;
+        }
+    }
+    .createoredit-option:hover {
+        span {
+            color: $j;
+        }
+    }
+    input:focus {
+        background-color: $c!important;
+        border: 0.063rem $d solid!important;;
+        color: $white!important;
+    }
+    .createoredit-date-disabled {
+        background-color: $c;
+        border: 0.063rem $d solid;
+        color: $white;
+        span {
+            color:$u!important;
+        }
+    }
+    .createoredit-item-add-button {
+        background-color: $c!important; 
+    }
+    .createoredit-footer-outer-container {
+        background-color: $c!important;
+    }
+    .createoredit-cancel-button-container {
+        background-color: $d!important;
+        h3 {
+            color: $e!important;
+        }
+    }
+    .createoredit-discard-button-container {
+        background-color: $d!important;
+        h3 {
+            color: $e!important;
+        }
+    }
+    .createoredit-bottom-filler {
+        background-color: $trans;
+    }
+    .createoredit-saveasdraft-button-container {
+        background-color: $w!important;
+        h3 {
+            color: $e!important;
+        }
+    }
+    .createoredit-calendar-outer-container {
+        background-color: $d!important;
+        span {
+            color: $e!important;
+        }
+        h6 {
+            color: $e!important;
+        }
+    }
 }
 .day-mode {
     background-color: $k!important;
@@ -281,5 +402,112 @@ body {
             color: $g;
         }
     }
+    .error-modal-outer-container {
+        background-color: $white!important;
+    }
+    .error-modal-inner-container {
+        h1 {
+            color: $h;
+        }
+    }
+    .error-modal-ok-button-container {
+        background-color: $u;
+        h3 {
+            color: $g;
+        }
+    }
+    #createoredit {
+        h1 {
+            span {
+                color: $v;
+            }         
+        }
+        h4 {
+            color: $g;
+        }
+    }
+    .createoredit-field {
+        background-color: $white;
+        border: 0.063rem $e solid;
+        color: $h;
+    }
+    .createoredit-field-error {
+        background-color: $white;
+        border: 0.063rem $i solid;
+        color: $h;
+    }
+    .createoredit-option {
+        background-color: $white;
+        border-bottom: 0.063rem $e solid;
+        color: $z;
+
+        span {
+            transition: .25s;
+            color:$z;
+        }
+    }
+    .createoredit-option:hover {
+        span {
+            color: $j;
+        }
+    }
+    input:focus:-webkit-autofill {
+        background-color: $white;
+        border: 0.063rem $e solid;
+        color: $h;
+    }
+    .createoredit-date-disabled {
+        background-color: $white;
+        border: 0.063rem $e solid;
+        color: $h;
+        box-shadow: 0.125rem 0.313rem 0.313rem $y!important;
+        span {
+            color:$l!important;
+        }
+    }
+    .createoredit-item-add-button {
+        background-color: $u!important; 
+    }
+    .createoredit-footer-outer-container {
+        background-color: $white!important;
+    }
+    .createoredit-cancel-button-container {
+        background-color: $u!important;
+        h3 {
+            color: $g!important;
+        }
+    }
+    .createoredit-discard-button-container {
+        background-color: $u!important;
+        h3 {
+            color: $g!important;
+        }
+    }
+    .createoredit-bottom-filler {
+        // background: $transgray;
+        background: linear-gradient(0deg, $transgray, $trans) no-repeat;
+    }
+    .createoredit-saveasdraft-button-container {
+        background-color: $w!important;
+        h3 {
+            color: $e!important;
+        }
+    }
+    .createoredit-saveasdraft-button-container {
+        background-color: $w!important;
+        h3 {
+            color: $f!important;
+        }
+    }
+    .createoredit-calendar-outer-container {
+        background-color: $white!important;
+        span {
+            color: $h!important;
+        }
+        h6 {
+            color: $h!important;
+        }
+    }
 }
+
 
