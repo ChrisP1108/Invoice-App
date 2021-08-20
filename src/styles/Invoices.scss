@@ -46,3 +46,34 @@
     from {top: 5rem; opacity: 0}
     to {top: 0rem; opacity: 1}
 }
+
+@media(min-width: 768px) {
+    .invoice-outer-container {
+        height: 4.5rem!important;
+    }
+    .invoice-inner-container {
+        padding: 1rem 1.375rem 1rem!important;
+    }
+    .invoice-right-arrow {
+        background-image: url(../assets/icon-arrow-right.svg);
+        height: 0.625rem!important;
+        width: 0.438rem!important;
+        transition: .5s;
+        margin-left: 1.188rem!important;
+    }
+    .margin-invoice-left {
+        margin-left: 1.75rem!important;
+    }
+    .invoice-container-width-12 {
+        width: 12%;
+    }
+    .invoice-container-width-20 {
+        width: 20%;
+    }
+    .invoice-container-width-28 {
+        width: 28%
+    }
+    .text-right {
+        text-align: right!important;
+    }
+}

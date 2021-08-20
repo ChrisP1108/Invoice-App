@@ -70,6 +70,10 @@ body {
         justify-content: flex-end;
         align-items: center;
     }
+    &-as {
+        display: flex;
+        align-items: center;
+    }
     &-ca {
         display: flex;
         justify-content: space-between;
@@ -96,6 +100,10 @@ body {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+    }
+    &-ac {
+        display: flex;
+        align-items: center;
     }
 }
 

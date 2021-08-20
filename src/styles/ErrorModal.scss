@@ -6,13 +6,14 @@
         transition: .25s!important;
         background-color: $halftrans!important;
         width: 96.5vw;
-        height: 130vh;
+        height: 116vh;
     }
     .error-modal-page-container-createoredit {
         transition: .25s!important;
         background-color: $halftrans!important;
         width: 96.5vw;
-        height: 262vh;
+        height: 213vh;
+        padding-top: 69rem;
     }
     .error-fill-transition {
         animation-name: error-modal-trans-in;

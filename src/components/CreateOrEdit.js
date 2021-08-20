@@ -309,8 +309,8 @@ const CreateOrEdit = () => {
         return (
             <div onClick={() => formStateUpdate('paymentTerms', option.days)}
                 key={option.id} 
-                className={`${option.id == 1 ? `createoredit-option-first`
-                : option.id == 4 ? `createoredit-option-last` : ``} createoredit-option pointer`}
+                className={`${option.id === 1 ? `createoredit-option-first`
+                : option.id === 4 ? `createoredit-option-last` : ``} createoredit-option pointer`}
                 style={{ borderBottom: option.id == 4 && `0rem $white solid` }}>
                 <span>{option.name}</span>
             </div>
@@ -321,7 +321,7 @@ const CreateOrEdit = () => {
         if (!emptyFields && !emptyItems) {
             return false
         }
-        if (field === '' || field == 0 || field === null) {
+        if (field === '' || field === 0 || field === null) {
             return true
         } else return false
     }

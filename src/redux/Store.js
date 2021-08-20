@@ -24,6 +24,14 @@ import { createReduxModule } from 'hooks-for-redux';
             INITINVOICES(["error"]);
         } else {
             const data = await res.json();
+            data.forEach(list => {
+                let idAssign = 0;
+                list.items.forEach(item => {
+                    item.id = idAssign;
+                    idAssign += 1;
+                });
+                idAssign = 0;
+            });
             INITINVOICES(data);
         }
     }
@@ -228,3 +236,29 @@ import { createReduxModule } from 'hooks-for-redux';
         createReduxModule('httpOk', HTTPOK_START, {
             SETHTTPRES: (store, toggle) => toggle
         });
+
+// MOBILE, TABLET, DESKTOP RESPONSIVE TOGGLER
+
+    const RESPONSIVE_START = "Not SET";
+            
+    export const [RESPONSIVE, {SETRESPONSIVE}] =
+        createReduxModule('responsive', RESPONSIVE_START, {
+            SETRESPONSIVE: (store, toggle) => toggle
+        });
+
+    const width = window.innerWidth;
+    
+    if (width < 768) {
+        SETRESPONSIVE('mobile');
+    } else if (width > 768 && width < 1200) {
+        SETRESPONSIVE('tablet');
+    } else SETRESPONSIVE('desktop');
+
+    window.addEventListener('resize', () => {
+        const width = window.innerWidth;
+        if (width < 768) {
+            SETRESPONSIVE('mobile');
+        } else if (width > 768 && width < 1200) {
+            SETRESPONSIVE('tablet');
+        } else SETRESPONSIVE('desktop');
+    });

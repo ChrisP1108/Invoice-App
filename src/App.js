@@ -2,18 +2,18 @@ import CreateOrEdit from './components/CreateOrEdit';
 import Header from './components/Header';
 import List from './components/List';
 import ErrorModal from './components/ErrorModal';
-import Formatter from './components/List';
 import Viewer from './components/Viewer';
 import DeleteModal from './components/DeleteModal';
 import './App.scss';
-import { INITINVOICES, INVOICELIST, NIGHTMODE, 
+import { NIGHTMODE, 
   TOGGLEVIEWER, TOGGLECREATEEDIT, TOGGLEDELETEMODAL,
   TOGGLEERRORMODAL, SETTOGGLEERRORMODAL, SETTOGGLEDELETEMODAL, 
-  SETTOGGLEVIEWER, SETTOGGLECREATEEDIT, HTTPRES } from './redux/Store.js';
-import { useState, useEffect } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+  SETTOGGLEVIEWER, SETTOGGLECREATEEDIT, HTTPRES, RESPONSIVE } from './redux/Store.js';
+
 
 const App = () => {
+
+  console.log(RESPONSIVE());
 
   const createToggle = TOGGLECREATEEDIT();
   const viewerToggle = TOGGLEVIEWER();

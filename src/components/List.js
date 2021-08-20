@@ -1,13 +1,14 @@
 import Loading from './Loading';
 import Invoices from './Invoices';
 import { SETTOGGLECREATEEDIT, INVOICELIST, 
-    invoice, SETINVOICE } from '../redux/Store.js';
+    SETINVOICE, RESPONSIVE } from '../redux/Store.js';
 import { useState, useEffect } from 'react';
 import { filterItems } from '../Arrays/Filters';
 
 const List = () => {
 
     const list = INVOICELIST();
+    const response = RESPONSIVE();
     
     const [toggleFilter, setToggleFilter] = useState(false);
     const [draftFilter, setDraftFilter] = useState(false);
@@ -118,14 +119,15 @@ const List = () => {
                             : list[0] === 'error' ? `Error`
                             : list.length === 0 ? `No invoices` 
                             : list.length === 1 ? `1 invoice`
-                            : `${list.length} invoices`}</h2>
+                            : response === 'mobile' ? `${list.length} invoices`
+                            : `There are ${list.length} total invoices`}</h2>
                 </div>
                 <div className="col-7 ns f-ae pointer">
                     <div className="d-flex">
                         <div className="d-flex">
                             <div onClick={() => loadedEval() && list.length > 0 
                                 && setToggleFilter(!toggleFilter)} className="d-flex">
-                                <h3>Filter</h3>
+                                <h3>{response === 'mobile' ? `Filter` : `Filter by status`}</h3>
                                 <div className="filter-container f-c">
                                     <div className={`${toggleFilter && `filter-arrow-clicked`} filter-arrow`}></div>
                                 </div>
@@ -147,7 +149,7 @@ const List = () => {
                                 <div className="button-icon"></div>
                             </div>
                         </div>
-                        <div className="button"><span>New</span></div>
+                        <div className="button"><span>{response === 'mobile' ? `New` : `New Invoice`}</span></div>
                     </div>
                 </div>
             </div>
