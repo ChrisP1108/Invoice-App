@@ -1,6 +1,6 @@
 #viewer {
     h1 {
-        font-size: 1.25rem!important;
+        font-size: 1.25rem;
         font-weight: 600!important;
         letter-spacing: -0.026rem!important;
         line-height: 2rem!important;
@@ -12,7 +12,7 @@
     }
     h2 {
         font-size: 0.75rem!important;
-        font-weight: 500!important;
+        font-weight: 400!important;
         letter-spacing: -0.016rem!important;
         margin: 0!important;
         padding: 0!important;
@@ -21,10 +21,10 @@
         line-height: 0.938rem!important;
     }
     h3 {
-        font-size: 0.75rem!important;
-        font-weight: 700!important;
-        letter-spacing: -0.016rem!important;
-        line-height: .938rem!important;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: -0.016rem;
+        line-height: .938rem;
         margin: 0!important;
         padding: 0!important;
         span {
@@ -40,10 +40,10 @@
         padding: 0!important;
     }
     h6 {
-        font-size: 0.688rem!important;
-        font-weight: 500!important;
-        letter-spacing: -0.016rem!important;
-        line-height: 0.938rem!important;
+        font-size: 0.688rem;
+        font-weight: 400;
+        letter-spacing: -0.016rem;
+        line-height: 0.938rem;
         margin: 0!important;
         padding: 0!important;
     }
@@ -81,7 +81,7 @@
     }
     .viewer {
         &-container {
-            margin: 2rem 1.5rem 3.5rem 1.5rem!important;
+            margin: 2rem 1.5rem 3.5rem!important;
         }
     }
     .viewer-status {
@@ -106,7 +106,6 @@
             }
             &-inner-container {
                 padding: 1.5rem!important;
-                height: 100%!important
             }
             &-left-column-container {
                 width: 8.563rem!important;
@@ -230,4 +229,114 @@
     @keyframes viewer-trans-in {
         from {padding-top: 5rem; opacity: 0}
         to {padding-top: 0rem; opacity: 1}
+    }
+
+    @media(min-width: 768px) {
+        .viewer {
+            &-container {
+                margin: 3rem 2.5rem 0!important;
+                padding-bottom: 8.438rem!important;
+            }
+        }
+        .viewer-status {
+            &-outer-container {
+                height: 5.5rem!important;
+                margin-top: 2rem!important;
+                border-radius: 0.5rem!important;
+                border: 0.063rem $trans solid;
+                z-index: 0!important;
+            }
+            &-inner-container {
+                padding: 1.25rem 2rem 1.25rem !important;
+            }
+            &-closeto-width {
+                width: 10rem!important;
+            }
+        }
+        .viewer-footer {
+            &-edit-button-container {
+                width: 4.563rem!important;
+                height: 3rem!important;
+            }
+            &-delete-button-container {
+            width: 5.563rem!important;
+            height: 3rem!important;
+            }
+            &-paid-button-container {
+            width: 8.188rem!important;
+            height: 3rem!important;
+            }
+        }
+        .viewer-main {
+            &-inner-container {
+            padding: 2rem!important;
+            }
+            &-id-subscription-container {
+                height: 2.938rem!important;
+                h3 {
+                    span {
+                        font-size: 1rem!important;
+                    }
+                    font-size: 1rem!important;
+                    font-weight: 700!important;
+                    letter-spacing: -0.05rem!important;
+                    line-height: 1.5rem!important;
+                    margin: 0!important;
+                    padding: 0!important;
+                }
+            }
+            &-address-container {
+                margin-top: 0rem!important;
+                text-align: right;
+                height: 4.688rem!important;
+            }
+            &-due-container {
+                margin: 0!important;
+                padding: 0!important;
+                height: 2.938rem!important;
+            }
+            &-bill-container {
+                margin: 0!important;
+                height: 3rem!important;
+            }
+            &-bill-address-container {
+                height: 8.25rem!important;
+            }
+            &-email-container {
+                width: 37%!important;
+            }
+            &-sent-inner-container {
+                height: 3rem!important;
+            }
+            &-date-bill-email-container {
+                margin-top: 1.5rem!important;
+            }
+            &-pricing-outer-container {
+                margin-top: 3rem!important;
+            }
+            &-pricing-inner-container {
+                padding: 2rem 2rem 1rem!important;
+                height: 100%!important;
+            }
+            &-pricing-item-container {
+                margin-top: 2rem!important;
+                height: 1rem!important;
+                margin-bottom: 1.5rem!important;
+
+                h6 {
+                    font-size: 0.75rem!important;
+                    font-weight: 700!important;
+                    letter-spacing: -0.016rem!important;
+                    line-height: .938rem!important;
+                    margin: 0!important;
+                    padding: 0!important;
+                }
+            }
+            &-pricing-grand-total-inner-container {
+                padding: 1.5rem 2rem 1.5rem!important;
+                h1 {
+                    font-size: 1.5rem!important;
+                }
+            }
+        }
     }
