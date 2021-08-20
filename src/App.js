@@ -13,7 +13,7 @@ import { NIGHTMODE,
 
 const App = () => {
 
-  console.log(RESPONSIVE());
+  const response = RESPONSIVE();
 
   const createToggle = TOGGLECREATEEDIT();
   const viewerToggle = TOGGLEVIEWER();
@@ -24,13 +24,16 @@ const App = () => {
   }
 
   return (
-    <div className={`${NIGHTMODE() ? 'night-mode' : 'day-mode'} window-height position-relative`}>
+    <div className={`${NIGHTMODE() ? 'night-mode' 
+      : 'day-mode'} window-height w-100  h-100 position-relative`}>
       {TOGGLEERRORMODAL() && <ErrorModal />}
       {TOGGLEDELETEMODAL() && <DeleteModal />}
       <div className="d-flex flex-column flex-xl-row">
         <Header />
-        <div className="w-100">
-          {invoiceSwitch()}
+        <div className="w-100 h-100 position-relative">
+          {TOGGLECREATEEDIT() && <div className="background-createoredit-filler"></div>}
+          {TOGGLECREATEEDIT() && <CreateOrEdit />}
+          {TOGGLEVIEWER() ? <Viewer /> : <List />}
         </div>
       </div>
     </div>

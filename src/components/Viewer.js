@@ -372,7 +372,7 @@ const Viewer = () => {
     }
 
     return (
-        <div id="viewer">
+        <div id="viewer" className="background-filler">
             <div className="viewer-container">
                 {backHeader()} 
                 <div className="viewer-transition">  

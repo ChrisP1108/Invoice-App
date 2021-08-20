@@ -55,6 +55,15 @@ body {
     cursor: pointer;
 }
 
+.trans-background {
+    background-color: $halftrans!important;
+    width: 100%!important;
+    height: 100%!important;
+    position: absolute;
+    z-index: 4!important;
+    transition: .25s!important;
+}
+
 .ns {
     margin: 0!important;
     padding: 0!important;
@@ -147,9 +156,28 @@ body {
     }
 }
 
+.background-createoredit-filler {
+    position: absolute;
+    transition: .25s;
+    width: 100%!important;
+    height: 195.5vh!important;
+    z-index: -1;
+}
+
 .night-mode {
     background-color: $l!important;
     transition: .25s;
+
+    .background-filler {
+        background-color: $l!important;
+        transition: .25s;
+        width: 100%!important;
+        height: 100%!important;
+        z-index: 5;
+    }
+    .background-createoredit-filler{
+        background-color: $l!important;
+    }
 
     h1 {
         color: $white;
@@ -347,6 +375,18 @@ body {
 .day-mode {
     background-color: $k!important;
     transition: .25s;
+
+    .background-filler {
+        background-color: $k!important;
+        transition: .25s;
+        width: 100%!important;
+        height: 100%!important;
+        z-index: 5;
+    }
+
+    .background-createoredit-filler{
+        background-color: $k!important;
+    }
 
     h1 {
         color: $h;

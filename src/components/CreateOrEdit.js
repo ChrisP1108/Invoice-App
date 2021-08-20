@@ -7,9 +7,11 @@ import { INVOICE, SETINVOICE,
     MARKASPAIDINVOICE, SETTOGGLEDELETEMODAL, SETHTTPRES, HTTPRES, 
     TOGGLEERRORMODAL, SETTOGGLEERRORMODAL, SETTOGGLEVIEWER, 
     SETTOGGLECREATEEDIT, SAVECHANGESINVOICE, SAVEANDSENDINVOICE, 
-    SAVEASDRAFTINVOICE, UPDATEINVOICE } from '../redux/Store.js';
+    SAVEASDRAFTINVOICE, UPDATEINVOICE, RESPONSIVE } from '../redux/Store.js';
 
 const CreateOrEdit = () => {
+
+    const response = RESPONSIVE();
 
     const date = new Date();
     const dayOfWeek = date.getDay();
@@ -819,7 +821,7 @@ const CreateOrEdit = () => {
 
     const footerButtons = () => { 
         return (
-            <div className="createoredit-footer-outer-container f-c">
+            <div className={response === 'mobile' ? `createoredit-footer-outer-container f-c` : `d-none`}>
                 <div className="createoredit-footer-inner-container f-e f-c">
                     <div onClick={() => SETTOGGLECREATEEDIT(false)}
                         className={`${INVOICE().id === undefined && `d-none`} createoredit-cancel-button-container f-c pointer`}>
@@ -852,14 +854,19 @@ const CreateOrEdit = () => {
 
     return (
         <div id="createoredit">
-            <div className="createoredit-container">
-                {backHeader()}
-                <div className="createoredit-transition">
-                    {title()}
-                    {formBody()}
+            {response !== 'mobile' && <div className="trans-background"></div>} 
+            <div className="createoredit-master-container">
+                <div className="createoredit-tab-container background-filler">
+                    <div className="createoredit-container">
+                        {backHeader()}
+                        <div className="createoredit-transition">
+                            {title()}
+                            {formBody()}
+                        </div>
+                    </div>
+                    {footerButtons()}
                 </div>
             </div>
-            {footerButtons()}   
         </div>
     )
 }

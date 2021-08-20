@@ -1,4 +1,7 @@
 #createoredit {
+    z-index: 5!important;
+    position: absolute;
+    width: 100%!important;
     h1 {
         font-size: 1.5rem!important;
         font-weight: 700!important;
@@ -389,4 +392,17 @@
             height: 3rem!important;
         }
     }
+    @media(min-width: 768px) {
+        .createoredit {
+            &-master-container {
+                display: flex;
+            }
+            &-tab-container {
+                width: 80%!important;
+                border-top-right-radius: 1.5rem!important;
+                border-bottom-right-radius: 1.5rem!important;
+            }
+        }
+    }
 }
+

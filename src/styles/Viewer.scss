@@ -1,4 +1,7 @@
 #viewer {
+    z-index: 3!important;
+    width: 100%!important;
+    height: 100%!important;
     h1 {
         font-size: 1.25rem;
         font-weight: 600!important;
@@ -12,7 +15,7 @@
     }
     h2 {
         font-size: 0.75rem!important;
-        font-weight: 400!important;
+        font-weight: 500!important;
         letter-spacing: -0.016rem!important;
         margin: 0!important;
         padding: 0!important;
@@ -41,7 +44,7 @@
     }
     h6 {
         font-size: 0.688rem;
-        font-weight: 400;
+        font-weight: 500;
         letter-spacing: -0.016rem;
         line-height: 0.938rem;
         margin: 0!important;
