@@ -371,6 +371,13 @@ body {
             color: $e!important;
         }
     }
+    .createoredit-container {
+        @media(min-width: 768px) {
+            h4 {
+                color: $e!important;
+            }
+        }
+    }
 }
 .day-mode {
     background-color: $k!important;
@@ -586,6 +593,13 @@ body {
         }
         h6 {
             color: $h!important;
+        }
+    }
+    .createoredit-container {
+        @media(min-width: 768px) {
+            h4 {
+                color: $g!important;
+            }
         }
     }
 }

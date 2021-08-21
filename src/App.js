@@ -31,7 +31,9 @@ const App = () => {
       <div className="d-flex flex-column flex-xl-row">
         <Header />
         <div className="w-100 h-100 position-relative">
-          {TOGGLECREATEEDIT() && <div className="background-createoredit-filler"></div>}
+          {TOGGLECREATEEDIT() && 
+            <div className="background-createoredit-filler"></div>
+          }
           {TOGGLECREATEEDIT() && <CreateOrEdit />}
           {TOGGLEVIEWER() ? <Viewer /> : <List />}
         </div>

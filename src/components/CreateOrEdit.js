@@ -212,7 +212,8 @@ const CreateOrEdit = () => {
     const backHeader = () => {
         return (
             <div onClick={() => SETTOGGLECREATEEDIT(false)} 
-                className="back-container pointer position-relative">
+                className={response === 'mobile' ? `back-container pointer position-relative` 
+                    : `d-none`}>
                 <div className="back-arrow"></div>
                 <div className="d-flex">
                     <h3>Go back</h3>
@@ -606,23 +607,44 @@ const CreateOrEdit = () => {
                                 ? `createoredit-field-error` : `createoredit-field`}> 
                             </input>
                     </div>
-                </div>
-                <div className="createoredit-form-row-full-container f-clb">
-                        <div className="f-sb">
-                            <h4 className={errorStylingEval(invoiceEdit.senderAddress.country) 
-                                && `createoredit-error-highlight`}>Country</h4>
-                            {errorStylingEval(invoiceEdit.senderAddress.country)
-                            && <p>can't be empty</p>}
+                    {response !== 'mobile' && <div className="createoredit-column-gap"></div>}
+                    {response !== 'mobile' &&
+                        <div className="createoredit-form-row-full-container f-clb">
+                                <div className="f-sb">
+                                    <h4 className={errorStylingEval(invoiceEdit.senderAddress.country) 
+                                        && `createoredit-error-highlight`}>Country</h4>
+                                    {errorStylingEval(invoiceEdit.senderAddress.country)
+                                    && <p>can't be empty</p>}
+                                </div>
+                            <input 
+                                type="text"
+                                name="senderAddress.country"
+                                value={invoiceEdit.senderAddress.country}
+                                onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
+                                className={errorStylingEval(invoiceEdit.senderAddress.country) 
+                                    ? `createoredit-field-error` : `createoredit-field`}> 
+                            </input>
                         </div>
-                    <input 
-                        type="text"
-                        name="senderAddress.country"
-                        value={invoiceEdit.senderAddress.country}
-                        onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
-                        className={errorStylingEval(invoiceEdit.senderAddress.country) 
-                            ? `createoredit-field-error` : `createoredit-field`}> 
-                    </input>
+                    }
                 </div>
+                {response === 'mobile' &&
+                    <div className="createoredit-form-row-full-container f-clb">
+                            <div className="f-sb">
+                                <h4 className={errorStylingEval(invoiceEdit.senderAddress.country) 
+                                    && `createoredit-error-highlight`}>Country</h4>
+                                {errorStylingEval(invoiceEdit.senderAddress.country)
+                                && <p>can't be empty</p>}
+                            </div>
+                        <input 
+                            type="text"
+                            name="senderAddress.country"
+                            value={invoiceEdit.senderAddress.country}
+                            onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
+                            className={errorStylingEval(invoiceEdit.senderAddress.country) 
+                                ? `createoredit-field-error` : `createoredit-field`}> 
+                        </input>
+                    </div>
+                }
                 <div className="createoredit-bill-margin">
                     <h2>Bill To</h2>
                 </div>
@@ -708,77 +730,102 @@ const CreateOrEdit = () => {
                             ? `createoredit-field-error` : `createoredit-field`}> 
                         </input>
                     </div>
-                </div>
-                <div className="createoredit-form-row-full-container f-clb">
-                    <div className="f-sb">
-                        <h4 className={errorStylingEval(invoiceEdit.clientAddress.country) 
-                                && `createoredit-error-highlight`}>Country</h4>
-                        {errorStylingEval(invoiceEdit.clientAddress.country)
-                            && <p>can't be empty</p>}
-                    </div>
-                    <input 
-                        type="text"
-                        name="clientAddress.country"
-                        value={invoiceEdit.clientAddress.country}
-                        onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
-                        className={errorStylingEval(invoiceEdit.clientAddress.country) 
-                        ? `createoredit-field-error` : `createoredit-field`}> 
-                    </input>
-                </div>
-                <div className="createoredit-invoice-top-gap"></div>
-                <div className={`${INVOICE().id === undefined || INVOICE().status === 'draft' ? `d-none` : ``} createoredit-form-row-full-container 
-                    createoredit-invoice-disabled f-clb`}>
-                    <h4>Invoice Date</h4>
-                    <div className="createoredit-date-disabled f-sb">
-                        <h4><span>{dateFormat(invoiceEdit.createdAt)}</span></h4>
-                        <div className="createoredit-calendar-icon"></div>
-                    </div>   
-                </div>
-                <div className={`${INVOICE().id !== undefined && INVOICE().status !== 'draft' ? `d-none` : ``} 
-                        createoredit-form-row-full-container f-clb position-relative`}>
-                    <div className="f-sb">
-                        <h4 className={errorStylingEval(invoiceEdit.createdAt) 
-                                && `createoredit-error-highlight`}>Invoice Date</h4>
-                        {emptyFields && invoiceEdit.createdAt === ''
-                            && <p>date must be selected</p>}
-                    </div>
-                    <div className="f-sb">
-                        <div onClick={() => {setToggleCalendar(!toggleCalendar); 
-                            setToggleTerms(false); calendarDateGenerator()}}
-                            className={`${errorStylingEval(invoiceEdit.createdAt) 
-                            ? `createoredit-field-error` : `createoredit-field`} 
-                            createoredit-date-active f-sb pointer`}> 
-                                <span>{invoiceEdit.createdAt === '' ? `Select Invoice Date` : dateFormat(invoiceEdit.createdAt)}</span>
-                                <div className="createoredit-calendar-icon"></div>
+                    {response !== 'mobile' && <div className="createoredit-column-gap"></div>}
+                    {response !== 'mobile' &&
+                        <div className="createoredit-form-row-full-container f-clb">
+                            <div className="f-sb">
+                                <h4 className={errorStylingEval(invoiceEdit.clientAddress.country) 
+                                        && `createoredit-error-highlight`}>Country</h4>
+                                {errorStylingEval(invoiceEdit.clientAddress.country)
+                                    && <p>can't be empty</p>}
+                            </div>
+                            <input 
+                                type="text"
+                                name="clientAddress.country"
+                                value={invoiceEdit.clientAddress.country}
+                                onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
+                                className={errorStylingEval(invoiceEdit.clientAddress.country) 
+                                ? `createoredit-field-error` : `createoredit-field`}> 
+                            </input>
                         </div>
-                    </div>
-                    {toggleCalendar && !toggleTerms && calendarMenu()}
+                    }
                 </div>
-                <div className="position-relative">
+                {response === 'mobile' &&
                     <div className="createoredit-form-row-full-container f-clb">
                         <div className="f-sb">
-                            <h4 className={errorStylingEval(invoiceEdit.paymentTerms) 
-                                && `createoredit-error-highlight`}>Payment Terms</h4>
-                            {errorStylingEval(invoiceEdit.paymentTerms)
-                            && <p>payment term must be selected</p>}
+                            <h4 className={errorStylingEval(invoiceEdit.clientAddress.country) 
+                                    && `createoredit-error-highlight`}>Country</h4>
+                            {errorStylingEval(invoiceEdit.clientAddress.country)
+                                && <p>can't be empty</p>}
                         </div>
-                        <div onClick ={() => {setToggleTerms(!toggleTerms); setToggleCalendar(false)}} 
-                            className={`${errorStylingEval(invoiceEdit.paymentTerms) 
-                                ? `createoredit-field-error` : `createoredit-field`} f-sb pointer`}>
-                            <span className={`${invoiceEdit.paymentTerms !== null && `d-none`}`}>
-                                Select Payment Status
-                            </span>
-                            <span className={`${invoiceEdit.paymentTerms == null && `d-none`}`}>
-                                Net {invoiceEdit.paymentTerms} Day{invoiceEdit.paymentTerms > 1 ? 's' : ''}
-                            </span>
-                            <div className="f-c">
-                                <div className={`${toggleTerms 
-                                    && `createoredit-option-arrow-clicked`} createoredit-option-arrow`}></div>
+                        <input 
+                            type="text"
+                            name="clientAddress.country"
+                            value={invoiceEdit.clientAddress.country}
+                            onChange={(e) => formStateUpdate(e.target.name, e.target.value)}
+                            className={errorStylingEval(invoiceEdit.clientAddress.country) 
+                            ? `createoredit-field-error` : `createoredit-field`}> 
+                        </input>
+                    </div>
+                }
+                <div className="createoredit-invoice-top-gap"></div>
+
+                <div className="d-md-flex">
+                    <div className={`${INVOICE().id === undefined || INVOICE().status === 'draft' ? `d-none` : ``} createoredit-form-row-full-container 
+                        createoredit-invoice-disabled f-clb`}>
+                        <h4>Invoice Date</h4>
+                        <div className="createoredit-date-disabled f-sb">
+                            <h4><span>{dateFormat(invoiceEdit.createdAt)}</span></h4>
+                            <div className="createoredit-calendar-icon"></div>
+                        </div>   
+                    </div>
+                    <div className={`${INVOICE().id !== undefined && INVOICE().status !== 'draft' ? `d-none` : ``} 
+                            createoredit-form-row-full-container f-clb position-relative`}>
+                        <div className="f-sb">
+                            <h4 className={errorStylingEval(invoiceEdit.createdAt) 
+                                    && `createoredit-error-highlight`}>Invoice Date</h4>
+                            {emptyFields && invoiceEdit.createdAt === ''
+                                && <p>date must be selected</p>}
+                        </div>
+                        <div className="f-sb">
+                            <div onClick={() => {setToggleCalendar(!toggleCalendar); 
+                                setToggleTerms(false); calendarDateGenerator()}}
+                                className={`${errorStylingEval(invoiceEdit.createdAt) 
+                                ? `createoredit-field-error` : `createoredit-field`} 
+                                createoredit-date-active f-sb pointer`}> 
+                                    <span>{invoiceEdit.createdAt === '' ? `Select Invoice Date` : dateFormat(invoiceEdit.createdAt)}</span>
+                                    <div className="createoredit-calendar-icon"></div>
                             </div>
                         </div>
+                        {toggleCalendar && !toggleTerms && calendarMenu()}
                     </div>
-                    <div className={`${toggleTerms && !toggleCalendar ? `createoredit-option-trans` : `d-none`} position-absolute w-100`}>
-                        {termsMapping}
+                    {response !== 'mobile' && <div className="createoredit-invoice-payment-gap"></div>}
+                    <div className="createoredit-form-payment-terms-container position-relative">
+                        <div className="createoredit-form-row-full-container f-clb">
+                            <div className="f-sb">
+                                <h4 className={errorStylingEval(invoiceEdit.paymentTerms) 
+                                    && `createoredit-error-highlight`}>Payment Terms</h4>
+                                {errorStylingEval(invoiceEdit.paymentTerms)
+                                && <p className="text-right">payment term must be selected</p>}
+                            </div>
+                            <div onClick ={() => {setToggleTerms(!toggleTerms); setToggleCalendar(false)}} 
+                                className={`${errorStylingEval(invoiceEdit.paymentTerms) 
+                                    ? `createoredit-field-error` : `createoredit-field`} f-sb pointer`}>
+                                <span className={`${invoiceEdit.paymentTerms !== null && `d-none`}`}>
+                                    Select Payment Status
+                                </span>
+                                <span className={`${invoiceEdit.paymentTerms == null && `d-none`}`}>
+                                    Net {invoiceEdit.paymentTerms} Day{invoiceEdit.paymentTerms > 1 ? 's' : ''}
+                                </span>
+                                <div className="f-c">
+                                    <div className={`${toggleTerms 
+                                        && `createoredit-option-arrow-clicked`} createoredit-option-arrow`}></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={`${toggleTerms && !toggleCalendar ? `createoredit-option-trans` : `d-none`} position-absolute w-100`}>
+                            {termsMapping}
+                        </div>
                     </div>
                 </div>
                 <div className="createoredit-form-row-full-container f-clb">
@@ -854,7 +901,10 @@ const CreateOrEdit = () => {
 
     return (
         <div id="createoredit">
-            {response !== 'mobile' && <div className="trans-background"></div>} 
+            {response !== 'mobile' && 
+                <div onClick={() => SETTOGGLECREATEEDIT(false)}
+                    className="trans-background"></div>
+            } 
             <div className="createoredit-master-container">
                 <div className="createoredit-tab-container background-filler">
                     <div className="createoredit-container">

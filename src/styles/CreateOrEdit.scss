@@ -402,6 +402,34 @@
                 border-top-right-radius: 1.5rem!important;
                 border-bottom-right-radius: 1.5rem!important;
             }
+            &-container {
+                margin: 3.5rem 3.5rem 0rem!important;
+            }
+            &-bill-top-margin {
+                margin-top: 3.5rem!important;
+            }
+            &-bill-margin {
+                margin-top: 3rem!important;
+            }
+            &-column-gap {
+                width: 4.974rem!important;
+            }
+            &-form-payment-terms-container {
+                margin-top: 0rem!important;
+                height: 4.563rem!important;
+                width: 100%!important;
+            }
+            &-invoice-payment-gap {
+                width: 3.114rem!important;
+            }
+            &-invoice-top-gap{
+                margin-top: 0.75rem!important;
+            }
+
+        }
+        @keyframes option-trans-in {
+            from {transform: rotateX(90deg); top: 1.5rem; display: block}
+            to {transform: rotateX(0deg); top: 6.55rem; display: block}
         }
     }
 }
