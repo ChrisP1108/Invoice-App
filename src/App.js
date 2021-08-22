@@ -17,6 +17,8 @@ const App = () => {
 
   const createToggle = TOGGLECREATEEDIT();
   const viewerToggle = TOGGLEVIEWER();
+  const errorToggle = TOGGLEERRORMODAL();
+  const deleteToggle = TOGGLEDELETEMODAL();
 
   const invoiceSwitch = () => {
     return createToggle ? <CreateOrEdit />
@@ -33,8 +35,10 @@ const App = () => {
   return (
     <div className={`${NIGHTMODE() ? 'night-mode' 
       : 'day-mode'} window-height w-100  h-100 position-relative`}>
-      {TOGGLEERRORMODAL() && <ErrorModal />}
-      {TOGGLEDELETEMODAL() && <DeleteModal />}
+      {errorToggle && <ErrorModal />}
+      {deleteToggle && <DeleteModal />}
+      {deleteToggle && <div className="modal-trans-background"></div>}
+      {errorToggle && <div className="modal-trans-background"></div>}
       <div className="d-flex flex-column flex-xl-row position-relative">
         <Header />
         <div className="w-100 h-100 position-relative">

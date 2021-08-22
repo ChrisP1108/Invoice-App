@@ -13,9 +13,6 @@ const CreateOrEdit = () => {
 
     const idRef = INVOICE().id
 
-    let screenHeight = window.innerHeight + window.scrollY;
-    console.log(screenHeight)
-
     const response = RESPONSIVE();
 
     const date = new Date();
@@ -206,7 +203,6 @@ const CreateOrEdit = () => {
     const [saveSendSpinner, setSaveSendSpinner] = useState(false);
     const [itemClicked, setItemClicked] = useState(false);
 
-    console.log(invoiceEdit.createdAt);
     invoiceEdit.id === '' && setInvoiceEdit({...invoiceEdit, id: newInvoiceId});
 
     let blankFieldTally;

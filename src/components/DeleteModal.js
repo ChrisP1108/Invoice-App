@@ -26,7 +26,7 @@ const DeleteModal = () => {
     }
 
     return (
-        <div id="deleteModal" className="d-flex align-items-stretch">
+        <div id="deleteModal" className="d-flex">
             <div className="delete-modal-page-container f-c delete-fill-transition">
                 <div className="delete-modal-outer-container delete-modal-transition">
                     <div className="delete-modal-inner-container">

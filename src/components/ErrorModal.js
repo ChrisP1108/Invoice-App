@@ -4,9 +4,8 @@ import { SETTOGGLEERRORMODAL, TOGGLEVIEWER,
 const ErrorModal = () => {
 
     return (
-        <div id="errorModal" className="d-flex align-items-stretch">
-            <div className={`${TOGGLEVIEWER() && !TOGGLECREATEEDIT()? `error-modal-page-container-viewer` 
-                : `error-modal-page-container-createoredit`} f-c error-fill-transition`}>
+        <div id="errorModal" className="d-flex">
+            <div className="error-modal-page-container f-c error-fill-transition">
                 <div className="error-modal-outer-container error-modal-transition">
                     <div className="error-modal-inner-container">
                         <h1>Error</h1>

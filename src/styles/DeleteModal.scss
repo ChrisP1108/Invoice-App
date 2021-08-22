@@ -1,12 +1,13 @@
 #deleteModal {
     position: absolute!important;
-    z-index: 3!important;
+    z-index: 7!important;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%)!important;
 
     .delete-modal-page-container {
         transition: .25s!important;
-        background-color: $halftrans!important;
-        width: 96.5vw;
-        height: 130vh;
+        width: 100%;
     }
     .delete-fill-transition {
         animation-name: delete-modal-trans-in;
@@ -24,7 +25,7 @@
 
     &-outer-container {
         margin: 1.5rem!important;
-        width: 100%!important;
+        width: 100%;
         height: auto!important;
         border-radius: 0.5rem!important;
     }
@@ -49,7 +50,7 @@
             display: flex;
             align-items: center;
             line-height: 1.375rem!important;
-            color: $f!important;
+            color: $f;
         }
         h3 {
             font-size: 0.75rem!important;
@@ -93,6 +94,35 @@
     @keyframes delete-modal-trans-in {
         from {transform: translateY(10%); opacity: 0}
         to {transform: translateY(0%); opacity: 1}
+    }
+}
+
+@media(min-width: 576px) {
+    .delete-modal {
+        &-outer-container {
+            margin: 1.5rem!important;
+            width: 30rem!important;
+            height: auto!important;
+            border-radius: 0.5rem!important;
+        }
+    }
+}
+
+@media(min-width: 768px) {
+    .delete-modal {
+        &-outer-container {
+            margin: 1.5rem!important;
+            width: 30rem!important;
+            height: 15.563rem!important;
+            border-radius: 0.5rem!important;
+        }
+        &-inner-container {
+            padding: 3rem!important;
+            height: 100%!important;
+            h2 {
+                font-weight: 400!important;
+            }
+        }
     }
 }
 

@@ -79,6 +79,15 @@ body {
     transition: .25s!important;
 }
 
+.modal-trans-background {
+    background-color: $halftrans!important;
+    width: 100%!important;
+    height: 100%!important;
+    position: absolute;
+    z-index: 6!important;
+    transition: .25s!important;
+}
+
 .ns {
     margin: 0!important;
     padding: 0!important;
@@ -297,6 +306,11 @@ body {
         h1 {
             color: $white;
         }
+        @media(min-width: 768px) {
+            h2 {
+                color: $e;
+            }
+        }
     }
     .delete-modal-cancel-button-container {
         background-color: $d;
@@ -310,6 +324,11 @@ body {
     .error-modal-inner-container {
         h1 {
             color: $white;
+        }
+        @media(min-width: 768px) {
+            h2 {
+                color: $e;
+            }
         }
     }
     .error-modal-ok-button-container {
