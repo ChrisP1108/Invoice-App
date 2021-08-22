@@ -29,20 +29,20 @@ const App = () => {
 
   return (
     <div className={`${NIGHTMODE() ? 'night-mode' 
-      : 'day-mode'} window-height w-100  h-100 position-relative`}>
+      : 'day-mode'} window-height w-100 h-100 position-relative`}>
       {errorToggle && <ErrorModal />}
       {deleteToggle && <DeleteModal />}
       {deleteToggle && <div className="modal-trans-background"></div>}
       {errorToggle && <div className="modal-trans-background"></div>}
-      <div className="d-flex flex-column flex-xl-row position-relative">
+      <div className="d-flex flex-column flex-xl-row position-relative w-100">
         <Header />
-        <div className="position-relative">
           {createToggle && <CreateOrEdit />}
           {createToggle && 
             <div onClick ={() => SETTOGGLECREATEEDIT(false)}
               className="createoredit-trans-background">
             </div>
           }
+        <div className="app-container">
           {viewerToggle ? <Viewer /> : <List />}
         </div>
       </div>
