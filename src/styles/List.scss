@@ -1,5 +1,5 @@
 #list {
-    z-index: 0!important;;
+    z-index: 0!important;
     h1 {
         font-size: 1.25rem!important;
         font-weight: 700!important;
@@ -56,8 +56,16 @@
         }
     }
     .checkbox {
-        width: 1.25rem!important;
-        height: 1.25rem!important;
+        width: 1rem!important;
+        height: 1rem!important;
+        border-radius: 0.125rem!important;
+        margin-right: 0.813rem!important;
+        transition: 0.25s;
+    }
+    .checkbox-checked {
+        background-image: url(../assets/icon-checked-full.svg)!important;
+        width: 1rem!important;
+        height: 1rem!important; 
     }
 
     .list {
@@ -81,18 +89,18 @@
             border-radius: 0.5rem!important;
         }
         &-filter-modal-item {
-            display: flex!important;
+            display: flex;
             width: 100%!important;
             height: 100%!important;
-            justify-content: center!important;
-            align-items: center!important;
+            justify-content: center;
+            align-items: center;
             transition: .25s!important;
             border-radius: 0.5rem!important;
         }
         &-filter-modal-selected {
             background: $n!important;
             h3 {
-                color: $white!important;
+                color: $white;
             }
         }
         &-filter-modal-trans-on {
@@ -109,10 +117,10 @@
 
     @keyframes filter-trans-in {
         from {transform: rotateX(90deg); top: 0rem; display: block}
-        to {transform: rotateX(0deg); top: 2.75rem; display: block}
+        to {transform: rotateX(0deg); top: 3rem; display: block}
     }
     @keyframes filter-trans-out {
-        from {transform: rotateX(0deg); top: 2.75rem; display: block}
+        from {transform: rotateX(0deg); top: 3rem; display: block}
         to {transform: rotateX(90deg); top: -1.25rem; display: none}
     }
 
@@ -221,7 +229,6 @@
             width: 12rem!important;
             height: 8rem!important;
             right: 10rem;
-            top: 2.75rem;
             border-radius: 0.5rem!important;
         }
         .no-invoices-container {
@@ -229,6 +236,40 @@
         }
         .no-invoices-container-error {
             margin-top: 19rem!important;
+        }
+        @keyframes filter-trans-in {
+            from {transform: rotateX(90deg); top: 0rem; display: block}
+            to {transform: rotateX(0deg); top: 3.5rem; display: block}
+        }
+    }
+    @media(min-width: 1200px) {
+        .list-container {
+            margin: 0!important;
+        }
+        .list-filter-modal-item {
+            display: flex!important;
+            width: 6rem!important;
+            height: 1rem!important;
+            justify-content: start!important;
+            align-items: center!important;
+            transition: .25s!important;
+            border-radius: 0.5rem!important;
+            cursor: pointer;
+        }
+        .list-filter-modal-item:hover {
+            .checkbox{
+                border: 1px $n solid;
+                transition: .25s!important;
+            }
+        }
+        .list-modal-inner-container {
+            padding: 1.5rem!important;
+        }
+        .list-filter-modal-selected {
+            background: $trans!important;
+            h3 {
+                color: $white!important;
+            }
         }
     }
 }

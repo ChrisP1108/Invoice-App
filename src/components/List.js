@@ -92,8 +92,8 @@ const List = () => {
         return (
             <div key={item.id}
                 className={`${eval(item.checkedValue) && `list-filter-modal-selected`} 
-                list-filter-modal-item`} onClick ={() => {toggleFilterType(item.name); setToggleFilter(!toggleFilter)}}>
-                <input className="checkbox d-none" type="checkbox" defaultChecked={eval(item.checkedValue)}></input>
+                list-filter-modal-item pointer`} onClick ={() => {toggleFilterType(item.name); setToggleFilter(!toggleFilter)}}>
+                <div className={`${eval(item.checkedValue) && `checkbox-checked`} checkbox d-none d-xl-block f-c`}></div>
                 <h3>{item.name}</h3>
             </div>
         )
@@ -135,7 +135,7 @@ const List = () => {
                             <div className={`${toggleFilter ? `list-filter-modal-trans-on`
                                 : loadedEval() ? `list-filter-modal-trans-off` : `d-none`} list-filter-modal position-absolute`}>
                                 <div className="list-modal-outer-container">
-                                    <div className="d-flex flex-column h-100 justify-content-between">
+                                    <div className="d-flex flex-column h-100 justify-content-between list-modal-inner-container">
                                         {filterItemMapping}
                                     </div>
                                 </div>
@@ -153,7 +153,6 @@ const List = () => {
                     </div>
                 </div>
             </div>
-
         )
     }
 

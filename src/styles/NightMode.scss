@@ -1,0 +1,239 @@
+.night-mode {
+    background-color: $l!important;
+    transition: .25s;
+
+    ::-webkit-scrollbar-thumb {
+        background: $d!important;
+    }
+
+    .background-filler {
+        background-color: $l!important;
+        transition: .25s;
+        width: 100%!important;
+        height: 100%!important;
+        z-index: 5;
+    }
+    .background-createoredit-filler{
+        background-color: $l!important;
+    }
+
+    h1 {
+        color: $white;
+    }
+    h2 {
+        color: $e;
+    }
+    h3 {
+        color :$white;
+    }
+    h4 {
+        color :$white;
+    }
+    h6 {
+        color: $e
+    }
+    p {
+        color: $white;
+    }
+    .invoice-outer-container {
+        transition: .25s;
+        background-color: $c;
+    }
+    .payment-button-paid {
+        background-color: $t;
+        color: $r!important;
+    }
+    .payment-button-pending {
+        background-color: $p;
+        color: $s!important;
+    }
+    .payment-button-draft {
+        background-color: $o;
+        color: $white!important;
+    }
+    .dot-paid {
+        background-color: $r!important;
+    }
+    .dot-pending {
+        background-color: $s!important;
+    }
+    .dot-draft {
+        background-color: $white!important;
+    }
+    .lds-default div {
+        background: $white;
+    }
+    .list-filter-modal {
+        background: $d;
+    }
+    #list {
+        .checkbox {
+            background: $c!important;
+        }
+        .checkbox-checked {
+            background-image: url(../assets/icon-checked-full.svg)!important;
+            width: 1rem!important;
+            height: 1rem!important;    
+        }
+    }
+    .viewer-status-outer-container {
+        transition: .25s;
+        background-color: $c;
+    }
+    .viewer-main-outer-container {
+        transition: .25s;
+        background-color: $c;
+    }
+    .viewer-main-pricing-outer-container {
+        transition: .25s;
+        background-color: $d;
+    }
+    #viewer {
+        h3 {
+            span {
+                color: $v!important;
+            }
+        }
+    }
+    .viewer-main-pricing-grand-total-outer-container {
+        background-color: $h!important;
+    }
+    .viewer-footer-outer-container {
+        background-color: $c;
+    }
+    .viewer-footer-edit-button-container {
+        background-color: $d;
+        h3 {
+            color: $e;
+        }
+    }
+    .delete-modal-outer-container {
+        background-color: $c!important;
+    }
+    .delete-modal-inner-container {
+        h1 {
+            color: $white;
+        }
+        @media(min-width: 768px) {
+            h2 {
+                color: $e;
+            }
+        }
+    }
+    .delete-modal-cancel-button-container {
+        background-color: $d;
+        h3 {
+            color: $e;
+        }
+    }
+    .error-modal-outer-container {
+        background-color: $c!important;
+    }
+    .error-modal-inner-container {
+        h1 {
+            color: $white;
+        }
+        @media(min-width: 768px) {
+            h2 {
+                color: $e;
+            }
+        }
+    }
+    .error-modal-ok-button-container {
+        background-color: $d;
+        h3 {
+            color: $e;
+        }
+    }
+    #createoredit {
+        h1 {
+            span {
+                color: $x;
+            }         
+        }
+        h4 {
+            color: $f;
+        }
+    }
+    .createoredit-field {
+        background-color: $c;
+        border: 0.063rem $d solid;
+        color: $white;
+    }
+    .createoredit-field-error {
+        background-color: $c;
+        border: 0.063rem $i solid;
+        color: $white;
+    }
+    .createoredit-option {
+        background-color: $d;
+        border-bottom: 0.063rem $c solid;
+        color: $white;
+
+        span {
+            transition: .25s;
+            color:$e;
+        }
+    }
+    .createoredit-option:hover {
+        span {
+            color: $j;
+        }
+    }
+    input:focus {
+        background-color: $c!important;
+        border: 0.063rem $d solid!important;;
+        color: $white!important;
+    }
+    .createoredit-date-disabled {
+        background-color: $c;
+        border: 0.063rem $d solid;
+        color: $white;
+        span {
+            color:$u!important;
+        }
+    }
+    .createoredit-item-add-button {
+        background-color: $c!important; 
+    }
+    .createoredit-footer-outer-container {
+        background-color: $c!important;
+    }
+    .createoredit-cancel-button-container {
+        background-color: $d!important;
+        h3 {
+            color: $e!important;
+        }
+    }
+    .createoredit-discard-button-container {
+        background-color: $d!important;
+        h3 {
+            color: $e!important;
+        }
+    }
+    .createoredit-bottom-filler {
+        background-color: $trans;
+    }
+    .createoredit-saveasdraft-button-container {
+        background-color: $w!important;
+        h3 {
+            color: $e!important;
+        }
+    }
+    .createoredit-calendar-outer-container {
+        background-color: $d!important;
+        span {
+            color: $e!important;
+        }
+        h6 {
+            color: $e!important;
+        }
+    }
+    .createoredit-container {
+        @media(min-width: 768px) {
+            h4 {
+                color: $e!important;
+            }
+        }
+    }
+}

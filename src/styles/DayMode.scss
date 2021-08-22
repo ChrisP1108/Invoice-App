@@ -1,0 +1,248 @@
+.day-mode {
+    background-color: $k!important;
+    transition: .25s;
+
+    ::-webkit-scrollbar-thumb {
+        background: $e!important;
+    }
+
+    .background-filler {
+        background-color: $k!important;
+        transition: .25s;
+        width: 100%!important;
+        height: 100%!important;
+        z-index: 5;
+    }
+
+    .background-createoredit-filler{
+        background-color: $k!important;
+    }
+
+    h1 {
+        color: $h;
+    }
+    h2 {
+        color: $f;
+    }
+    h3 {
+        color: $h;
+    }
+    h4 {
+        color: $h;
+    }
+    h6 {
+        color: $f;
+    }
+    p {
+        color: $h;
+    }
+    .invoice-outer-container {
+        transition: .25s;
+        background-color: $white;
+    }
+    .payment-button-paid {
+        background-color: $q;
+        color: $r!important;
+    }
+    .payment-button-pending {
+        background-color: $p;
+        color: $s!important;
+    }
+    .payment-button-draft {
+        background-color: $o;
+        color: $h!important;
+    }
+    .dot-paid {
+        background-color: $r!important;
+    }
+    .dot-pending {
+        background-color: $s!important;
+    }
+    .dot-draft {
+        background-color: $h!important;
+    }
+    .lds-default div {
+        background: $f;
+    }
+    .list-filter-modal {
+        background: $white;
+    }
+    .list-filter-modal {
+        @media(min-width: 1200px) {
+            h3 {
+                color: $z!important;
+            }
+        }
+    }
+    #list {
+        .checkbox {
+            background: $e!important;
+        }
+        .checkbox-checked {
+            background-image: url(../assets/icon-checked-full.svg)!important;
+            width: 1rem!important;
+            height: 1rem!important;    
+        }
+        .list-filter-modal-selected h3 {
+            color: $z!important;
+        }
+    }
+    .viewer-status-outer-container {
+        transition: .25s;
+        background-color: $white;
+    }
+    .viewer-main-outer-container {
+        transition: .25s;
+        background-color: $white;
+    }
+    .viewer-main-pricing-outer-container {
+        transition: .25s;
+        background-color: $u;
+    }
+    #viewer {
+        h3 {
+            span {
+                color: $g!important;
+            }
+        }
+    }
+    .viewer-main-pricing-grand-total-outer-container {
+        background-color: $w!important;
+    }
+    .viewer-footer-outer-container {
+        background-color: $white;
+    }
+    .viewer-footer-edit-button-container {
+        background-color: $u;
+        h3 {
+            color: $g;
+        }
+    }
+    .delete-modal-outer-container {
+        background-color: $white!important;
+    }
+    .delete-modal-inner-container {
+        h1 {
+            color: $h;
+        }
+    }
+    .delete-modal-cancel-button-container {
+        background-color: $u;
+        h3 {
+            color: $g;
+        }
+    }
+    .error-modal-outer-container {
+        background-color: $white!important;
+    }
+    .error-modal-inner-container {
+        h1 {
+            color: $h;
+        }
+    }
+    .error-modal-ok-button-container {
+        background-color: $u;
+        h3 {
+            color: $g;
+        }
+    }
+    #createoredit {
+        h1 {
+            span {
+                color: $v;
+            }         
+        }
+        h4 {
+            color: $g;
+        }
+    }
+    .createoredit-field {
+        background-color: $white;
+        border: 0.063rem $e solid;
+        color: $h;
+    }
+    .createoredit-field-error {
+        background-color: $white;
+        border: 0.063rem $i solid;
+        color: $h;
+    }
+    .createoredit-option {
+        background-color: $white;
+        border-bottom: 0.063rem $e solid;
+        color: $z;
+
+        span {
+            transition: .25s;
+            color:$z;
+        }
+    }
+    .createoredit-option:hover {
+        span {
+            color: $j;
+        }
+    }
+    input:focus:-webkit-autofill {
+        background-color: $white;
+        border: 0.063rem $e solid;
+        color: $h;
+    }
+    .createoredit-date-disabled {
+        background-color: $white;
+        border: 0.063rem $e solid;
+        color: $h;
+        box-shadow: 0.125rem 0.313rem 0.313rem $y!important;
+        span {
+            color:$l!important;
+        }
+    }
+    .createoredit-item-add-button {
+        background-color: $u!important; 
+    }
+    .createoredit-footer-outer-container {
+        background-color: $white!important;
+    }
+    .createoredit-cancel-button-container {
+        background-color: $u!important;
+        h3 {
+            color: $g!important;
+        }
+    }
+    .createoredit-discard-button-container {
+        background-color: $u!important;
+        h3 {
+            color: $g!important;
+        }
+    }
+    .createoredit-bottom-filler {
+        // background: $transgray;
+        background: linear-gradient(0deg, $transgray, $trans) no-repeat;
+    }
+    .createoredit-saveasdraft-button-container {
+        background-color: $w!important;
+        h3 {
+            color: $e!important;
+        }
+    }
+    .createoredit-saveasdraft-button-container {
+        background-color: $w!important;
+        h3 {
+            color: $f!important;
+        }
+    }
+    .createoredit-calendar-outer-container {
+        background-color: $white!important;
+        span {
+            color: $h!important;
+        }
+        h6 {
+            color: $h!important;
+        }
+    }
+    .createoredit-container {
+        @media(min-width: 768px) {
+            h4 {
+                color: $g!important;
+            }
+        }
+    }
+}
