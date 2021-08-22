@@ -410,7 +410,7 @@
             }
             &-tab-container {
                 height: 85vh!important;
-                width: 75.8vw!important;
+                width: 94.75%!important;
                 padding-bottom: 5vh!important;
                 position: absolute;
                 overflow-y: scroll;
@@ -468,13 +468,18 @@
             }
             &-scroller-side-filler {
                 position: absolute;
-                width: 2rem!important;
+                width: 5.25%!important;
                 height: 90vh!important;
                 left: 75.8vw!important;
                 border-top-right-radius: 1.5rem!important;
             }
             &-trans-sideways-in {
                 animation-name: createoredit-sideway-trans-in;
+                animation-duration: .25s;
+                animation-fill-mode: forwards;
+            }
+            &-trans-sideways-out {
+                animation-name: createoredit-sideway-trans-out;
                 animation-duration: .25s;
                 animation-fill-mode: forwards;
             }
@@ -487,6 +492,10 @@
         @keyframes createoredit-sideway-trans-in {
             from {left: -40rem; opacity: 0}
             to {left: 0rem; opacity: 1}
+        }
+        @keyframes createoredit-sideway-trans-out {
+            from {left: 0rem; opacity: 1}
+            to {left: -40rem; opacity: 0}
         }
     }
 }

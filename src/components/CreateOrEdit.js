@@ -12,6 +12,7 @@ import { INVOICE, SETINVOICE,
 const CreateOrEdit = () => {
 
     const idRef = INVOICE().id
+    const createToggle = TOGGLECREATEEDIT();
 
     const response = RESPONSIVE();
 
@@ -990,9 +991,9 @@ const CreateOrEdit = () => {
 
     return (
         <div id="createoredit">
-            <div className={`${response !== 'mobile' && TOGGLECREATEEDIT() 
-                ? `createoredit-trans-sideways-in` : ``} 
-                    createoredit-master-container position-relative`}>
+            <div className={`${response !== 'mobile' && createToggle 
+                ? `createoredit-trans-sideways-in` : `createoredit-trans-sideways-out`} 
+                    createoredit-master-container position-relative w-100`}>
                 <div className="createoredit-tab-container background-filler">
                     <div className="createoredit-container">
                         {backHeader()}

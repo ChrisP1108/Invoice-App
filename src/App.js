@@ -20,11 +20,6 @@ const App = () => {
   const errorToggle = TOGGLEERRORMODAL();
   const deleteToggle = TOGGLEDELETEMODAL();
 
-  const invoiceSwitch = () => {
-    return createToggle ? <CreateOrEdit />
-      : viewerToggle ? <Viewer /> : <List /> 
-  }
-
   const bodyScroller = document.body;
 
   if (createToggle && response !== 'mobile') {
@@ -41,12 +36,13 @@ const App = () => {
       {errorToggle && <div className="modal-trans-background"></div>}
       <div className="d-flex flex-column flex-xl-row position-relative">
         <Header />
-        <div className="w-100 h-100 position-relative">
-          {createToggle && 
-            <div onClick={() => SETTOGGLECREATEEDIT(false)}
-              className="trans-background"></div>
-          }
+        <div className="position-relative">
           {createToggle && <CreateOrEdit />}
+          {createToggle && 
+            <div onClick ={() => SETTOGGLECREATEEDIT(false)}
+              className="createoredit-trans-background">
+            </div>
+          }
           {viewerToggle ? <Viewer /> : <List />}
         </div>
       </div>

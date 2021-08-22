@@ -57,7 +57,7 @@ body {
 
 ::-webkit-scrollbar-track {
     margin-top: 9.2rem;
-    margin-bottom: 1.9rem;
+    margin-bottom: 4.5rem;
 }
 
 
@@ -70,9 +70,10 @@ body {
     cursor: pointer;
 }
 
-.trans-background {
+.createoredit-trans-background {
     background-color: $halftrans!important;
     width: 100%!important;
+    min-height: 59rem!important;
     height: 100%!important;
     position: absolute;
     z-index: 4!important;
