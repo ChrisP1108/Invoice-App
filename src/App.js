@@ -35,15 +35,17 @@ const App = () => {
       {deleteToggle && <div className="modal-trans-background"></div>}
       {errorToggle && <div className="modal-trans-background"></div>}
       <div className="d-flex flex-column flex-xl-row position-relative w-100">
-        <Header />
+        <Header /> 
+        <div className="d-flex w-100">
           {createToggle && <CreateOrEdit />}
           {createToggle && 
             <div onClick ={() => SETTOGGLECREATEEDIT(false)}
               className="createoredit-trans-background">
             </div>
           }
-        <div className="app-container">
-          {viewerToggle ? <Viewer /> : <List />}
+          <div className="app-container">
+            {viewerToggle ? <Viewer /> : <List />}
+          </div>
         </div>
       </div>
     </div>

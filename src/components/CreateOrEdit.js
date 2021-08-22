@@ -994,6 +994,9 @@ const CreateOrEdit = () => {
             <div className={`${response !== 'mobile' && createToggle 
                 ? `createoredit-trans-sideways-in` : `createoredit-trans-sideways-out`} 
                     createoredit-master-container position-relative w-100`}>
+                {response === 'desktop' && 
+                    <div className="createoredit-desktop-header-filler background-filler"></div>
+                }
                 <div className="createoredit-tab-container background-filler">
                     <div className="createoredit-container">
                         {backHeader()}
