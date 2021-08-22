@@ -122,11 +122,11 @@ const List = () => {
                             : response === 'mobile' ? `${list.length} invoices`
                             : `There are ${list.length} total invoices`}</h2>
                 </div>
-                <div className="col-7 ns f-ae pointer">
+                <div className="col-7 ns f-ae">
                     <div className="d-flex">
                         <div className="d-flex">
                             <div onClick={() => loadedEval() && list.length > 0 
-                                && setToggleFilter(!toggleFilter)} className="d-flex">
+                                && setToggleFilter(!toggleFilter)} className="d-flex pointer">
                                 <h3>{response === 'mobile' ? `Filter` : `Filter by status`}</h3>
                                 <div className="filter-container f-c">
                                     <div className={`${toggleFilter && `filter-arrow-clicked`} filter-arrow`}></div>
