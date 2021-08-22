@@ -26,7 +26,8 @@
           "name": "Website Redesign",
           "quantity": 1,
           "price": 14002.33,
-          "total": 14002.33
+          "total": 14002.33,
+          "id": 0
         }
       ],
       "total": 14002.33

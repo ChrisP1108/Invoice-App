@@ -51,6 +51,10 @@ body {
     position: relative!important;
     width: 100%!important;
     @media(min-width: 1200px) {
+        margin: 4.5rem 16.188rem 0 9.75rem!important;
+
+    }
+    @media(min-width: 1440px) {
         margin: 4.5rem 22.188rem 0 15.75rem!important;
 
     }
@@ -61,7 +65,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-    width: 0.5rem!important;     
+    width: 0.5rem!important;  
 }
 
 ::-webkit-scrollbar-track {
@@ -94,7 +98,7 @@ body {
     width: 100%!important;
     height: 100%!important;
     position: absolute;
-    z-index: 6!important;
+    z-index: 7!important;
     transition: .25s!important;
 }
 
