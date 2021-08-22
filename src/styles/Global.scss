@@ -51,6 +51,21 @@ body {
     min-height: 59rem!important;
 }
 
+::-webkit-scrollbar {
+    width: 0.5rem!important;     
+}
+
+::-webkit-scrollbar-track {
+    margin-top: 9.2rem;
+    margin-bottom: 1.9rem;
+}
+
+
+::-webkit-scrollbar-thumb {
+    border-radius: 0.25rem!important;
+    background: $d!important;
+}
+
 .pointer:hover {
     cursor: pointer;
 }
@@ -79,6 +94,10 @@ body {
 
 .w-10 {
     width: 10%!important;
+}
+
+.w-12 {
+    width: 12%!important;
 }
 
 .w-15 {
@@ -111,6 +130,10 @@ body {
 
 .w-50 {
     width:50%!important;
+}
+
+.r-1 {
+    width: 1rem!important;
 }
 
 .f {
@@ -160,13 +183,21 @@ body {
     position: absolute;
     transition: .25s;
     width: 100%!important;
-    height: 195.5vh!important;
+    height: 100%!important;
     z-index: -1;
+}
+
+.overflow-hidden {
+    overflow-y: hidden!important;
 }
 
 .night-mode {
     background-color: $l!important;
     transition: .25s;
+
+    ::-webkit-scrollbar-thumb {
+        background: $d!important;
+    }
 
     .background-filler {
         background-color: $l!important;
@@ -382,6 +413,10 @@ body {
 .day-mode {
     background-color: $k!important;
     transition: .25s;
+
+    ::-webkit-scrollbar-thumb {
+        background: $e!important;
+    }
 
     .background-filler {
         background-color: $k!important;

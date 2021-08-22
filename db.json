@@ -61,14 +61,14 @@
           "id": 0
         },
         {
-          "name": "Email Design",
-          "quantity": 2,
-          "price": 200,
-          "total": 400,
-          "id": 1
+          "id": 1,
+          "name": "Website Redesign",
+          "quantity": 3,
+          "price": 16,
+          "total": 48
         }
       ],
-      "total": 556
+      "total": 204
     },
     {
       "id": "RG0314",

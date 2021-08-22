@@ -23,19 +23,27 @@ const App = () => {
       : viewerToggle ? <Viewer /> : <List /> 
   }
 
+  const bodyScroller = document.body;
+
+  if (createToggle && response !== 'mobile') {
+    window.scrollTo(0, 0);
+    bodyScroller.style.overflow = 'hidden';
+  } else bodyScroller.style.overflow = 'auto';
+
   return (
     <div className={`${NIGHTMODE() ? 'night-mode' 
       : 'day-mode'} window-height w-100  h-100 position-relative`}>
       {TOGGLEERRORMODAL() && <ErrorModal />}
       {TOGGLEDELETEMODAL() && <DeleteModal />}
-      <div className="d-flex flex-column flex-xl-row">
+      <div className="d-flex flex-column flex-xl-row position-relative">
         <Header />
         <div className="w-100 h-100 position-relative">
-          {TOGGLECREATEEDIT() && 
-            <div className="background-createoredit-filler"></div>
+          {createToggle && 
+            <div onClick={() => SETTOGGLECREATEEDIT(false)}
+              className="trans-background"></div>
           }
-          {TOGGLECREATEEDIT() && <CreateOrEdit />}
-          {TOGGLEVIEWER() ? <Viewer /> : <List />}
+          {createToggle && <CreateOrEdit />}
+          {viewerToggle ? <Viewer /> : <List />}
         </div>
       </div>
     </div>

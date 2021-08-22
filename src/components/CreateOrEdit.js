@@ -7,9 +7,14 @@ import { INVOICE, SETINVOICE,
     MARKASPAIDINVOICE, SETTOGGLEDELETEMODAL, SETHTTPRES, HTTPRES, 
     TOGGLEERRORMODAL, SETTOGGLEERRORMODAL, SETTOGGLEVIEWER, 
     SETTOGGLECREATEEDIT, SAVECHANGESINVOICE, SAVEANDSENDINVOICE, 
-    SAVEASDRAFTINVOICE, UPDATEINVOICE, RESPONSIVE } from '../redux/Store.js';
+    SAVEASDRAFTINVOICE, UPDATEINVOICE, RESPONSIVE, TOGGLECREATEEDIT } from '../redux/Store.js';
 
 const CreateOrEdit = () => {
+
+    const idRef = INVOICE().id
+
+    let screenHeight = window.innerHeight + window.scrollY;
+    console.log(screenHeight)
 
     const response = RESPONSIVE();
 
@@ -226,7 +231,7 @@ const CreateOrEdit = () => {
     const title = () => {
         return (
             <div className="createoredit-title">
-                {INVOICE().id === undefined ?
+                {idRef === undefined ?
                     <h1>New Invoice</h1>
                     : <h1>Edit <span>#</span>{invoiceEdit.id}</h1>
                 }
@@ -334,17 +339,76 @@ const CreateOrEdit = () => {
         const itemTotal = (item.quantity * item.price).toFixed(2);
 
         return (
+            <div key={item.id} className="createoredit-trans-item d-flex">
+                <div className="createoredit-item-row-container w-45">
+                    <input 
+                        type="text"
+                        name={`item.name(${item.id})`}
+                        value={item.name}
+                        onChange={(e) => formStateUpdate(e.target.name, e.target.value, item.id)}                            
+                        className={errorStylingEval(item.name) 
+                            ? `createoredit-field-error` : `createoredit-field`}> 
+                    </input>
+                </div>
+                <div className="r-1"></div>
+                <div className="createoredit-item-row-container w-15">
+                    <input 
+                        type="number"
+                        name={`item.quantity(${item.id})`}
+                        value={item.quantity}
+                        onChange={(e) => formStateUpdate(e.target.name, e.target.value, item.id)}
+                        className={errorStylingEval(item.quantity)  
+                            ? `createoredit-field-error` : `createoredit-field`}> 
+                    </input>
+                </div>
+                <div className="r-1"></div>
+                <div className="createoredit-item-row-container w-20">
+                    <input 
+                        type="number"
+                        name={`item.price(${item.id})`}
+                        value={item.price.toFixed(2)}
+                        onChange={(e) => formStateUpdate(e.target.name, e.target.value, item.id)}
+                        className={errorStylingEval(item.price) 
+                        ? `createoredit-field-error` : `createoredit-field`}> 
+                    </input>
+                </div>
+                <div className="r-1"></div>
+                    <div className="createoredit-item-row-container w-20">
+                        <div className="createoredit-item-total">
+                            <h4><span>{itemTotal}</span></h4>
+                            <div className="position-relative">
+                                <div>
+                                    <div className="createoredit-item-trash-icon"></div>
+                                <div 
+                                    onClick={() => {formStateUpdate('deleteItem', item, item.id);
+                                        setItemClicked(false)}}
+                                    className="createoredit-item-trash-filler pointer">         
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="createoredit-item-separation-margin"></div>
+            </div>
+        )
+    });
+
+    const itemsMappingMobile = invoiceEdit.items.map(item => {
+
+        const itemTotal = (item.quantity * item.price).toFixed(2);
+
+        return (
             <div key={item.id} className="createoredit-trans-item">
                 <div className="createoredit-form-row-full-container f-clb">
                     <div className="f-sb">
                         <h4 className={errorStylingEval(item.name) 
                                 && `createoredit-error-highlight`}>Item Name</h4>
                         {errorStylingEval(item.name) 
-                            && <p>can't be empty</p>}
+                            && <p className="d-md-none">can't be empty</p>}
                     </div>
                     <input 
                         type="text"
-                        name="item.name"
+                        name={`item.name(${item.id})`}
                         value={item.name}
                         onChange={(e) => formStateUpdate(e.target.name, e.target.value, item.id)}                            
                         className={errorStylingEval(item.name) 
@@ -353,15 +417,15 @@ const CreateOrEdit = () => {
                 </div>
                 <div className="d-flex">
                     <div className="createoredit-form-row-full-container f-clb">
-                    <div className="f-sb">
+                    <div className="f-sb d-md-none">
                         <h4 className={errorStylingEval(item.quantity) 
                                 && `createoredit-error-highlight`}>Qty.</h4>
                         {errorStylingEval(item.quantity) 
-                            && <p>can't be 0</p>}
+                            && <p className="d-md-none">can't be 0</p>}
                     </div>
                         <input 
                             type="number"
-                            name="item.quantity"
+                            name={`item.quantity(${item.id})`}
                             value={item.quantity}
                             onChange={(e) => formStateUpdate(e.target.name, e.target.value, item.id)}
                             className={errorStylingEval(item.quantity)  
@@ -370,15 +434,15 @@ const CreateOrEdit = () => {
                     </div>
                     <div className="createoredit-column-gap"></div>
                     <div className="createoredit-form-row-full-container f-clb">
-                        <div className="f-sb">
+                        <div className="f-sb d-md-none">
                             <h4 className={errorStylingEval(item.price) 
                                 && `createoredit-error-highlight`}>Price</h4>
                             {errorStylingEval(item.price)
-                            && <p>can't be 0</p>}
+                            && <p className="d-md-none">can't be 0</p>}
                         </div>
                         <input 
                             type="number"
-                            name="item.price"
+                            name={`item.price(${item.id})`}
                             value={item.price.toFixed(2)}
                             onChange={(e) => formStateUpdate(e.target.name, e.target.value, item.id)}
                             className={errorStylingEval(item.price) 
@@ -387,7 +451,7 @@ const CreateOrEdit = () => {
                     </div>
                     <div className="createoredit-column-gap"></div>
                     <div className="createoredit-form-row-full-container f-clb">
-                        <h4>Total</h4>
+                        <h4 className="d-md-none">Total</h4>
                         <div className="createoredit-item-total">
                             <h4><span>{itemTotal}</span></h4>
                             <div className="position-relative">
@@ -439,6 +503,7 @@ const CreateOrEdit = () => {
             : data.yearTally, data.monthTally - 1, 0).getDate();
         const startingDayOfWeek = new Date(data.yearTally, data.monthTally, 1).getDay();
         let numbersTally = 0;
+        let currentMonthAdjust = 1;
         const prevNumbersArray = [];
         const numbersArray = [];
         const postNumbersArray = [];
@@ -450,13 +515,20 @@ const CreateOrEdit = () => {
                 numbersTally += 1;
             }
         }
-        for (let j = 1; j <= daysInMonth; j++) {
-            numbersArray.push(j);
+        if (calState.totalTally === 0) {
+            for (let j = 1; j <= day - 1; j++) {
+                prevNumbersArray.push(j);
+                numbersTally += 1;
+            }
+            currentMonthAdjust = day;
+        }
+        for (let k = currentMonthAdjust; k <= daysInMonth; k++) {
+            numbersArray.push(k);
             numbersTally += 1;
         }
         if (numbersTally < 42) {
-            for (let k = 1; numbersTally < 42; k++) {
-                postNumbersArray.push(k);
+            for (let l = 1; numbersTally < 42; l++) {
+                postNumbersArray.push(l);
                 numbersTally += 1;
             }
         }
@@ -521,7 +593,8 @@ const CreateOrEdit = () => {
                 <div className="createoredit-calendar-inner-main-container f-sb flex-column">
                     <div className="createoredit-calendar-inner-top-container">  
                         <div className="f-ca">
-                            <div className="createoredit-calendar-left-arrow position-relative">
+                            <div className={calState.totalTally !== 0 
+                                    &&`createoredit-calendar-left-arrow position-relative`}>
                                 <div onClick={() => calendarDateGenerator('-')}
                                     className="createoredit-calendar-arrow-left-filler pointer"></div>
                             </div>
@@ -769,9 +842,8 @@ const CreateOrEdit = () => {
                     </div>
                 }
                 <div className="createoredit-invoice-top-gap"></div>
-
                 <div className="d-md-flex">
-                    <div className={`${INVOICE().id === undefined || INVOICE().status === 'draft' ? `d-none` : ``} createoredit-form-row-full-container 
+                    <div className={`${idRef === undefined || INVOICE().status === 'draft' ? `d-none` : ``} createoredit-form-row-full-container 
                         createoredit-invoice-disabled f-clb`}>
                         <h4>Invoice Date</h4>
                         <div className="createoredit-date-disabled f-sb">
@@ -779,7 +851,7 @@ const CreateOrEdit = () => {
                             <div className="createoredit-calendar-icon"></div>
                         </div>   
                     </div>
-                    <div className={`${INVOICE().id !== undefined && INVOICE().status !== 'draft' ? `d-none` : ``} 
+                    <div className={`${idRef !== undefined && INVOICE().status !== 'draft' ? `d-none` : ``} 
                             createoredit-form-row-full-container f-clb position-relative`}>
                         <div className="f-sb">
                             <h4 className={errorStylingEval(invoiceEdit.createdAt) 
@@ -846,8 +918,27 @@ const CreateOrEdit = () => {
                 </div>
                 <div className="createoredit-item-list-container">
                     <h5>Item List</h5>
-                    {itemsMapping}
+                    {response !== 'mobile' && 
+                        <div className="d-flex createoredit-item-list-gap">
+                            <div className="w-45">
+                                <h4>Item Name</h4>
+                            </div>
+                            <div className="r-1"></div>
+                            <div className="w-15">
+                                <h4>Qty.</h4>
+                            </div>
+                            <div className="r-1"></div>
+                            <div className="w-20">
+                                <h4>Price</h4>
+                            </div>
+                            <div className="r-1"></div>
+                            <div className="w-20">
+                                <h4>Total</h4>
+                            </div>
+                        </div>
+                    }
                 </div>
+                {response === 'mobile' ? itemsMappingMobile : itemsMapping}
                 <div 
                     onClick={() => {formStateUpdate('addItem', null, invoiceEdit.items.length);
                                     setItemClicked(true);}}
@@ -856,7 +947,7 @@ const CreateOrEdit = () => {
                         ${itemClicked && `d-none`} createoredit-item-add-button pointer f-c`}>
                     <h4>+ Add New Item</h4>
                 </div>
-                <div className="createoredit-bottom-filler">
+                <div className={response === 'mobile' && `createoredit-bottom-filler`}>
                     <div className="createoredit-bottom-filler-error-text f-clb">
                         <p className={!emptyFields && `d-none`}>- All fields must be added</p>
                         <p className={!emptyItems && `d-none`}>- An item must be added</p>
@@ -868,31 +959,33 @@ const CreateOrEdit = () => {
 
     const footerButtons = () => { 
         return (
-            <div className={response === 'mobile' ? `createoredit-footer-outer-container f-c` : `d-none`}>
-                <div className="createoredit-footer-inner-container f-e f-c">
+            <div className="createoredit-footer-outer-container f-c">
+                <div className={`${response !== 'mobile' && idRef !== undefined ? `f-e f-sb` : `f-sb`} createoredit-footer-inner-container`}> 
                     <div onClick={() => SETTOGGLECREATEEDIT(false)}
-                        className={`${INVOICE().id === undefined && `d-none`} createoredit-cancel-button-container f-c pointer`}>
-                            <h3>Cancel</h3>
-                    </div>
-                    <div onClick={() => SETTOGGLECREATEEDIT(false)}
-                        className={`${INVOICE().id !== undefined && `d-none`} createoredit-cancel-button-container f-c pointer`}>
+                        className={`${idRef !== undefined && `d-none`} createoredit-cancel-button-container f-c pointer`}>
                             <h3>Discard</h3>
                     </div>
-                    <div className={`${INVOICE().id !== undefined && `d-none`} createoredit-footer-button-gap`}></div>
-                    <div onClick={() => saveAndSendInvoiceToggle(false)}
-                        className={`${INVOICE().id !== undefined && `d-none`} createoredit-saveasdraft-button-container f-c pointer`}>
-                            {draftSpinner ? <ButtonReqSpinner /> : <h3>Save as Draft</h3>}
-                    </div>
-                    <div className="createoredit-footer-button-gap"></div>
-                    <div onClick={() => saveChangesInvoiceToggle()}
-                        className={`${INVOICE().id === undefined && `d-none`} 
-                            createoredit-savechanges-button-container f-c pointer position-relative`}>
-                        {saveChangeSpinner ? <ButtonReqSpinner /> : <h3>Save Changes</h3>}
-                    </div>
-                    <div onClick={() => saveAndSendInvoiceToggle(true)}
-                        className={`${INVOICE().id !== undefined && `d-none`} 
-                            createoredit-saveandsend-button-container f-c pointer`}>
-                        {saveSendSpinner ? <ButtonReqSpinner /> : <h3>Save & Send</h3>}
+                    <div className="d-flex">
+                        <div onClick={() => SETTOGGLECREATEEDIT(false)}
+                            className={`${idRef === undefined && `d-none`} createoredit-cancel-button-container f-c pointer`}>
+                                <h3>Cancel</h3>
+                        </div>
+                        <div className={`${idRef !== undefined && `d-none`} createoredit-footer-button-gap`}></div>
+                        <div onClick={() => saveAndSendInvoiceToggle(false)}
+                            className={`${idRef !== undefined && `d-none`} createoredit-saveasdraft-button-container f-c pointer`}>
+                                {draftSpinner ? <ButtonReqSpinner /> : <h3>Save as Draft</h3>}
+                        </div>
+                        <div className="createoredit-footer-button-gap"></div>
+                        <div onClick={() => saveChangesInvoiceToggle()}
+                            className={`${idRef === undefined && `d-none`} 
+                                createoredit-savechanges-button-container f-c pointer position-relative`}>
+                            {saveChangeSpinner ? <ButtonReqSpinner /> : <h3>Save Changes</h3>}
+                        </div>
+                        <div onClick={() => saveAndSendInvoiceToggle(true)}
+                            className={`${idRef !== undefined && `d-none`} 
+                                createoredit-saveandsend-button-container f-c pointer`}>
+                            {saveSendSpinner ? <ButtonReqSpinner /> : <h3>Save & Send</h3>}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -901,21 +994,20 @@ const CreateOrEdit = () => {
 
     return (
         <div id="createoredit">
-            {response !== 'mobile' && 
-                <div onClick={() => SETTOGGLECREATEEDIT(false)}
-                    className="trans-background"></div>
-            } 
-            <div className="createoredit-master-container">
+            <div className={`${response !== 'mobile' && TOGGLECREATEEDIT() 
+                ? `createoredit-trans-sideways-in` : ``} 
+                    createoredit-master-container position-relative`}>
                 <div className="createoredit-tab-container background-filler">
                     <div className="createoredit-container">
                         {backHeader()}
-                        <div className="createoredit-transition">
+                        <div className={response === 'mobile' && `createoredit-transition`}>
                             {title()}
                             {formBody()}
                         </div>
-                    </div>
-                    {footerButtons()}
+                    </div>  
                 </div>
+                <div className="createoredit-scroller-side-filler background-filler"></div>
+                {footerButtons()}     
             </div>
         </div>
     )
