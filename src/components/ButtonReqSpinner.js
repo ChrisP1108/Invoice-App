@@ -1,5 +1,3 @@
-import React from 'react'
-
 const ButtonReqSpinner = () => {
     return (
         <div id="buttonReqSpinner" className="position-absolute f-c">

@@ -2,7 +2,7 @@ import Loading from './Loading';
 import Invoices from './List_Invoices';
 import { SETTOGGLECREATEEDIT, INVOICELIST, 
     SETINVOICE, RESPONSIVE } from '../redux/Store.js';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { filterItems } from '../Arrays/Filters';
 
 const List_Main = () => {

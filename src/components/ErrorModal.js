@@ -1,5 +1,5 @@
-import { SETTOGGLEERRORMODAL, TOGGLEVIEWER, 
-    TOGGLECREATEEDIT, RESPONSIVE } from '../redux/Store.js';
+import { SETTOGGLEERRORMODAL, TOGGLECREATEEDIT, 
+    RESPONSIVE } from '../redux/Store.js';
 
 const ErrorModal = () => {
 

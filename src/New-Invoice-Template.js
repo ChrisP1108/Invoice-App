@@ -21,6 +21,7 @@ export const NewInvoiceTemplate = {
     },
     items: [
         {
+            id: 0,
             name: "",
             quantity: 0,
             price: 0,
@@ -32,7 +33,7 @@ export const NewInvoiceTemplate = {
 
 export const ItemAddSchema = 
     {
-        id: null,
+        id: 0,
         name: "",
         quantity: 0,
         price: 0,

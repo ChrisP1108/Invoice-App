@@ -1,16 +1,14 @@
 import ButtonReqSpinner from './ButtonReqSpinner';
-import CreateOrEdit_Saving from './CreateOrEdit_Saving';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { optionTerms } from '../Arrays/Options';
 import { monthsArray } from '../Arrays/Months';
 import { NewInvoiceTemplate, ItemAddSchema } from '../New-Invoice-Template';
 import { INVOICE, SETINVOICE,
-    MARKASPAIDINVOICE, SETTOGGLEDELETEMODAL, SETHTTPRES, HTTPRES, 
-    TOGGLEERRORMODAL, SETTOGGLEERRORMODAL, SETTOGGLEVIEWER, 
+    SETHTTPRES, HTTPRES, SETTOGGLEERRORMODAL, 
     SETTOGGLECREATEEDIT, SAVECHANGESINVOICE, SAVEANDSENDINVOICE, 
-    SAVEASDRAFTINVOICE, UPDATEINVOICE, RESPONSIVE, TOGGLECREATEEDIT } from '../redux/Store.js';
+    SAVEASDRAFTINVOICE, RESPONSIVE, TOGGLECREATEEDIT } from '../redux/Store.js';
 
-const CreateOrEdit_Main = () => {
+const CreateOrEdit = () => {
 
     const idRef = INVOICE().id
     const createToggle = TOGGLECREATEEDIT();
@@ -71,96 +69,92 @@ const CreateOrEdit_Main = () => {
         return itemPass && fieldPass ? true : false;
     }
 
-    // if (HTTPRES() === "Save Changes Request Failed") {
-    //     setTimeout(() => {
-    //         SETTOGGLEERRORMODAL(true);
-    //         setSaveChangeSpinner(false);
-    //     }, 500);
-    // } 
-    // if (HTTPRES() === "Save Changes Request Fulfilled") {
-    //     setTimeout(() => {
-    //         setSaveChangeSpinner(false);
-    //         SETINVOICE({...invoiceEdit, status: 'pending'});
-    //         SETTOGGLECREATEEDIT(false);
-    //     }, 500); 
-    // }
-    // if (HTTPRES() === "Save & Send Invoice Request Failed") {
-    //     setTimeout(() => {
-    //         SETTOGGLEERRORMODAL(true);
-    //         setSaveSendSpinner(false);
-    //     }, 500);
-    // } 
-    // if (HTTPRES() === "Save & Send Invoice Request Fulfilled") {
-    //     setTimeout(() => {
-    //         setSaveSendSpinner(false);
-    //         SETTOGGLECREATEEDIT(false);
-    //         setInvoiceEdit({...invoiceEdit, status: 'pending'})
-    //     }, 500); 
-    // }
-    // if (HTTPRES() === "Add Draft Invoice Request Failed") {
-    //     setTimeout(() => {
-    //         SETTOGGLEERRORMODAL(true);
-    //         setDraftSpinner(false);
-    //     }, 500);
-    // } 
-    // if (HTTPRES() === "Add Draft Invoice Request Fulfilled") {
-    //     setTimeout(() => {
-    //         setDraftSpinner(false);
-    //         SETTOGGLECREATEEDIT(false);
-    //         setInvoiceEdit({...invoiceEdit, status: 'draft'});
-    //     }, 500); 
-    // }
+    if (HTTPRES() === "Save Changes Request Failed") {
+        setTimeout(() => {
+            SETTOGGLEERRORMODAL(true);
+            setSaveChangeSpinner(false);
+        }, 500);
+    } 
+    if (HTTPRES() === "Save Changes Request Fulfilled") {
+        setTimeout(() => {
+            setSaveChangeSpinner(false);
+            SETINVOICE({...invoiceEdit, status: 'pending'});
+            SETTOGGLECREATEEDIT(false);
+        }, 500); 
+    }
+    if (HTTPRES() === "Save & Send Invoice Request Failed") {
+        setTimeout(() => {
+            SETTOGGLEERRORMODAL(true);
+            setSaveSendSpinner(false);
+        }, 500);
+    } 
+    if (HTTPRES() === "Save & Send Invoice Request Fulfilled") {
+        setTimeout(() => {
+            setSaveSendSpinner(false);
+            SETTOGGLECREATEEDIT(false);
+            setInvoiceEdit({...invoiceEdit, status: 'pending'})
+        }, 500); 
+    }
+    if (HTTPRES() === "Add Draft Invoice Request Failed") {
+        setTimeout(() => {
+            SETTOGGLEERRORMODAL(true);
+            setDraftSpinner(false);
+        }, 500);
+    } 
+    if (HTTPRES() === "Add Draft Invoice Request Fulfilled") {
+        setTimeout(() => {
+            setDraftSpinner(false);
+            SETTOGGLECREATEEDIT(false);
+            setInvoiceEdit({...invoiceEdit, status: 'draft'});
+        }, 500); 
+    }
 
-    // const grandTotalTally = (input) => {
-    //     let grandTotal = 0;
-    //     input.items.forEach(item => {
-    //         const amount = item.price * item.quantity;
-    //         item.total = amount;
-    //         grandTotal += amount;
-    //     });
-    //     input.total = grandTotal;
-    //     return input;
-    // }
+    const grandTotalTally = (input) => {
+        let grandTotal = 0;
+        input.items.forEach(item => {
+            const amount = item.price * item.quantity;
+            item.total = amount;
+            grandTotal += amount;
+        });
+        input.total = grandTotal;
+        return input;
+    }
 
-    // const saveChangesInvoiceToggle = () => {
-    //     const output = grandTotalTally(invoiceEdit);
-    //     fieldsEval();
-    //     if (fieldsEval()) {
-    //         setSaveChangeSpinner(true);
-    //         SETHTTPRES("Save Changes Request Pending");
-    //         SAVECHANGESINVOICE(output);
-    //     } else console.log("Fields & Or Items Are Empty");
-    // }
+    const saveChangesInvoiceToggle = () => {
+        const output = grandTotalTally(invoiceEdit);
+        fieldsEval();
+        if (fieldsEval()) {
+            setSaveChangeSpinner(true);
+            SETHTTPRES("Save Changes Request Pending");
+            SAVECHANGESINVOICE(output);
+        } else console.log("Fields & Or Items Are Empty");
+    }
 
-    // const saveAndSendInvoiceInitiate = (type) => {
-    //     const output = grandTotalTally(invoiceEdit);
-    //     if (type === 'Save') {
-    //         setSaveSendSpinner(true);
-    //         SETHTTPRES("Save & Send Invoice Request Pending");
-    //         SAVEANDSENDINVOICE(output);
-    //     } else if (type === 'Draft') {
-    //         setDraftSpinner(true);
-    //         SETHTTPRES("Add Draft Invoice Request Pending");
-    //         SAVEASDRAFTINVOICE(output);
-    //     }
-    // }
+    const saveAndSendInvoiceInitiate = (type) => {
+        const output = grandTotalTally(invoiceEdit);
+        if (type === 'Save') {
+            setSaveSendSpinner(true);
+            SETHTTPRES("Save & Send Invoice Request Pending");
+            SAVEANDSENDINVOICE(output);
+        } else if (type === 'Draft') {
+            setDraftSpinner(true);
+            SETHTTPRES("Add Draft Invoice Request Pending");
+            SAVEASDRAFTINVOICE(output);
+        }
+    }
 
-    // const saveAndSendInvoiceToggle = (evalFields) => {
-    //     if (evalFields) {
-    //         fieldsEval();
-    //         if (fieldsEval()) {
-    //             saveAndSendInvoiceInitiate('Save');
-    //         } else console.log("Fields & Or Items Are Empty");
-    //     } else {
-    //         saveAndSendInvoiceInitiate('Draft');
-    //     }     
-    // }
+    const saveAndSendInvoiceToggle = (evalFields) => {
+        if (evalFields) {
+            fieldsEval();
+            if (fieldsEval()) {
+                saveAndSendInvoiceInitiate('Save');
+            } else console.log("Fields & Or Items Are Empty");
+        } else {
+            saveAndSendInvoiceInitiate('Draft');
+        }     
+    }
 
     const input = INVOICE().id === undefined ? NewInvoiceTemplate : INVOICE();
-
-    useEffect(() => {
-        SETINVOICE(input);
-    })
 
     const randomIdGenerator = () => {  
         let alphabet;
@@ -204,10 +198,11 @@ const CreateOrEdit_Main = () => {
     const [emptyItems, setEmptyItems] = useState(false);
     const [toggleCalendar, setToggleCalendar] = useState(false);
     const [calState, setCalState] = useState(calStartingState);
-    // const [saveChangeSpinner, setSaveChangeSpinner] = useState(false);
-    // const [draftSpinner, setDraftSpinner] = useState(false);
-    // const [saveSendSpinner, setSaveSendSpinner] = useState(false);
+    const [saveChangeSpinner, setSaveChangeSpinner] = useState(false);
+    const [draftSpinner, setDraftSpinner] = useState(false);
+    const [saveSendSpinner, setSaveSendSpinner] = useState(false);
     const [itemClicked, setItemClicked] = useState(false);
+    const [idTally, setIdTally] = useState(1);
 
     invoiceEdit.id === '' && setInvoiceEdit({...invoiceEdit, id: newInvoiceId});
 
@@ -240,6 +235,7 @@ const CreateOrEdit_Main = () => {
             </div>
         )
     }
+
 
     const formStateUpdate = (type, value, id) => {
         let data = invoiceEdit;
@@ -301,14 +297,19 @@ const CreateOrEdit_Main = () => {
                 if (data.items.length == 1) {
                     break;
                 }
+                setIdTally(idTally - 1);
                 data.items.splice(index, 1)
-                console.log(data);
                 break;
             case 'addItem':
                 const newItem = ItemAddSchema;
-                const id = index;
-                newItem.id = id;
+                newItem.id = idTally;
+                setIdTally(idTally + 1);
                 data.items.push(newItem);
+                break;
+            case 'discard':
+                setInvoiceEdit(NewInvoiceTemplate);
+                data = NewInvoiceTemplate;
+                break;
             default:
                 break;
         }
@@ -340,14 +341,16 @@ const CreateOrEdit_Main = () => {
 
         const itemTotal = (item.quantity * item.price).toFixed(2);
 
+        const index = invoiceEdit.items.indexOf(item);
+
         return (
             <div key={item.id} className="createoredit-trans-item d-flex">
                 <div className="createoredit-item-row-container w-45">
                     <input 
                         type="text"
-                        name={`item.name(${item.id})`}
+                        name='item.name'
                         value={item.name}
-                        onChange={(e) => formStateUpdate(e.target.name, e.target.value, item.id)}                            
+                        onChange={(e) => formStateUpdate(e.target.name, e.target.value, index)}                            
                         className={errorStylingEval(item.name) 
                             ? `createoredit-field-error` : `createoredit-field`}> 
                     </input>
@@ -356,9 +359,9 @@ const CreateOrEdit_Main = () => {
                 <div className="createoredit-item-row-container w-15">
                     <input 
                         type="number"
-                        name={`item.quantity(${item.id})`}
+                        name='item.quantity'
                         value={item.quantity}
-                        onChange={(e) => formStateUpdate(e.target.name, e.target.value, item.id)}
+                        onChange={(e) => formStateUpdate(e.target.name, e.target.value, index)}
                         className={errorStylingEval(item.quantity)  
                             ? `createoredit-field-error` : `createoredit-field`}> 
                     </input>
@@ -367,9 +370,9 @@ const CreateOrEdit_Main = () => {
                 <div className="createoredit-item-row-container w-20">
                     <input 
                         type="number"
-                        name={`item.price(${item.id})`}
+                        name='item.price'
                         value={item.price.toFixed(2)}
-                        onChange={(e) => formStateUpdate(e.target.name, e.target.value, item.id)}
+                        onChange={(e) => formStateUpdate(e.target.name, e.target.value, index)}
                         className={errorStylingEval(item.price) 
                         ? `createoredit-field-error` : `createoredit-field`}> 
                     </input>
@@ -381,7 +384,7 @@ const CreateOrEdit_Main = () => {
                             <div className="position-relative">
                                 <div>
                                 <div 
-                                    onClick={() => {formStateUpdate('deleteItem', item, item.id);
+                                    onClick={() => {formStateUpdate('deleteItem', item, index);
                                         setItemClicked(false)}}
                                     className="createoredit-item-trash-filler pointer f-c">
                                         <div className="createoredit-item-trash-icon"></div>         
@@ -399,6 +402,8 @@ const CreateOrEdit_Main = () => {
 
         const itemTotal = (item.quantity * item.price).toFixed(2);
 
+        const index = invoiceEdit.items.indexOf(item);
+
         return (
             <div key={item.id} className="createoredit-trans-item">
                 <div className="createoredit-form-row-full-container f-clb">
@@ -410,7 +415,7 @@ const CreateOrEdit_Main = () => {
                     </div>
                     <input 
                         type="text"
-                        name={`item.name(${item.id})`}
+                        name='item.name'
                         value={item.name}
                         onChange={(e) => formStateUpdate(e.target.name, e.target.value, item.id)}                            
                         className={errorStylingEval(item.name) 
@@ -427,7 +432,7 @@ const CreateOrEdit_Main = () => {
                     </div>
                         <input 
                             type="number"
-                            name={`item.quantity(${item.id})`}
+                            name='item.quantity'
                             value={item.quantity}
                             onChange={(e) => formStateUpdate(e.target.name, e.target.value, item.id)}
                             className={errorStylingEval(item.quantity)  
@@ -444,7 +449,7 @@ const CreateOrEdit_Main = () => {
                         </div>
                         <input 
                             type="number"
-                            name={`item.price(${item.id})`}
+                            name='item.price'
                             value={item.price.toFixed(2)}
                             onChange={(e) => formStateUpdate(e.target.name, e.target.value, item.id)}
                             className={errorStylingEval(item.price) 
@@ -942,14 +947,14 @@ const CreateOrEdit_Main = () => {
                 </div>
                 {response === 'mobile' ? itemsMappingMobile : itemsMapping}
                 <div 
-                    onClick={() => {formStateUpdate('addItem', null, invoiceEdit.items.length);
+                    onClick={() => {formStateUpdate('addItem', null, idTally);
                                     setItemClicked(true);}}
                     className={`${invoiceEdit.items.length === 0 
                         && `createoredit-item-empty-button-gap`} 
-                        ${itemClicked && `d-none`} createoredit-item-add-button pointer f-c`}>
+                        ${itemClicked || invoiceEdit.items.length > 1 ? `d-none` : ``} createoredit-item-add-button pointer f-c`}>
                     <h4>+ Add New Item</h4>
                 </div>
-                <div className={response === 'mobile' && `createoredit-bottom-filler`}>
+                <div className={response === 'mobile' || itemClicked ? `createoredit-bottom-filler` : ``}>
                     <div className="createoredit-bottom-filler-error-text f-clb">
                         <p className={!emptyFields && `d-none`}>- All fields must be added</p>
                         <p className={!emptyItems && `d-none`}>- An item must be added</p>
@@ -963,7 +968,7 @@ const CreateOrEdit_Main = () => {
         return (
             <div className="createoredit-footer-outer-container f-c">
                 <div className={`${idRef !== undefined ? `f-e f-sb` : `f-sb`} createoredit-footer-inner-container`}> 
-                    <div onClick={() => SETTOGGLECREATEEDIT(false)}
+                    <div onClick={() => {formStateUpdate('discard'); SETTOGGLECREATEEDIT(false)}}
                         className={`${idRef !== undefined && `d-none`} createoredit-discard-button-container f-c pointer`}>
                             <h3>Discard</h3>
                     </div>
@@ -1018,4 +1023,4 @@ const CreateOrEdit_Main = () => {
     )
 }
 
-export default CreateOrEdit_Main
+export default CreateOrEdit

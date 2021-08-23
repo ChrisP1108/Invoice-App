@@ -1,4 +1,4 @@
-import CreateOrEdit from './components/CreateOrEdit_Main';
+import CreateOrEdit from './components/CreateOrEdit';
 import Header from './components/Header';
 import List_Main from './components/List_Main';
 import ErrorModal from './components/ErrorModal';
@@ -7,8 +7,7 @@ import DeleteModal from './components/DeleteModal';
 import './App.scss';
 import { NIGHTMODE, 
   TOGGLEVIEWER, TOGGLECREATEEDIT, TOGGLEDELETEMODAL,
-  TOGGLEERRORMODAL, SETTOGGLEERRORMODAL, SETTOGGLEDELETEMODAL, 
-  SETTOGGLEVIEWER, SETTOGGLECREATEEDIT, HTTPRES, RESPONSIVE } from './redux/Store.js';
+  TOGGLEERRORMODAL, SETTOGGLECREATEEDIT, RESPONSIVE } from './redux/Store.js';
 
 
 const App = () => {

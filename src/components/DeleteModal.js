@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ButtonReqSpinner from './ButtonReqSpinner';
 import { INVOICE, SETTOGGLEVIEWER, SETTOGGLEDELETEMODAL, 
-    DELETEINVOICE, HTTPRES, SETHTTPRES, SETTOGGLEERRORMODAL,
-    SETTOGGLECREATEEDIT, TOGGLECREATEEDIT, INVOICELIST, RESPONSIVE } from '../redux/Store.js';
+    DELETEINVOICE, HTTPRES, SETHTTPRES, 
+    SETTOGGLEERRORMODAL } from '../redux/Store.js';
 
 const DeleteModal = () => {
 

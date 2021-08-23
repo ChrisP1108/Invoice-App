@@ -2,9 +2,9 @@ import { monthsArray } from '../Arrays/Months';
 import ButtonReqSpinner from './ButtonReqSpinner';
 
 import { useState } from 'react';
-import { INVOICE, INVOICELIST, MARKASPAIDINVOICE, SETTOGGLEDELETEMODAL, 
-    SETTOGGLEVIEWER, SETTOGGLECREATEEDIT, UPDATEINVOICE,
-    HTTPRES, SETHTTPRES, SETTOGGLEERRORMODAL, RESPONSIVE } from '../redux/Store.js';
+import { INVOICE, MARKASPAIDINVOICE, SETTOGGLEDELETEMODAL, 
+    SETTOGGLEVIEWER, SETTOGGLECREATEEDIT, HTTPRES, SETHTTPRES, 
+    SETTOGGLEERRORMODAL, RESPONSIVE } from '../redux/Store.js';
 
 const Viewer = () => {
 
