@@ -372,7 +372,7 @@ const Viewer = () => {
     }
 
     return (
-        <div id="viewer" className="background-filler">
+        <div id="viewer" className="d-flex flex-column">
             <div className="viewer-container">
                 {backHeader()} 
                 <div className="viewer-transition">  

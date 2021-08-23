@@ -1,10 +1,14 @@
 import { SETTOGGLEERRORMODAL, TOGGLEVIEWER, 
-    TOGGLECREATEEDIT } from '../redux/Store.js';
+    TOGGLECREATEEDIT, RESPONSIVE } from '../redux/Store.js';
 
 const ErrorModal = () => {
 
+    const response = RESPONSIVE();
+    const createoredit = TOGGLECREATEEDIT();
+
     return (
-        <div id="errorModal" className="d-flex">
+        <div id="errorModal" className="d-flex" 
+            style={{ top: response === 'mobile' && createoredit ? '133%' : '50%'}}>
             <div className="error-modal-page-container f-c error-fill-transition">
                 <div className="error-modal-outer-container error-modal-transition">
                     <div className="error-modal-inner-container">

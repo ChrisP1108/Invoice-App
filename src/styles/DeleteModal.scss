@@ -5,9 +5,8 @@
     top: 50%;
     transform: translateY(-50%)!important;
 
-    .delete-modal-page-container {
-        transition: .25s!important;
-        width: 100%;
+    .delete-modal-createoredit-mobile-offset {
+        top: 150rem!important
     }
     .delete-fill-transition {
         animation-name: delete-modal-trans-in;

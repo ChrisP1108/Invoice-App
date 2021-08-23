@@ -1,9 +1,8 @@
 #errorModal {
     position: absolute!important;
     z-index: 9!important;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%)!important;
+    width: 100%!important;
+    transform: translateY(-50%);
 
     .error-modal-page-container {
         transition: .25s!important;
@@ -109,6 +108,9 @@
 }
 
 @media(min-width: 768px) {
+    #errorModal {
+        top: 50%;
+    }
     .error-modal {
         &-outer-container {
             margin: 1.5rem!important;

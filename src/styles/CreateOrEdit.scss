@@ -301,8 +301,14 @@
             position: absolute;
             width: 2.75rem!important;
             height: 2.75rem!important;
-            left: -.95rem!important;
-            top: -0.78rem!important;
+            left: -1.85rem!important;
+            top: -1.4rem!important;
+            transition: 0.25s;
+        }
+        &-item-trash-filler:hover {
+            .createoredit-item-trash-icon {
+                background-image: url(../assets/icon-delete-hover.svg)!important;
+            }
         }
         &-item-add-button {
             height: 3rem!important;
@@ -355,6 +361,11 @@
             width: 0.5rem!important;
         }
         &-cancel-button-container {
+            border-radius: 1.513rem!important;
+            width: 6rem!important;
+            height: 3rem!important;
+        }
+        &-discard-button-container {
             border-radius: 1.513rem!important;
             width: 6rem!important;
             height: 3rem!important;
@@ -507,7 +518,6 @@
             &-tab-container {
                 height: 88vh!important;
                 width: 94.75%!important;
-                padding-bottom: 5vh!important;
                 position: absolute;
                 overflow-y: scroll;
                 top: 0rem!important;

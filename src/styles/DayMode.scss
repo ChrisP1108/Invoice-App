@@ -86,6 +86,9 @@
         .list-filter-modal-selected h3 {
             color: $z!important;
         }
+        h3 {
+            font-weight: 800!important;
+        }
     }
     .viewer-status-outer-container {
         transition: .25s;
@@ -100,10 +103,20 @@
         background-color: $u;
     }
     #viewer {
+        h2 {
+            font-weight: 500!important;
+        }
         h3 {
+            font-weight: 700!important;
             span {
                 color: $g!important;
             }
+        }
+        p {
+            font-weight: 800!important;
+        }
+        h6 {
+            font-weight: 500!important;
         }
     }
     .viewer-main-pricing-grand-total-outer-container {

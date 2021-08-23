@@ -1,7 +1,7 @@
 import { SETINVOICE, SETTOGGLEVIEWER, RESPONSIVE } from '../redux/Store.js';
 import { monthsArray } from '../Arrays/Months';
 
-const Invoices = ({ listOutput }) => {
+const List_Invoices = ({ listOutput }) => {
 
     const response = RESPONSIVE();
 
@@ -90,4 +90,4 @@ const Invoices = ({ listOutput }) => {
     )
 }
 
-export default Invoices
+export default List_Invoices

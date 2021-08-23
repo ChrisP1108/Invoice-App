@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import ButtonReqSpinner from './ButtonReqSpinner';
 import { INVOICE, SETTOGGLEVIEWER, SETTOGGLEDELETEMODAL, 
     DELETEINVOICE, HTTPRES, SETHTTPRES, SETTOGGLEERRORMODAL,
-    SETTOGGLECREATEEDIT, INITINVOICES, INVOICELIST } from '../redux/Store.js';
+    SETTOGGLECREATEEDIT, TOGGLECREATEEDIT, INVOICELIST, RESPONSIVE } from '../redux/Store.js';
 
 const DeleteModal = () => {
 
@@ -26,7 +26,7 @@ const DeleteModal = () => {
     }
 
     return (
-        <div id="deleteModal" className="d-flex">
+        <div id="deleteModal" className="d-flex f-c">
             <div className="delete-modal-page-container f-c delete-fill-transition">
                 <div className="delete-modal-outer-container delete-modal-transition">
                     <div className="delete-modal-inner-container">

@@ -210,6 +210,12 @@
         h3 {
             color: $e!important;
         }
+        @media(min-width: 768px) {
+            background-color: $u!important;
+            h3 {
+                color: $g!important;
+            }
+        }
     }
     .createoredit-bottom-filler {
         background-color: $trans;

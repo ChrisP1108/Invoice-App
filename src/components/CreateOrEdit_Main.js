@@ -1,5 +1,6 @@
 import ButtonReqSpinner from './ButtonReqSpinner';
-import { useState } from 'react';
+import CreateOrEdit_Saving from './CreateOrEdit_Saving';
+import { useState, useEffect } from 'react';
 import { optionTerms } from '../Arrays/Options';
 import { monthsArray } from '../Arrays/Months';
 import { NewInvoiceTemplate, ItemAddSchema } from '../New-Invoice-Template';
@@ -9,7 +10,7 @@ import { INVOICE, SETINVOICE,
     SETTOGGLECREATEEDIT, SAVECHANGESINVOICE, SAVEANDSENDINVOICE, 
     SAVEASDRAFTINVOICE, UPDATEINVOICE, RESPONSIVE, TOGGLECREATEEDIT } from '../redux/Store.js';
 
-const CreateOrEdit = () => {
+const CreateOrEdit_Main = () => {
 
     const idRef = INVOICE().id
     const createToggle = TOGGLECREATEEDIT();
@@ -70,92 +71,96 @@ const CreateOrEdit = () => {
         return itemPass && fieldPass ? true : false;
     }
 
-    if (HTTPRES() === "Save Changes Request Failed") {
-        setTimeout(() => {
-            SETTOGGLEERRORMODAL(true);
-            setSaveChangeSpinner(false);
-        }, 500);
-    } 
-    if (HTTPRES() === "Save Changes Request Fulfilled") {
-        setTimeout(() => {
-            setSaveChangeSpinner(false);
-            SETINVOICE({...invoiceEdit, status: 'pending'});
-            SETTOGGLECREATEEDIT(false);
-        }, 500); 
-    }
-    if (HTTPRES() === "Save & Send Invoice Request Failed") {
-        setTimeout(() => {
-            SETTOGGLEERRORMODAL(true);
-            setSaveSendSpinner(false);
-        }, 500);
-    } 
-    if (HTTPRES() === "Save & Send Invoice Request Fulfilled") {
-        setTimeout(() => {
-            setSaveSendSpinner(false);
-            SETTOGGLECREATEEDIT(false);
-            setInvoiceEdit({...invoiceEdit, status: 'pending'})
-        }, 500); 
-    }
-    if (HTTPRES() === "Add Draft Invoice Request Failed") {
-        setTimeout(() => {
-            SETTOGGLEERRORMODAL(true);
-            setDraftSpinner(false);
-        }, 500);
-    } 
-    if (HTTPRES() === "Add Draft Invoice Request Fulfilled") {
-        setTimeout(() => {
-            setDraftSpinner(false);
-            SETTOGGLECREATEEDIT(false);
-            setInvoiceEdit({...invoiceEdit, status: 'draft'});
-        }, 500); 
-    }
+    // if (HTTPRES() === "Save Changes Request Failed") {
+    //     setTimeout(() => {
+    //         SETTOGGLEERRORMODAL(true);
+    //         setSaveChangeSpinner(false);
+    //     }, 500);
+    // } 
+    // if (HTTPRES() === "Save Changes Request Fulfilled") {
+    //     setTimeout(() => {
+    //         setSaveChangeSpinner(false);
+    //         SETINVOICE({...invoiceEdit, status: 'pending'});
+    //         SETTOGGLECREATEEDIT(false);
+    //     }, 500); 
+    // }
+    // if (HTTPRES() === "Save & Send Invoice Request Failed") {
+    //     setTimeout(() => {
+    //         SETTOGGLEERRORMODAL(true);
+    //         setSaveSendSpinner(false);
+    //     }, 500);
+    // } 
+    // if (HTTPRES() === "Save & Send Invoice Request Fulfilled") {
+    //     setTimeout(() => {
+    //         setSaveSendSpinner(false);
+    //         SETTOGGLECREATEEDIT(false);
+    //         setInvoiceEdit({...invoiceEdit, status: 'pending'})
+    //     }, 500); 
+    // }
+    // if (HTTPRES() === "Add Draft Invoice Request Failed") {
+    //     setTimeout(() => {
+    //         SETTOGGLEERRORMODAL(true);
+    //         setDraftSpinner(false);
+    //     }, 500);
+    // } 
+    // if (HTTPRES() === "Add Draft Invoice Request Fulfilled") {
+    //     setTimeout(() => {
+    //         setDraftSpinner(false);
+    //         SETTOGGLECREATEEDIT(false);
+    //         setInvoiceEdit({...invoiceEdit, status: 'draft'});
+    //     }, 500); 
+    // }
 
-    const grandTotalTally = (input) => {
-        let grandTotal = 0;
-        input.items.forEach(item => {
-            const amount = item.price * item.quantity;
-            item.total = amount;
-            grandTotal += amount;
-        });
-        input.total = grandTotal;
-        return input;
-    }
+    // const grandTotalTally = (input) => {
+    //     let grandTotal = 0;
+    //     input.items.forEach(item => {
+    //         const amount = item.price * item.quantity;
+    //         item.total = amount;
+    //         grandTotal += amount;
+    //     });
+    //     input.total = grandTotal;
+    //     return input;
+    // }
 
-    const saveChangesInvoiceToggle = () => {
-        const output = grandTotalTally(invoiceEdit);
-        fieldsEval();
-        if (fieldsEval()) {
-            setSaveChangeSpinner(true);
-            SETHTTPRES("Save Changes Request Pending");
-            SAVECHANGESINVOICE(output);
-        } else console.log("Fields & Or Items Are Empty");
-    }
+    // const saveChangesInvoiceToggle = () => {
+    //     const output = grandTotalTally(invoiceEdit);
+    //     fieldsEval();
+    //     if (fieldsEval()) {
+    //         setSaveChangeSpinner(true);
+    //         SETHTTPRES("Save Changes Request Pending");
+    //         SAVECHANGESINVOICE(output);
+    //     } else console.log("Fields & Or Items Are Empty");
+    // }
 
-    const saveAndSendInvoiceInitiate = (type) => {
-        const output = grandTotalTally(invoiceEdit);
-        if (type === 'Save') {
-            setSaveSendSpinner(true);
-            SETHTTPRES("Save & Send Invoice Request Pending");
-            SAVEANDSENDINVOICE(output);
-        } else if (type === 'Draft') {
-            setDraftSpinner(true);
-            SETHTTPRES("Add Draft Invoice Request Pending");
-            SAVEASDRAFTINVOICE(output);
-        }
-    }
+    // const saveAndSendInvoiceInitiate = (type) => {
+    //     const output = grandTotalTally(invoiceEdit);
+    //     if (type === 'Save') {
+    //         setSaveSendSpinner(true);
+    //         SETHTTPRES("Save & Send Invoice Request Pending");
+    //         SAVEANDSENDINVOICE(output);
+    //     } else if (type === 'Draft') {
+    //         setDraftSpinner(true);
+    //         SETHTTPRES("Add Draft Invoice Request Pending");
+    //         SAVEASDRAFTINVOICE(output);
+    //     }
+    // }
 
-    const saveAndSendInvoiceToggle = (evalFields) => {
-        if (evalFields) {
-            fieldsEval();
-            if (fieldsEval()) {
-                saveAndSendInvoiceInitiate('Save');
-            } else console.log("Fields & Or Items Are Empty");
-        } else {
-            saveAndSendInvoiceInitiate('Draft');
-        }     
-    }
+    // const saveAndSendInvoiceToggle = (evalFields) => {
+    //     if (evalFields) {
+    //         fieldsEval();
+    //         if (fieldsEval()) {
+    //             saveAndSendInvoiceInitiate('Save');
+    //         } else console.log("Fields & Or Items Are Empty");
+    //     } else {
+    //         saveAndSendInvoiceInitiate('Draft');
+    //     }     
+    // }
 
     const input = INVOICE().id === undefined ? NewInvoiceTemplate : INVOICE();
+
+    useEffect(() => {
+        SETINVOICE(input);
+    })
 
     const randomIdGenerator = () => {  
         let alphabet;
@@ -199,9 +204,9 @@ const CreateOrEdit = () => {
     const [emptyItems, setEmptyItems] = useState(false);
     const [toggleCalendar, setToggleCalendar] = useState(false);
     const [calState, setCalState] = useState(calStartingState);
-    const [saveChangeSpinner, setSaveChangeSpinner] = useState(false);
-    const [draftSpinner, setDraftSpinner] = useState(false);
-    const [saveSendSpinner, setSaveSendSpinner] = useState(false);
+    // const [saveChangeSpinner, setSaveChangeSpinner] = useState(false);
+    // const [draftSpinner, setDraftSpinner] = useState(false);
+    // const [saveSendSpinner, setSaveSendSpinner] = useState(false);
     const [itemClicked, setItemClicked] = useState(false);
 
     invoiceEdit.id === '' && setInvoiceEdit({...invoiceEdit, id: newInvoiceId});
@@ -375,11 +380,11 @@ const CreateOrEdit = () => {
                             <h4><span>{itemTotal}</span></h4>
                             <div className="position-relative">
                                 <div>
-                                    <div className="createoredit-item-trash-icon"></div>
                                 <div 
                                     onClick={() => {formStateUpdate('deleteItem', item, item.id);
                                         setItemClicked(false)}}
-                                    className="createoredit-item-trash-filler pointer">         
+                                    className="createoredit-item-trash-filler pointer f-c">
+                                        <div className="createoredit-item-trash-icon"></div>         
                                 </div>
                             </div>
                         </div>
@@ -453,11 +458,11 @@ const CreateOrEdit = () => {
                             <h4><span>{itemTotal}</span></h4>
                             <div className="position-relative">
                                 <div>
-                                    <div className="createoredit-item-trash-icon"></div>
                                 <div 
                                     onClick={() => {formStateUpdate('deleteItem', item, item.id);
                                         setItemClicked(false)}}
-                                    className="createoredit-item-trash-filler pointer">         
+                                    className="createoredit-item-trash-filler pointer f-c">
+                                        <div className="createoredit-item-trash-icon"></div>         
                                 </div>
                                 </div>
                             </div>
@@ -584,7 +589,7 @@ const CreateOrEdit = () => {
         )
     });
 
-    const calendarMenu = () => {
+    const calendarModal = () => {
         return (
             <div className="createoredit-calendar-outer-container position-absolute">
                 <div className="createoredit-calendar-inner-main-container f-sb flex-column">
@@ -866,7 +871,7 @@ const CreateOrEdit = () => {
                                     <div className="createoredit-calendar-icon"></div>
                             </div>
                         </div>
-                        {toggleCalendar && !toggleTerms && calendarMenu()}
+                        {toggleCalendar && !toggleTerms && calendarModal()}
                     </div>
                     {response !== 'mobile' && <div className="createoredit-invoice-payment-gap"></div>}
                     <div className="createoredit-form-payment-terms-container position-relative">
@@ -957,9 +962,9 @@ const CreateOrEdit = () => {
     const footerButtons = () => { 
         return (
             <div className="createoredit-footer-outer-container f-c">
-                <div className={`${response !== 'mobile' && idRef !== undefined ? `f-e f-sb` : `f-sb`} createoredit-footer-inner-container`}> 
+                <div className={`${idRef !== undefined ? `f-e f-sb` : `f-sb`} createoredit-footer-inner-container`}> 
                     <div onClick={() => SETTOGGLECREATEEDIT(false)}
-                        className={`${idRef !== undefined && `d-none`} createoredit-cancel-button-container f-c pointer`}>
+                        className={`${idRef !== undefined && `d-none`} createoredit-discard-button-container f-c pointer`}>
                             <h3>Discard</h3>
                     </div>
                     <div className="d-flex">
@@ -1007,10 +1012,10 @@ const CreateOrEdit = () => {
                     </div>  
                 </div>
                 <div className="createoredit-scroller-side-filler background-filler"></div>
-                {footerButtons()}     
+                {footerButtons()}
             </div>
         </div>
     )
 }
 
-export default CreateOrEdit
+export default CreateOrEdit_Main

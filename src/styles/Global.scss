@@ -47,6 +47,12 @@ body {
     height: 100%!important;
 }
 
+.window-height {
+    width: 100%;
+    height: 100%;
+    min-height: 56.75rem!important;
+}
+
 .app-container {
     position: relative!important;
     width: 100%!important;
@@ -58,10 +64,6 @@ body {
         margin: 4.5rem 22.188rem 0 15.75rem!important;
 
     }
-}
-
-.window-height {
-    min-height: 56.75rem!important;
 }
 
 ::-webkit-scrollbar {
@@ -97,6 +99,15 @@ body {
     background-color: $halftrans!important;
     width: 100%!important;
     height: 100%!important;
+    position: absolute;
+    z-index: 7!important;
+    transition: .25s!important;
+}
+
+.modal-mobile-createoredit-background {
+    background-color: $halftrans!important;
+    width: 100%!important;
+    height: 183.5%!important;
     position: absolute;
     z-index: 7!important;
     transition: .25s!important;

@@ -23,7 +23,7 @@
     }
     h3 {
         font-size: 0.75rem!important;
-        font-weight: 700!important;
+        font-weight: 600!important;
         letter-spacing: -0.016rem!important;
         line-height: .938rem!important;
         margin: 0!important;
@@ -257,7 +257,7 @@
             cursor: pointer;
         }
         .list-filter-modal-item:hover {
-            .checkbox{
+            .checkbox {
                 border: 1px $n solid;
                 transition: .25s!important;
             }
