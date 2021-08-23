@@ -1,111 +1,67 @@
-# Frontend Mentor - Invoice app
+# Frontend Mentor - Invoice app solution
 
-![Design preview for the Invoice app coding challenge](./preview.jpg)
+This is a solution to the [Invoice app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/invoice-app-i7KaLTQjl). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
 
-## Welcome! 👋
+### Screenshot
 
-Thanks for purchasing this premium Frontend Mentor coding challenge.
+(./screenshot.png)
 
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects. These premium challenges are perfect portfolio pieces, so please feel free to use what you create in your portfolio to show others.
+### Links
 
-**To do this challenge, you need a strong understanding of HTML, CSS, and JavaScript.**
+- Solution URL: https://www.frontendmentor.io/solutions/react-js-sass-hooksforredux-3wkJ36EC0#feedback
+- Live Site URL: https://chrisp1108.github.io/Invoice-App/
 
-## The challenge
+## My process
 
-Your challenge is to build out this invoicing application and get it looking as close to the design as possible.
+### Built with
 
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
+- React JS
+- SASS
+- Flexbox
+- CSS Grid
+- JSON Server
+- Hooks For Redux
 
-We provide the data in a local `data.json` file, so use that to populate the content on first load. If you want to take it up a notch, feel free to build this as a full-stack application!
 
-Your users should be able to:
+### What I learned
 
-- View the optimal layout for the app depending on their device's screen size
-- See hover states for all interactive elements on the page
-- Create, read, update, and delete invoices
-- Receive form validations when trying to create/edit an invoice
-- Save draft invoices, and mark pending invoices as paid
-- Filter invoices by status (draft/pending/paid)
-- Toggle light and dark mode
-- **Bonus**: Keep track of any changes, even after refreshing the browser (`localStorage` could be used for this if you're not building out a full-stack app)
+To develop this app, I utilized ReactJS Framework.  Along with utilizing React, I utilized a few Node packages to better manage things.
 
-Want some support on the challenge? [Join our Slack community](https://www.frontendmentor.io/slack) and ask questions in the **#help** channel.
+The most important package I utilized was hooks-for-redux.  This was substantially beneficial in managing state between components and
+eliminated the need to be passing props around.  This particular form of redux made the entire process much easier to use with much less code than the other redux methods out there.  
+Hooks for redux allowed me to manage HTTP requests to the JSON server.  I could update state within the redux store after an HTTP 
+request got resolved to ensure that changes made in the UI were actually saved to the JSON server.  The redux reducers called would call a function
+within the redux store, and if resolved, called another reducer to update the state.
 
-### Expected Behaviour
+Here's a link for more information on hooks-for-redux: https://www.npmjs.com/package/hooks-for-redux
 
-- Creating an invoice
-  - When creating a new invoice, an ID needs to be created. Each ID should be 2 random uppercased letters followed by 4 random numbers.
-  - Invoices can be created either as drafts or as pending. Clicking "Save as Draft" should allow the user to leave any form field blank, but should create an ID if one doesn't exist and set the status to "draft". Clicking "Save & Send" should require all forms fields to be filled in, and should set the status to "pending".
-  - Changing the Payments Terms field should set the `paymentDue` property based on the `createdAt` date plus the numbers of days set for the payment terms.
-  - The `total` should be the sum of all items on the invoice.
-- Editing an invoice
-  - When saving changes to an invoice, all fields are required when the "Save Changes" button is clicked. If the user clicks "Cancel", any unsaved changes should be reset.
-  - If the invoice being edited is a "draft", the status needs to be updated to "pending" when the "Save Changes" button is clicked. All fields are required at this stage.
-- Users should be able to mark invoices as paid by clicking the "Mark as Paid" button. This should change the invoice's status to "paid".
-- Users should receive a confirmation modal when trying to delete invoices.
-- Feel free not to add custom styling for the date and dropdown form fields. The designs for those fields are optional extras and are mostly for illustration purposes.
+Utilizing async / await functions, I managed the HTTP requests, along with having .then and .catch to resolve promises or catch errors.
 
-## Where to find everything
+This project was quite heavy on styling given it has a day and night mode theme colors.  The two modes would be triggered by state variable
+being toggled between true / false and having a ternary operator to change the style accordingly in the main div container in the app.js file.
 
-Your task is to build out the project to the design file provided. We provide both Sketch and Figma versions of the design, so you can choose which tool you prefer to use. You can download the design file on the platform. **Please be sure not to share them with anyone else.** The design download comes with a `README.md` file as well to help you get set up.
+Some accomplishments that I'm proud of is all the modals I custom made myself, in particular the calendar modal.  The designs showed 5 rows, 
+however I made 6 rows for date numbers as numbers were being pushed to a sixth row if the starting date of the month fell on a Friday or Saturday.
+This required heavy use of the Javascript New Date function to output the correct numbers along with utilizing CSS flexbox and CSS grid to 
+align the numbers accordingly.
 
-All the required assets for this project are in the `/assets` folder. The assets are already exported for the correct screen size and optimized. Some images are reusable at multiple screen sizes. So if you don't see an image in a specific folder, it will typically be in another folder for that page.
+I was quite thorough in matching the styling and setting all margins, paddings as precise as I could to the Figma graphic designs.  I utilized 
+SASS for the styling which became quite essential to have with all the styling changes and all.
 
-The design system in the design file will give you more information about the various colors, fonts, and styles used in this project.
+The biggest challenge I ran into was in the item list.  I struggled with an issue of item ids being duplicated which resulted in the fields of
+two items changing simultaneously when typing.  It seemed to do this whenever a third item would be added to the list.  My end solution was
+to only allow two items to be added to an invoice.  Not the most ideal, but it helps avoid the duplicate glitch from occuring.
 
-## Building your project
+If anyone can figure out how to resolve the issue I described with the items list, I'm all ears.
 
-Feel free to use any workflow that you feel comfortable with. Below is a suggested process, but do not feel like you need to follow these steps:
+Since I mentioned HTTP requests, this app is built as a full stack app.  If you want to see it completely in action, you can run a JSON server
+with a db.json file.
 
-1. Separate the `starter-code` from the rest of this project and rename it to something meaningful for you. Initialize the codebase as a public repository on [GitHub](https://github.com/). Creating a repo will make it easier to share your code with the community if you need help. If you're not sure how to do this, [have a read-through of this Try Git resource](https://try.github.io/). **⚠️ IMPORTANT ⚠️: There are already a couple of `.gitignore` files in this project. Please do not remove them or change the content of the files. If you create a brand new project, please use the `.gitignore` files provided in your new codebase. This is to avoid the accidental upload of the design files to GitHub. With these premium challenges, please be sure not to share the design files in your GitHub repo. Thanks!**
-2. Configure your repository to publish your code to a web address. This will also be useful if you need some help during a challenge as you can share the URL for your project with your repo URL. There are a number of ways to do this, and we provide some recommendations below.
-3. Look through the designs to start planning out how you'll tackle the project. This step is crucial to help you think ahead for CSS classes to create reusable styles.
-4. Before adding any styles, structure your content with HTML. Writing your HTML first can help focus your attention on creating well-structured content.
-5. Write out the base styles for your project, including general content styles, such as `font-family` and `font-size`.
-6. Start adding styles to the top of the page and work down. Only move on to the next section once you're happy you've completed the area you're working on.
+This project was quite challenging and time consuming, but I feel proud for having accomplishing it.  I've learned a lot from working on this
+project, in particular my Javascript skills.
 
-## Deploying your project
+## Author
 
-As mentioned above, there are many ways to host your project for free. Our recommend hosts are:
-
-- [GitHub Pages](https://pages.github.com/)
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
-
-You can host your site using one of these solutions or any of our other trusted providers. [Read more about our recommended and trusted hosts](https://medium.com/frontend-mentor/frontend-mentor-trusted-hosting-providers-bf000dfebe).
-
-## Create a custom `README.md`
-
-We strongly recommend overwriting this `README.md` with a custom one. We've provided a template inside the [`README-template.md`](./README-template.md) file in this starter code.
-
-The template provides a guide for what to add. A custom `README` will help you explain your project and reflect on your learnings. Please feel free to edit our template as much as you like.
-
-Once you've added your information to the template, delete this file and rename the `README-template.md` file to `README.md`. That will make it show up as your repository's README file.
-
-## Submitting your solution
-
-Submit your solution on the platform for the rest of the community to see. Follow our ["Complete guide to submitting solutions"](https://medium.com/frontend-mentor/a-complete-guide-to-submitting-solutions-on-frontend-mentor-ac6384162248) for tips on how to do this.
-
-Remember, if you're looking for feedback on your solution, be sure to ask questions when submitting it. The more specific and detailed you are with your questions, the higher the chance you'll get valuable feedback from the community.
-
-**⚠️ IMPORTANT ⚠️: With these premium challenges, please be sure not to upload the design files to GitHub when you're submitting to the platform and sharing it around. If you've created a brand new project, the easiest way to do that is to copy across the `.gitignore` provided in this starter project.**
-
-## Sharing your solution
-
-There are multiple places you can share your solution:
-
-1. Share your solution page in the **#finished-projects** channel of the [Slack community](https://www.frontendmentor.io/slack). 
-2. Tweet [@frontendmentor](https://twitter.com/frontendmentor) and mention **@frontendmentor**, including the repo and live URLs in the tweet. We'd love to take a look at what you've built and help share it around.
-3. Share your solution on other social channels like LinkedIn.
-4. Blog about your experience building your project. Writing about your workflow, technical choices, and talking through your code is a brilliant way to reinforce what you've learned. Great platforms to write on are [dev.to](https://dev.to/), [Hashnode](https://hashnode.com/), and [CodeNewbie](https://community.codenewbie.org/).
-
-We provide templates to help you share your solution once you've submitted it on the platform. Please do edit them and include specific questions when you're looking for feedback. 
-
-The more specific you are with your questions the more likely it is that another member of the community will give you feedback.
-
-## Got feedback for us?
-
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please email hi[at]frontendmentor[dot]io.
-
-**Have fun building!** 🚀
-
+- Name - Chris Paschall
+- Website - https://www.linkedin.com/in/christopher-paschall/
+- Frontend Mentor - https://www.frontendmentor.io/profile/ChrisP1108
