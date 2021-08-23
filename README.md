@@ -4,7 +4,7 @@ This is a solution to the [Invoice app challenge on Frontend Mentor](https://www
 
 ### Screenshot
 
-![Invoice App Screenshot]!(./screenshot.png "Invoice-App")
+![Invoice App Screenshot]!(/screenshot.png "Invoice-App")
 
 ### Links
 
