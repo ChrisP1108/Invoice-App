@@ -26,7 +26,7 @@ const Viewer = () => {
             setMarkPaidSpinner(false);
             SETTOGGLEVIEWER(false);
             setViewInvoice({...viewInvoice, status: 'paid'});
-        }, 500); 
+        }, 250); 
     }
 
     const markPaid = () => {

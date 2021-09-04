@@ -18,21 +18,32 @@ import { createReduxModule } from 'hooks-for-redux';
     // GET INVOICES - Sent To App.Js For Formatting Date and Currency Fields
 
     const fetchInvoices = async () => { // HTTP GET
-        const res = await fetch(Url)
-        .catch((err) => console.log(err));   
-        if (res === undefined) {
-            INITINVOICES(["error"]);
+        const storedInvoices = JSON.parse(localStorage.getItem("SavedInvoices"));
+        console.log(storedInvoices.length > 0);
+        if (storedInvoices !== null && storedInvoices.length > 0) {
+            setTimeout(() => {
+                INITINVOICES(storedInvoices);
+                return;
+            }, 2000);
         } else {
-            const data = await res.json();
-            data.forEach(list => {
-                let idAssign = 0;
-                list.items.forEach(item => {
-                    item.id = idAssign;
-                    idAssign += 1;
+            const res = await fetch(Url)
+            .catch((err) => console.log(err));   
+            if (res === undefined) {
+                INITINVOICES(["error"]);
+            } else {
+                const data = await res.json();
+                data.forEach(list => {
+                    let idAssign = 0;
+                    list.items.forEach(item => {
+                        item.id = idAssign;
+                        idAssign += 1;
+                    });
+                    idAssign = 0;
                 });
-                idAssign = 0;
-            });
-            INITINVOICES(data);
+                setTimeout(() => {
+                    INITINVOICES(data);
+                }, 2000);
+            }
         }
     }
 
@@ -47,20 +58,28 @@ import { createReduxModule } from 'hooks-for-redux';
 
     const addReq = async (store, invoice) => { // HTTP POST
         invoice.status = 'pending';
-        await fetch( Url, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({...invoice })
-        })
-        .then(() => { 
+        const updateState = store;
+        updateState.push(invoice);
+        const localData = JSON.stringify(updateState);
+        localStorage.setItem("SavedInvoices", localData);
+        setTimeout(() => {
             httpStatusAndReset("Save & Send Invoice Request Fulfilled");
-            const updateState = store;
-            updateState.push(invoice);
             INITINVOICES(updateState);
-        })
-        .catch(() => httpStatusAndReset("Save & Send Invoice Request Failed")); 
+        }, 2000);
+        // await fetch( Url, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify({...invoice })
+        // })
+        // .then(() => { 
+        //     httpStatusAndReset("Save & Send Invoice Request Fulfilled");
+        //     const updateState = store;
+        //     updateState.push(invoice);
+        //     INITINVOICES(updateState);
+        // })
+        // .catch(() => httpStatusAndReset("Save & Send Invoice Request Failed")); 
     }
 
     // SAVE AS DRAFT
@@ -71,20 +90,27 @@ import { createReduxModule } from 'hooks-for-redux';
     }
 
     const addDraftReq = async (store, invoice) => { // HTTP POST
-        invoice.status = 'draft'
-        await fetch( Url, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({...invoice })
-        })
-        .then(() => { 
+        invoice.status = 'draft';
+        const updateState = store.concat(invoice);
+        const localData = JSON.stringify(updateState);
+        localStorage.setItem("SavedInvoices", localData);
+        setTimeout(() => {
             httpStatusAndReset("Add Draft Invoice Request Fulfilled");
-            const updateState = store.concat(invoice);
             INITINVOICES(updateState);
-        })
-        .catch(() => httpStatusAndReset("Add Draft Invoice Request Failed")); 
+        }, 2000);
+        // await fetch( Url, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify({...invoice })
+        // })
+        // .then(() => { 
+        //     httpStatusAndReset("Add Draft Invoice Request Fulfilled");
+        //     const updateState = store.concat(invoice);
+        //     INITINVOICES(updateState);
+        // })
+        // .catch(() => httpStatusAndReset("Add Draft Invoice Request Failed")); 
     }
 
     // MARK AS PAID
@@ -96,21 +122,31 @@ import { createReduxModule } from 'hooks-for-redux';
 
     const paidUpdateReq = async (store, id) => { // HTTP PUT
         const invoice = store.filter(store => store.id === id);
-        await fetch(`${Url}/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({...invoice[0], status: 'paid' })
-        })
-        .then(() => { 
-            httpStatusAndReset("Mark Paid Request Fulfilled");
+        setTimeout(() => {
             invoice[0].status = 'paid';
             const updateState = store.map(list => list.id === invoice[0].id 
                 ? invoice[0] : list);
+            const localData = JSON.stringify(updateState);
+            localStorage.setItem("SavedInvoices", localData);
+            httpStatusAndReset("Mark Paid Request Fulfilled");
             INITINVOICES(updateState);
-        })
-        .catch(() => httpStatusAndReset("Mark Paid Request Failed")); 
+        }, 2000)    
+
+        // await fetch(`${Url}/${id}`, {
+        //     method: 'PUT',
+        //     headers: {
+        //         'Content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify({...invoice[0], status: 'paid' })
+        // })
+        // .then(() => { 
+        //     httpStatusAndReset("Mark Paid Request Fulfilled");
+        //     invoice[0].status = 'paid';
+        //     const updateState = store.map(list => list.id === invoice[0].id 
+        //         ? invoice[0] : list);
+        //     INITINVOICES(updateState);
+        // })
+        // .catch(() => httpStatusAndReset("Mark Paid Request Failed")); 
     }
 
     // SAVE CHANGES
@@ -122,21 +158,29 @@ import { createReduxModule } from 'hooks-for-redux';
 
     const updReq = async (store, invoice) => { // HTTP PUT
         invoice.status = 'pending'
-        await fetch(`${Url}/${invoice.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({...invoice, status: 'pending'})
-        })
-        .then(() => { 
+        const updateState = store.map(list => list.id === invoice.id 
+            ? invoice : list);
+        const localData = JSON.stringify(updateState);
+        localStorage.setItem("SavedInvoices", localData);
+        setTimeout(() => {
             httpStatusAndReset("Save Changes Request Fulfilled");
-            invoice.status = 'pending';
-            const updateState = store.map(list => list.id === invoice.id 
-                ? invoice : list);
             INITINVOICES(updateState);
-        })
-        .catch(() => httpStatusAndReset("Save Changes Request Failed")); 
+        }, 2000);
+        // await fetch(`${Url}/${invoice.id}`, {
+        //     method: 'PUT',
+        //     headers: {
+        //         'Content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify({...invoice, status: 'pending'})
+        // })
+        // .then(() => { 
+        //     httpStatusAndReset("Save Changes Request Fulfilled");
+        //     invoice.status = 'pending';
+        //     const updateState = store.map(list => list.id === invoice.id 
+        //         ? invoice : list);
+        //     INITINVOICES(updateState);
+        // })
+        // .catch(() => httpStatusAndReset("Save Changes Request Failed")); 
     }
 
     // DELETE INVOICE
@@ -147,15 +191,22 @@ import { createReduxModule } from 'hooks-for-redux';
     }
 
     const delReq = async (store, id) => {
-        await fetch(`${Url}/${id}`, { // HTTP DELETE
-            method: 'DELETE'
-        })
-        .then(() => { 
+        const updateState = store.filter(invoice => invoice.id !== id);
+        const localData = JSON.stringify(updateState);
+        localStorage.setItem("SavedInvoices", localData);
+        setTimeout(() => {
             httpStatusAndReset("Delete Request Fulfilled");
-            const updateState = store.filter(invoice => invoice.id !== id);
             INITINVOICES(updateState);
-        })
-        .catch(() => httpStatusAndReset("Delete Request Failed"));
+        }, 2000);
+        // await fetch(`${Url}/${id}`, { // HTTP DELETE
+        //     method: 'DELETE'
+        // })
+        // .then(() => { 
+        //     httpStatusAndReset("Delete Request Fulfilled");
+        //     const updateState = store.filter(invoice => invoice.id !== id);
+        //     INITINVOICES(updateState);
+        // })
+        // .catch(() => httpStatusAndReset("Delete Request Failed"));
     }
 
 // Invoice List - Fetched Data Is Modified in App.Js To Reformat Dates And Currencies And Then Sent To Invoice List

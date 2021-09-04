@@ -14,8 +14,7 @@ const ErrorModal = () => {
                     <div className="error-modal-inner-container">
                         <h1>Error</h1>
                         <div className="error-modal-content-spacing">
-                            <h2>Your changes were not able to be saved.  Please 
-                            try again.</h2>
+                            <h2>This is a demo version.  Changes cannot be saved.</h2>
                         </div>
                         <div className="f-ae">
                             <div onClick={() => SETTOGGLEERRORMODAL(false)}
