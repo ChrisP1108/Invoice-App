@@ -19,7 +19,6 @@ import { createReduxModule } from 'hooks-for-redux';
 
     const fetchInvoices = async () => { // HTTP GET
         const storedInvoices = JSON.parse(localStorage.getItem("SavedInvoices"));
-        console.log(storedInvoices.length > 0);
         if (storedInvoices !== null && storedInvoices.length > 0) {
             setTimeout(() => {
                 INITINVOICES(storedInvoices);

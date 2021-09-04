@@ -16,7 +16,6 @@ const CreateOrEdit = () => {
     const response = RESPONSIVE();
 
     const date = new Date();
-    const dayOfWeek = date.getDay();
     const day = date.getDate();
     const month = date.getMonth();
     const year = date.getFullYear();
@@ -294,7 +293,7 @@ const CreateOrEdit = () => {
                 : data.items[index].price = Number(value);
                 break;
             case 'deleteItem':
-                if (data.items.length == 1) {
+                if (data.items.length === 1) {
                     break;
                 }
                 setIdTally(idTally - 1);
@@ -322,7 +321,7 @@ const CreateOrEdit = () => {
                 key={option.id} 
                 className={`${option.id === 1 ? `createoredit-option-first`
                 : option.id === 4 ? `createoredit-option-last` : ``} createoredit-option pointer`}
-                style={{ borderBottom: option.id == 4 && `0rem $white solid` }}>
+                style={{ borderBottom: option.id === 4 && `0rem $white solid` }}>
                 <span>{option.name}</span>
             </div>
         )
@@ -401,8 +400,6 @@ const CreateOrEdit = () => {
     const itemsMappingMobile = invoiceEdit.items.map(item => {
 
         const itemTotal = (item.quantity * item.price).toFixed(2);
-
-        const index = invoiceEdit.items.indexOf(item);
 
         return (
             <div key={item.id} className="createoredit-trans-item">
@@ -483,7 +480,7 @@ const CreateOrEdit = () => {
         const data = calState;
 
         if (increment === '-') {
-            if (data.totalTally == 0) {
+            if (data.totalTally === 0) {
                 return;
             }
             data.totalTally -= 1;
@@ -506,7 +503,7 @@ const CreateOrEdit = () => {
         data.header = headerOutput;
 
         const daysInMonth = new Date(data.yearTally, data.monthTally, 0).getDate();
-        const prevDaysInMonth = new Date(data.monthTally == 0 ? data.yearTally - 1 
+        const prevDaysInMonth = new Date(data.monthTally === 0 ? data.yearTally - 1 
             : data.yearTally, data.monthTally - 1, 0).getDate();
         const startingDayOfWeek = new Date(data.yearTally, data.monthTally, 1).getDay();
         let numbersTally = 0;
@@ -565,7 +562,7 @@ const CreateOrEdit = () => {
         const paymentDueFullDate = new Date(createdYearNumber, 
             createdMonthNumber, createdDateNumber + invoiceEdit.paymentTerms);
         let paymentDueDate = paymentDueFullDate.getDate();
-        paymentDueDate = paymentDueDate == 0 ? 1 : paymentDueDate;
+        paymentDueDate = paymentDueDate === 0 ? 1 : paymentDueDate;
         paymentDueDate = paymentDueDate < 10 ? `0${paymentDueDate}` : paymentDueDate;
         let paymentDueMonth = paymentDueFullDate.getMonth() + 1;
         paymentDueMonth = paymentDueMonth < 10 ? `0${paymentDueMonth}` : paymentDueMonth;
