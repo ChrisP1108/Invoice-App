@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Invoice-App/static/css/main.612f2597.chunk.css",
+    "main.css": "/Invoice-App/static/css/main.cfe9dd72.chunk.css",
     "main.js": "/Invoice-App/static/js/main.0675b4c0.chunk.js",
     "main.js.map": "/Invoice-App/static/js/main.0675b4c0.chunk.js.map",
     "runtime-main.js": "/Invoice-App/static/js/runtime-main.302265aa.js",
@@ -12,7 +12,7 @@
     "static/js/3.f3544ef8.chunk.js.map": "/Invoice-App/static/js/3.f3544ef8.chunk.js.map",
     "index.html": "/Invoice-App/index.html",
     "static/css/2.da1eef19.chunk.css.map": "/Invoice-App/static/css/2.da1eef19.chunk.css.map",
-    "static/css/main.612f2597.chunk.css.map": "/Invoice-App/static/css/main.612f2597.chunk.css.map",
+    "static/css/main.cfe9dd72.chunk.css.map": "/Invoice-App/static/css/main.cfe9dd72.chunk.css.map",
     "static/js/2.6271aed6.chunk.js.LICENSE.txt": "/Invoice-App/static/js/2.6271aed6.chunk.js.LICENSE.txt",
     "static/media/App.scss": "/Invoice-App/static/media/illustration-empty.e3122ec2.svg"
   },
@@ -20,7 +20,7 @@
     "static/js/runtime-main.302265aa.js",
     "static/css/2.da1eef19.chunk.css",
     "static/js/2.6271aed6.chunk.js",
-    "static/css/main.612f2597.chunk.css",
+    "static/css/main.cfe9dd72.chunk.css",
     "static/js/main.0675b4c0.chunk.js"
   ]
 }
